@@ -12,6 +12,7 @@
     "start:web": "pnpm --filter web start"
   },
   "devDependencies": {
+    "next": "16.2.11",
     "typescript": "^5.0.0"
   }
 }
