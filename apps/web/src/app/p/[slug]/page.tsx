@@ -15,6 +15,79 @@ import BulkDownloader from '@/components/tools/BulkDownloader';
 import ApkDownloader from '@/components/tools/ApkDownloader';
 import ContactFormTool from '@/components/tools/ContactFormTool';
 
+const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
+  home: {
+    title: 'Home Downloader',
+    seoTitle: 'TTDownloader - Download TikTok Videos Without Watermark',
+    seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'h-1', type: 'hero', title: 'Download TikTok Videos Without Watermark', subtitle: 'Fast, free, and completely ad-free. Just paste the link and get your video.', bgColor: '#8b5cf6' },
+      { id: 'h-2', type: 'downloader_tool' }
+    ])
+  },
+  video: {
+    title: 'TikTok Video Downloader',
+    seoTitle: 'TikTok Video Downloader - TTDownloader',
+    seoDescription: 'Download HD videos without watermark in MP4 format.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'v-1', type: 'hero', title: 'TikTok Video Downloader', subtitle: 'Download HD videos without watermark in MP4 format.', bgColor: '#3b82f6' },
+      { id: 'v-2', type: 'downloader_tool' }
+    ])
+  },
+  audio: {
+    title: 'TikTok Audio Extractor',
+    seoTitle: 'TikTok Audio Extractor - TTDownloader',
+    seoDescription: 'Extract and download MP3 audio from any TikTok video.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'au-1', type: 'hero', title: 'TikTok Audio Extractor', subtitle: 'Extract and download MP3 audio from any TikTok video.', bgColor: '#ec4899' },
+      { id: 'au-2', type: 'audio_tool' }
+    ])
+  },
+  bulk: {
+    title: 'TikTok Profile Bulk Downloader',
+    seoTitle: 'TikTok Profile Bulk Downloader - TTDownloader',
+    seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'b-1', type: 'hero', title: 'TikTok Profile Bulk Downloader', subtitle: 'Enter any TikTok username to fetch and download all their videos at once.', bgColor: '#10b981' },
+      { id: 'b-2', type: 'bulk_tool' }
+    ])
+  },
+  apk: {
+    title: 'Download Our Android App',
+    seoTitle: 'Android APK Release - TTDownloader',
+    seoDescription: 'Download the TTDownloader Android app.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'ap-1', type: 'hero', title: 'Download Our Android App', subtitle: 'Get the TTDownloader Android app and download TikTok videos directly.', bgColor: '#f59e0b' },
+      { id: 'ap-2', type: 'apk_tool' }
+    ])
+  },
+  about: {
+    title: 'About Us Page',
+    seoTitle: 'About Us - TTDownloader',
+    seoDescription: 'About our TikTok downloading platform.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'ab-1', type: 'hero', title: 'About TTDownloader', subtitle: 'Built for Everyone, Always Free.', bgColor: '#1e293b' },
+      { id: 'ab-2', type: 'paragraph', text: 'TTDownloader is a free, open-access platform for downloading TikTok content for educational and personal use. We believe everyone should have access to the content they love, without limitations.' }
+    ])
+  },
+  contact: {
+    title: 'Contact Us Page',
+    seoTitle: 'Contact Us - TTDownloader',
+    seoDescription: 'Get in touch with the support team.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
+      { id: 'c-2', type: 'contact_tool' }
+    ])
+  }
+};
+
 export default function CustomPage({ params }: { params: any }) {
   const [page, setPage] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,12 +114,22 @@ export default function CustomPage({ params }: { params: any }) {
     getCustomPageBySlug(slug)
       .then(res => {
         if (!res || !res.isPublished) {
-          setNotFound(true);
+          if (DEFAULT_SYSTEM_PAGES[slug]) {
+            setPage(DEFAULT_SYSTEM_PAGES[slug]);
+          } else {
+            setNotFound(true);
+          }
         } else {
           setPage(res);
         }
       })
-      .catch(() => setNotFound(true))
+      .catch(() => {
+        if (DEFAULT_SYSTEM_PAGES[slug]) {
+          setPage(DEFAULT_SYSTEM_PAGES[slug]);
+        } else {
+          setNotFound(true);
+        }
+      })
       .finally(() => setLoading(false));
   }, [slug]);
 
