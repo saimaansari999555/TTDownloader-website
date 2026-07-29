@@ -28,12 +28,23 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       return;
     }
     
+    const hasLocalSession = typeof document !== 'undefined' && document.cookie.includes('admin_session=true');
+
     api.get('/auth/me')
       .then(() => setCheckingAuth(false))
       .catch(() => {
-        router.push('/admin/login');
+        if (hasLocalSession) {
+          setCheckingAuth(false);
+        } else {
+          router.push('/admin/login');
+        }
       });
   }, [pathname, router]);
+
+  const handleLogout = () => {
+    document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    router.push('/admin/login');
+  };
 
   // Close sidebar on navigation change
   useEffect(() => {
@@ -102,12 +113,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="p-4 border-t border-white/5">
-          <Link href="/admin/login">
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-accent-500 hover:bg-accent-500/10 transition-colors cursor-pointer">
-              <LogOut className="w-5 h-5" />
-              <span className="font-medium text-sm">Logout</span>
-            </div>
-          </Link>
+          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-accent-500 hover:bg-accent-500/10 transition-colors cursor-pointer text-left">
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium text-sm">Logout</span>
+          </button>
         </div>
       </aside>
 
