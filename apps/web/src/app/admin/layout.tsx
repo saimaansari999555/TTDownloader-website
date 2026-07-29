@@ -28,21 +28,32 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       return;
     }
     
-    const hasLocalSession = typeof document !== 'undefined' && document.cookie.includes('admin_session=true');
+    const hasLocalSession =
+      typeof window !== 'undefined' &&
+      (localStorage.getItem('admin_session') === 'true' || document.cookie.includes('admin_session=true'));
+
+    if (hasLocalSession) {
+      setCheckingAuth(false);
+      return;
+    }
 
     api.get('/auth/me')
-      .then(() => setCheckingAuth(false))
-      .catch(() => {
-        if (hasLocalSession) {
-          setCheckingAuth(false);
-        } else {
-          router.push('/admin/login');
+      .then(() => {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('admin_session', 'true');
         }
+        setCheckingAuth(false);
+      })
+      .catch(() => {
+        router.push('/admin/login');
       });
   }, [pathname, router]);
 
   const handleLogout = () => {
-    document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('admin_session');
+      document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
     router.push('/admin/login');
   };
 

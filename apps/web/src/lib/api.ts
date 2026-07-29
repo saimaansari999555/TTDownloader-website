@@ -31,13 +31,21 @@ export const getBlogPost = (slug: string) =>
 // Admin
 export const adminLogin = async (emailOrUsername: string, password: string) => {
   try {
-    return await api.post('/auth/login', { emailOrUsername, password });
+    const res = await api.post('/auth/login', { emailOrUsername, password });
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('admin_session', 'true');
+      document.cookie = 'admin_session=true; path=/; max-age=86400; SameSite=Lax';
+    }
+    return res;
   } catch (err) {
     if (
       (emailOrUsername === 'admin' || emailOrUsername === 'admin@website.com') &&
       password === 'Admin@12345'
     ) {
-      document.cookie = 'admin_session=true; path=/; max-age=86400';
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('admin_session', 'true');
+        document.cookie = 'admin_session=true; path=/; max-age=86400; SameSite=Lax';
+      }
       return { data: { success: true } };
     }
     throw err;
