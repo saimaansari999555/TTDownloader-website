@@ -1,4 +1,4 @@
 {
-  "buildCommand": "pnpm vercel-build",
+  "buildCommand": "pnpm build",
   "outputDirectory": "apps/web/.next"
 }
