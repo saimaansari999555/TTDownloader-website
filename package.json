@@ -7,6 +7,7 @@
     "dev": "pnpm --filter api dev & pnpm --filter web dev",
     "build": "pnpm --filter api build && pnpm --filter web build",
     "vercel-build": "pnpm --filter api build && pnpm --filter web build",
+    "postinstall": "pnpm --filter api postinstall",
     "start:api": "pnpm --filter api start:prod",
     "start:web": "pnpm --filter web start"
   },
