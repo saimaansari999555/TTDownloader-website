@@ -10,7 +10,18 @@ export default function BlogPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getBlogPosts().then(setPosts).catch(() => setPosts([])).finally(() => setLoading(false));
+    getBlogPosts()
+      .then(res => {
+        const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
+        const combined = [...(Array.isArray(res) ? res : []), ...local];
+        const unique = combined.filter((v, i, a) => a.findIndex(t => t.slug === v.slug) === i);
+        setPosts(unique);
+      })
+      .catch(() => {
+        const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
+        setPosts(local);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (

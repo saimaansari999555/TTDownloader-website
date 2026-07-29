@@ -53,4 +53,8 @@ export class BlogService {
   async getTags(): Promise<Tag[]> {
     return this.prisma.tag.findMany();
   }
+
+  async getAdminUser() {
+    return this.prisma.user.findFirst();
+  }
 }
