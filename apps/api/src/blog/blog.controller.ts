@@ -12,7 +12,6 @@ export class BlogController {
     return this.blogService.getAllPosts({
       skip: skip ? Number(skip) : undefined,
       take: take ? Number(take) : undefined,
-      where: { status: 'PUBLISHED' }
     });
   }
 
@@ -28,20 +27,31 @@ export class BlogController {
       const adminUser = await this.blogService.getAdminUser();
       authorId = adminUser?.id;
     }
-    const postData: any = { ...data };
+
+    const { id, author, ...cleanData } = data;
+
+    const postData: any = {
+      title: cleanData.title,
+      slug: cleanData.slug || cleanData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+      content: cleanData.content || '',
+      summary: cleanData.summary || '',
+      status: cleanData.status || 'PUBLISHED',
+      publishedAt: cleanData.status === 'PUBLISHED' ? new Date() : null,
+    };
+
     if (authorId) {
       postData.author = { connect: { id: authorId } };
     }
+
     return this.blogService.createPost(postData);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Put('posts/:id')
-  async updatePost(@Param('id') id: string, @Body() data: Prisma.BlogPostUpdateInput) {
-    return this.blogService.updatePost(id, data);
+  async updatePost(@Param('id') id: string, @Body() data: any) {
+    const { id: _, author, ...cleanData } = data;
+    return this.blogService.updatePost(id, cleanData);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Delete('posts/:id')
   async deletePost(@Param('id') id: string) {
     return this.blogService.deletePost(id);

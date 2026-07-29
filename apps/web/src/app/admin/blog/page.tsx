@@ -35,43 +35,51 @@ export default function AdminBlog() {
     e.preventDefault();
     setSubmitting(true);
 
-    const newPostData = {
-      id: editId || 'post-' + Date.now(),
+    const generatedSlug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    const postPayload = {
       title: form.title,
-      slug: form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+      slug: generatedSlug,
       content: form.content,
       summary: form.summary,
       status: form.status,
       publishedAt: form.status === 'PUBLISHED' ? new Date().toISOString() : null,
+    };
+
+    const localItem = {
+      id: editId || 'post-' + Date.now(),
+      ...postPayload,
       createdAt: new Date().toISOString(),
       author: { username: 'admin' }
     };
 
     try {
       if (editId) {
-        await api.put(`/blog/posts/${editId}`, form);
+        await api.put(`/blog/posts/${editId}`, postPayload);
       } else {
-        await api.post('/blog/posts', newPostData);
+        await api.post('/blog/posts', postPayload);
       }
     } catch (err: any) {
-      // Fallback to local storage if API backend database is offline/unreachable
-      const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
+      console.warn('API save fallback to local:', err);
+    }
+
+    // Always update local storage as reliable backup
+    if (typeof window !== 'undefined') {
+      const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
       let updatedLocal;
       if (editId) {
-        updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...newPostData } : p);
+        updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...localItem } : p);
       } else {
-        updatedLocal = [newPostData, ...local];
+        updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug)];
       }
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
-      }
-    } finally {
-      setForm(emptyForm);
-      setShowEditor(false);
-      setEditId(null);
-      setSubmitting(false);
-      load();
+      localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
     }
+
+    setForm(emptyForm);
+    setShowEditor(false);
+    setEditId(null);
+    setSubmitting(false);
+    load();
   };
 
   const handleEdit = (post: any) => {
