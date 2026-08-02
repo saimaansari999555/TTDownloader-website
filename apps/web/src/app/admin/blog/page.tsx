@@ -57,24 +57,16 @@ export default function AdminBlog() {
       publishedAt: form.status === 'PUBLISHED' ? new Date().toISOString() : null,
     };
 
+    const targetId = editId || 'post-' + Date.now();
+
     const localItem = {
-      id: editId || 'post-' + Date.now(),
+      id: targetId,
       ...postPayload,
       createdAt: new Date().toISOString(),
       author: { username: 'admin' }
     };
 
-    try {
-      if (editId) {
-        await api.put(`/blog/posts/${editId}`, postPayload);
-      } else {
-        await api.post('/blog/posts', postPayload);
-      }
-    } catch (err: any) {
-      console.warn('API save fallback to local:', err);
-    }
-
-    // Always update local storage as reliable backup
+    // 1. Immediately update LocalStorage & State without blocking
     if (typeof window !== 'undefined') {
       const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
       let updatedLocal;
@@ -86,11 +78,23 @@ export default function AdminBlog() {
       localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
     }
 
+    // 2. Reset form & close editor instantly
     setForm(emptyForm);
     setShowEditor(false);
     setEditId(null);
     setSubmitting(false);
     load();
+
+    // 3. Background API sync (non-blocking)
+    try {
+      if (editId && !editId.startsWith('post-')) {
+        await api.put(`/blog/posts/${editId}`, postPayload);
+      } else {
+        await api.post('/blog/posts', postPayload);
+      }
+    } catch (err: any) {
+      console.warn('Backend sync saved locally:', err);
+    }
   };
 
   const handleEdit = (post: any) => {
@@ -108,7 +112,13 @@ export default function AdminBlog() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this post?')) return;
-    await deletePost(id); load();
+    if (typeof window !== 'undefined') {
+      const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
+      const updated = local.filter((p: any) => p.id !== id);
+      localStorage.setItem('local_blog_posts', JSON.stringify(updated));
+    }
+    await deletePost(id).catch(() => {});
+    load();
   };
 
   const generateSlug = (title: string) =>
@@ -130,45 +140,45 @@ export default function AdminBlog() {
       </div>
 
       {showEditor && (
-        <form onSubmit={handleSubmit} className="glass-panel p-6 rounded-2xl space-y-5">
+        <form onSubmit={handleSubmit} className="glass-panel p-6 rounded-2xl space-y-5 border border-primary-500/30">
           <h3 className="text-lg font-bold text-white">{editId ? 'Edit Post' : 'Create New Post'}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="md:col-span-2">
-              <label className="block text-sm text-text-secondary mb-2">Title *</label>
-              <input required className="w-full glass-input rounded-xl py-2.5 px-4" placeholder="Post title..." value={form.title}
+              <label className="block text-sm font-semibold text-text-secondary mb-2">Title *</label>
+              <input required className="w-full glass-input rounded-xl py-3 px-4 text-white font-medium text-base" placeholder="Post title..." value={form.title}
                 onChange={e => setForm(p => ({ ...p, title: e.target.value, slug: generateSlug(e.target.value) }))} />
             </div>
             <div>
-              <label className="block text-sm text-text-secondary mb-2">Slug</label>
-              <input className="w-full glass-input rounded-xl py-2.5 px-4" value={form.slug} onChange={e => setForm(p => ({ ...p, slug: e.target.value }))} />
+              <label className="block text-sm font-semibold text-text-secondary mb-2">Slug</label>
+              <input className="w-full glass-input rounded-xl py-3 px-4 text-white font-mono text-sm" value={form.slug} onChange={e => setForm(p => ({ ...p, slug: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-sm text-text-secondary mb-2">Status</label>
-              <select className="w-full glass-input rounded-xl py-2.5 px-4" value={form.status} onChange={e => setForm(p => ({ ...p, status: e.target.value }))}>
-                <option value="DRAFT">Draft</option>
-                <option value="PUBLISHED">Published</option>
+              <label className="block text-sm font-semibold text-text-secondary mb-2">Status</label>
+              <select className="w-full glass-input rounded-xl py-3 px-4 text-white font-medium text-sm" value={form.status} onChange={e => setForm(p => ({ ...p, status: e.target.value }))}>
+                <option value="DRAFT" className="bg-slate-900 text-white">Draft</option>
+                <option value="PUBLISHED" className="bg-slate-900 text-white">Published</option>
               </select>
             </div>
             <div className="md:col-span-2 space-y-2">
               <div className="flex justify-between items-center">
-                <label className="block text-sm text-text-secondary">Featured Image URL (Optional)</label>
+                <label className="block text-sm font-semibold text-text-secondary">Featured Image URL (Optional)</label>
                 <button
                   type="button"
                   onClick={() => setShowMediaPicker(!showMediaPicker)}
-                  className="text-xs text-primary-400 hover:text-primary-300 font-semibold flex items-center gap-1.5 bg-primary-500/10 px-3 py-1 rounded-lg border border-primary-500/20"
+                  className="text-xs text-primary-400 hover:text-primary-300 font-bold flex items-center gap-1.5 bg-primary-500/15 px-3 py-1.5 rounded-lg border border-primary-500/30"
                 >
                   Choose from Media Library
                 </button>
               </div>
               <input 
                 type="text"
-                className="w-full glass-input rounded-xl py-2.5 px-4" 
+                className="w-full glass-input rounded-xl py-3 px-4 text-white font-mono text-sm" 
                 placeholder="Paste image link or select from Media Library..." 
                 value={form.imageUrl} 
                 onChange={e => setForm(p => ({ ...p, imageUrl: e.target.value }))} 
               />
               {form.imageUrl && (
-                <div className="mt-2 h-28 w-48 rounded-xl overflow-hidden border border-white/10 relative">
+                <div className="mt-2 h-32 w-56 rounded-xl overflow-hidden border border-white/20 relative shadow-md">
                   <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
                 </div>
               )}
