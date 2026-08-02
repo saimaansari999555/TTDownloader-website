@@ -7,14 +7,56 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-export const fetchVideo = (url: string) =>
-  api.post('/downloader/fetch', { url }).then(r => r.data.data);
+export const fetchVideo = async (url: string) => {
+  try {
+    const res = await api.post('/downloader/fetch', { url });
+    if (res.data?.data) return res.data.data;
+  } catch (err) {
+    console.warn('Backend API fetch unavailable, falling back to direct provider:', err);
+  }
+  const directRes = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
+  const data = await directRes.json();
+  if (data && data.code === 0 && data.data) {
+    return data.data;
+  }
+  throw new Error(data?.msg || 'Could not fetch TikTok video. Please check the link and try again.');
+};
 
-export const fetchAudio = (url: string) =>
-  api.post('/downloader/fetch-audio', { url }).then(r => r.data.data);
+export const fetchAudio = async (url: string) => {
+  try {
+    const res = await api.post('/downloader/fetch-audio', { url });
+    if (res.data?.data) return res.data.data;
+  } catch (err) {
+    console.warn('Backend API fetch-audio unavailable, falling back to direct provider:', err);
+  }
+  const directRes = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
+  const data = await directRes.json();
+  if (data && data.code === 0 && data.data) {
+    return {
+      title: data.data.title,
+      music: data.data.music,
+      cover: data.data.cover,
+      author: data.data.author,
+    };
+  }
+  throw new Error(data?.msg || 'Could not extract audio. Please check the link and try again.');
+};
 
-export const fetchUserVideos = (username: string, cursor = 0) =>
-  api.get(`/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`).then(r => r.data.data);
+export const fetchUserVideos = async (username: string, cursor = 0) => {
+  try {
+    const res = await api.get(`/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`);
+    if (res.data?.data) return res.data.data;
+  } catch (err) {
+    console.warn('Backend API bulk downloader unavailable, falling back to direct provider:', err);
+  }
+  const cleanUsername = username.replace(/^@/, '');
+  const directRes = await fetch(`https://tikwm.com/api/user/posts?unique_id=${encodeURIComponent(cleanUsername)}&count=12&cursor=${cursor}`);
+  const data = await directRes.json();
+  if (data && data.code === 0 && data.data) {
+    return data.data;
+  }
+  throw new Error(data?.msg || 'Could not fetch profile videos. Please check username and try again.');
+};
 
 export const submitContact = (body: { name: string; email: string; subject: string; message: string }) =>
   api.post('/contact', body).then(r => r.data);
