@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText } from 'lucide-react';
 import { getAdminPosts, deletePost, api } from '@/lib/api';
 
-const emptyForm = { title: '', slug: '', content: '', summary: '', status: 'DRAFT' };
+const emptyForm = { title: '', slug: '', content: '', summary: '', status: 'DRAFT', imageUrl: '' };
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -43,6 +43,8 @@ export default function AdminBlog() {
       content: form.content,
       summary: form.summary,
       status: form.status,
+      imageUrl: form.imageUrl,
+      featuredImage: form.imageUrl ? { url: form.imageUrl } : null,
       publishedAt: form.status === 'PUBLISHED' ? new Date().toISOString() : null,
     };
 
@@ -83,8 +85,16 @@ export default function AdminBlog() {
   };
 
   const handleEdit = (post: any) => {
-    setForm({ title: post.title, slug: post.slug, content: post.content, summary: post.summary || '', status: post.status });
-    setEditId(post.id); setShowEditor(true);
+    setForm({
+      title: post.title,
+      slug: post.slug,
+      content: post.content,
+      summary: post.summary || '',
+      status: post.status,
+      imageUrl: post.imageUrl || post.featuredImage?.url || '',
+    });
+    setEditId(post.id);
+    setShowEditor(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -129,6 +139,21 @@ export default function AdminBlog() {
                 <option value="DRAFT">Draft</option>
                 <option value="PUBLISHED">Published</option>
               </select>
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm text-text-secondary mb-2">Featured Image URL (Optional)</label>
+              <input 
+                type="url"
+                className="w-full glass-input rounded-xl py-2.5 px-4" 
+                placeholder="https://images.unsplash.com/... or image link" 
+                value={form.imageUrl} 
+                onChange={e => setForm(p => ({ ...p, imageUrl: e.target.value }))} 
+              />
+              {form.imageUrl && (
+                <div className="mt-2 h-28 w-48 rounded-xl overflow-hidden border border-white/10 relative">
+                  <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                </div>
+              )}
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm text-text-secondary mb-2">Summary</label>

@@ -5,17 +5,47 @@ import { Calendar, User, ArrowLeft, BookOpen } from 'lucide-react';
 import { getBlogPost } from '@/lib/api';
 import Link from 'next/link';
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+export default function BlogPostPage({ params }: { params: any }) {
+  const [slug, setSlug] = useState<string>('');
   const [post, setPost] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    getBlogPost(params.slug)
-      .then(setPost)
-      .catch(() => setNotFound(true))
+    Promise.resolve(params).then((p: any) => {
+      if (p?.slug) setSlug(p.slug);
+    });
+  }, [params]);
+
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+
+    getBlogPost(slug)
+      .then(res => {
+        if (res && res.title) {
+          setPost(res);
+          setNotFound(false);
+        } else {
+          checkLocal(slug);
+        }
+      })
+      .catch(() => {
+        checkLocal(slug);
+      })
       .finally(() => setLoading(false));
-  }, [params.slug]);
+
+    function checkLocal(targetSlug: string) {
+      const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
+      const found = local.find((p: any) => p.slug === targetSlug || p.slug === decodeURIComponent(targetSlug));
+      if (found) {
+        setPost(found);
+        setNotFound(false);
+      } else {
+        setNotFound(true);
+      }
+    }
+  }, [slug]);
 
   if (loading) return (
     <main className="min-h-screen max-w-4xl mx-auto px-4 py-20">
@@ -32,9 +62,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     <main className="min-h-screen max-w-4xl mx-auto px-4 py-20 text-center">
       <BookOpen className="w-16 h-16 text-text-secondary mx-auto mb-4 opacity-50" />
       <h1 className="text-2xl font-bold text-white mb-2">Post Not Found</h1>
-      <Link href="/blog" className="text-primary-400 hover:underline">← Back to Blog</Link>
+      <p className="text-text-secondary mb-6 text-sm">The post you are looking for does not exist or may have been removed.</p>
+      <Link href="/blog" className="btn-primary px-6 py-2.5 rounded-xl text-sm font-semibold inline-flex items-center gap-2">← Back to Blog</Link>
     </main>
   );
+
+  const imageUrl = post.featuredImage?.url || post.imageUrl;
 
   return (
     <main className="min-h-screen max-w-4xl mx-auto px-4 py-20">
@@ -44,13 +77,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         </Link>
 
         <article className="glass-panel rounded-2xl overflow-hidden">
-          {post.featuredImage && (
-            <img src={post.featuredImage.url} alt={post.title} className="w-full h-80 object-cover" />
+          {imageUrl && (
+            <img src={imageUrl} alt={post.title} className="w-full h-80 object-cover" />
           )}
           <div className="p-8 md:p-12">
             <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary mb-6">
               <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" />{new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-              <span className="flex items-center gap-1.5"><User className="w-4 h-4" />@{post.author?.username}</span>
+              <span className="flex items-center gap-1.5"><User className="w-4 h-4" />@{post.author?.username || 'admin'}</span>
               {post.categories?.map((c: any) => (
                 <span key={c.id} className="px-2.5 py-1 bg-primary-500/10 text-primary-400 border border-primary-500/20 rounded-full text-xs">{c.name}</span>
               ))}
