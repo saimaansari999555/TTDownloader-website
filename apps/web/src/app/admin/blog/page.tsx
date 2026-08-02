@@ -12,6 +12,15 @@ export default function AdminBlog() {
   const [form, setForm] = useState(emptyForm);
   const [submitting, setSubmitting] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
+  const [mediaAssets, setMediaAssets] = useState<any[]>([]);
+
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('uploaded_media_assets') : null;
+    if (saved) {
+      try { setMediaAssets(JSON.parse(saved)); } catch (e) {}
+    }
+  }, [showMediaPicker]);
 
   const load = () => {
     setLoading(true);
@@ -140,18 +149,51 @@ export default function AdminBlog() {
                 <option value="PUBLISHED">Published</option>
               </select>
             </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm text-text-secondary mb-2">Featured Image URL (Optional)</label>
+            <div className="md:col-span-2 space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="block text-sm text-text-secondary">Featured Image URL (Optional)</label>
+                <button
+                  type="button"
+                  onClick={() => setShowMediaPicker(!showMediaPicker)}
+                  className="text-xs text-primary-400 hover:text-primary-300 font-semibold flex items-center gap-1.5 bg-primary-500/10 px-3 py-1 rounded-lg border border-primary-500/20"
+                >
+                  Choose from Media Library
+                </button>
+              </div>
               <input 
-                type="url"
+                type="text"
                 className="w-full glass-input rounded-xl py-2.5 px-4" 
-                placeholder="https://images.unsplash.com/... or image link" 
+                placeholder="Paste image link or select from Media Library..." 
                 value={form.imageUrl} 
                 onChange={e => setForm(p => ({ ...p, imageUrl: e.target.value }))} 
               />
               {form.imageUrl && (
                 <div className="mt-2 h-28 w-48 rounded-xl overflow-hidden border border-white/10 relative">
                   <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+
+              {/* Media Picker Modal */}
+              {showMediaPicker && (
+                <div className="p-4 glass-panel rounded-2xl border border-primary-500/30 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs font-bold text-white uppercase tracking-wider">Select Image from Media Library</p>
+                    <button type="button" onClick={() => setShowMediaPicker(false)} className="text-xs text-text-secondary hover:text-white">Close</button>
+                  </div>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 max-h-48 overflow-y-auto p-1">
+                    {mediaAssets.map((asset: any) => (
+                      <div
+                        key={asset.id}
+                        onClick={() => {
+                          setForm(p => ({ ...p, imageUrl: asset.url }));
+                          setShowMediaPicker(false);
+                        }}
+                        className="aspect-square rounded-xl overflow-hidden border border-white/10 hover:border-primary-500 cursor-pointer relative group transition-all"
+                      >
+                        <img src={asset.url} alt={asset.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
