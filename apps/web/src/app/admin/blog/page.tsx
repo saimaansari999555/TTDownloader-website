@@ -122,6 +122,11 @@ export default function AdminBlog() {
     e.preventDefault();
     setSubmitting(true);
 
+    // Guaranteed failsafe: Unlock submitting state after 300ms so button never gets stuck
+    const unlockTimer = setTimeout(() => {
+      setSubmitting(false);
+    }, 300);
+
     try {
       const generatedSlug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
@@ -165,7 +170,7 @@ export default function AdminBlog() {
         console.warn('LocalStorage quota warning handled:', err);
       }
 
-      // 2. Instantly update state & close editor (0ms lag!)
+      // 2. Instantly update state & close editor modal (0ms lag!)
       setPosts(prev => {
         const filtered = prev.filter(p => p.slug !== generatedSlug && p.id !== targetId);
         return [localItem, ...filtered];
@@ -175,6 +180,7 @@ export default function AdminBlog() {
       setShowEditor(false);
       setEditId(null);
       setSubmitting(false);
+      clearTimeout(unlockTimer);
 
       // 3. Sync to backend API asynchronously (non-blocking)
       setTimeout(async () => {
@@ -192,6 +198,7 @@ export default function AdminBlog() {
     } catch (err: any) {
       console.warn('Submit handler error:', err);
       setSubmitting(false);
+      clearTimeout(unlockTimer);
     }
   };
 
