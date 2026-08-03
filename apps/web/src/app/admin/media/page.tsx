@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { UploadCloud, Image as ImageIcon, Trash2, Search, Filter, Copy, Check, Link as LinkIcon, Plus } from 'lucide-react';
+import { UploadCloud, Image as ImageIcon, Trash2, Search, Filter, Copy, Check, Link as LinkIcon, Plus, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getMediaAssets, saveUrlMedia } from '@/lib/api';
 
 const defaultSamples = [
   { id: 'sample-1', name: 'tiktok-banner.webp', url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80', type: 'image/jpeg', size: '1.2 MB', date: new Date().toISOString().split('T')[0] },
@@ -18,28 +19,43 @@ export default function AdminMedia() {
   const [showAddUrlModal, setShowAddUrlModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const saved = typeof window !== 'undefined' ? localStorage.getItem('uploaded_media_assets') : null;
-    if (saved) {
-      try {
-        setMediaList(JSON.parse(saved));
-      } catch (e) {
-        setMediaList(defaultSamples);
-      }
-    } else {
-      setMediaList(defaultSamples);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('uploaded_media_assets', JSON.stringify(defaultSamples));
-      }
-    }
-  }, []);
-
   const saveMediaList = (newList: any[]) => {
     setMediaList(newList);
     if (typeof window !== 'undefined') {
       localStorage.setItem('uploaded_media_assets', JSON.stringify(newList));
     }
   };
+
+  const loadMedia = () => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('uploaded_media_assets') : null;
+    const local = saved ? JSON.parse(saved) : defaultSamples;
+
+    getMediaAssets()
+      .then((res: any) => {
+        if (Array.isArray(res) && res.length > 0) {
+          const formattedApi = res.map((m: any) => ({
+            id: m.id,
+            name: m.originalName || m.filename || 'image.png',
+            url: m.url,
+            type: m.mimeType || 'image/png',
+            size: m.size ? formatFileSize(m.size) : 'Uploaded Asset',
+            date: new Date(m.createdAt || Date.now()).toISOString().split('T')[0],
+          }));
+          const combined = [...formattedApi, ...local];
+          const unique = combined.filter((v, i, a) => a.findIndex(t => t.url === v.url) === i);
+          saveMediaList(unique);
+        } else {
+          saveMediaList(local);
+        }
+      })
+      .catch(() => {
+        saveMediaList(local);
+      });
+  };
+
+  useEffect(() => {
+    loadMedia();
+  }, []);
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
@@ -64,6 +80,9 @@ export default function AdminMedia() {
           size: formatFileSize(file.size),
           date: new Date().toISOString().split('T')[0],
         };
+
+        saveUrlMedia(file.name, resultUrl).catch(() => {});
+
         setMediaList((prev) => {
           const updated = [newAsset, ...prev];
           if (typeof window !== 'undefined') {
@@ -80,19 +99,23 @@ export default function AdminMedia() {
     e.preventDefault();
     if (!customUrlInput.trim()) return;
 
+    const url = customUrlInput.trim();
+    const name = url.split('/').pop()?.split('?')[0] || 'external-image.jpg';
     const newAsset = {
       id: 'media-url-' + Date.now(),
-      name: customUrlInput.split('/').pop()?.split('?')[0] || 'external-image.jpg',
-      url: customUrlInput.trim(),
+      name,
+      url,
       type: 'image/jpeg',
-      size: 'External',
+      size: 'External Link',
       date: new Date().toISOString().split('T')[0],
     };
 
+    saveUrlMedia(name, url).catch(() => {});
     saveMediaList([newAsset, ...mediaList]);
     setCustomUrlInput('');
     setShowAddUrlModal(false);
   };
+
 
   const copyToClipboard = (url: string, id: string) => {
     navigator.clipboard.writeText(url);

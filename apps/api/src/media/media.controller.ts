@@ -1,7 +1,6 @@
-import { Controller, Post, Get, Delete, Param, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, Body, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { MediaService } from './media.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AuthGuard } from '@nestjs/passport';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
@@ -9,7 +8,6 @@ import { extname } from 'path';
 export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
 
-  @UseGuards(AuthGuard('jwt'))
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -26,7 +24,13 @@ export class MediaController {
     }),
   )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    if (!file) throw new Error('No file provided');
     return this.mediaService.saveMediaRecord(file);
+  }
+
+  @Post('url')
+  async saveUrlMedia(@Body() body: { name?: string; url: string }) {
+    return this.mediaService.saveUrlMediaRecord(body.name || 'image.png', body.url);
   }
 
   @Get()
@@ -34,9 +38,9 @@ export class MediaController {
     return this.mediaService.getAllMedia();
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   async deleteMedia(@Param('id') id: string) {
     return this.mediaService.deleteMedia(id);
   }
 }
+

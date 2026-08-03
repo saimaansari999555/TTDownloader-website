@@ -168,5 +168,13 @@ export const updatePlugin = (id: string, body: any) =>
 export const deletePlugin = (id: string) =>
   api.delete(`/plugins/${id}`).then(r => r.data);
 
+// Media Manager
+export const getMediaAssets = () =>
+  api.get('/media').then(r => r.data);
+
+export const saveUrlMedia = (name: string, url: string) =>
+  api.post('/media/url', { name, url }).then(r => r.data);
+
+
 
 

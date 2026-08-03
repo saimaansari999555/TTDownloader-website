@@ -21,6 +21,18 @@ export class MediaService {
     });
   }
 
+  async saveUrlMediaRecord(name: string, url: string): Promise<Media> {
+    return this.prisma.media.create({
+      data: {
+        filename: `img-${Date.now()}`,
+        originalName: name,
+        mimeType: 'image/png',
+        size: 0,
+        url,
+      },
+    });
+  }
+
   async getAllMedia(): Promise<Media[]> {
     return this.prisma.media.findMany({
       orderBy: { createdAt: 'desc' },
@@ -30,6 +42,9 @@ export class MediaService {
   async deleteMedia(id: string): Promise<Media> {
     const media = await this.prisma.media.findUnique({ where: { id } });
     if (media) {
+      if (media.filename && media.filename.startsWith('img-')) {
+        return this.prisma.media.delete({ where: { id } });
+      }
       const filePath = path.join(__dirname, '..', '..', 'uploads', media.filename);
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
@@ -39,3 +54,4 @@ export class MediaService {
     throw new Error('Media not found');
   }
 }
+
