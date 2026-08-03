@@ -1,7 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Request, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Request, Query } from '@nestjs/common';
 import { BlogService } from './blog.service';
-import { AuthGuard } from '@nestjs/passport';
-import { Prisma } from '@prisma/client';
 
 @Controller('blog')
 export class BlogController {
@@ -22,34 +20,13 @@ export class BlogController {
 
   @Post('posts')
   async createPost(@Request() req: any, @Body() data: any) {
-    let authorId = req.user?.id;
-    if (!authorId) {
-      const adminUser = await this.blogService.getAdminUser();
-      authorId = adminUser?.id;
-    }
-
-    const { id, author, ...cleanData } = data;
-
-    const postData: any = {
-      title: cleanData.title,
-      slug: cleanData.slug || cleanData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
-      content: cleanData.content || '',
-      summary: cleanData.summary || '',
-      status: cleanData.status || 'PUBLISHED',
-      publishedAt: cleanData.status === 'PUBLISHED' ? new Date() : null,
-    };
-
-    if (authorId) {
-      postData.author = { connect: { id: authorId } };
-    }
-
-    return this.blogService.createPost(postData);
+    const authorId = req.user?.id;
+    return this.blogService.createPost({ ...data, authorId });
   }
 
   @Put('posts/:id')
   async updatePost(@Param('id') id: string, @Body() data: any) {
-    const { id: _, author, ...cleanData } = data;
-    return this.blogService.updatePost(id, cleanData);
+    return this.blogService.updatePost(id, data);
   }
 
   @Delete('posts/:id')
@@ -67,3 +44,4 @@ export class BlogController {
     return this.blogService.getTags();
   }
 }
+

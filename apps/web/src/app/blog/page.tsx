@@ -51,33 +51,35 @@ export default function BlogPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((post: any, i: number) => (
-            <motion.div key={post.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-              <Link href={`/blog/${post.slug}`}>
-                <article className="glass-panel rounded-2xl overflow-hidden hover:border-primary-500/30 transition-all hover:shadow-lg hover:shadow-primary-500/10 h-full flex flex-col">
-                  {post.featuredImage && (
-                    <img src={post.featuredImage.url} alt={post.title} className="w-full h-48 object-cover" />
-                  )}
-                  {!post.featuredImage && (
-                    <div className="h-48 bg-gradient-to-br from-primary-500/20 to-accent-500/10 flex items-center justify-center">
-                      <BookOpen className="w-12 h-12 text-primary-400/40" />
+          {posts.map((post: any, i: number) => {
+            const displayImg = post.imageUrl || post.featuredImage?.url;
+            return (
+              <motion.div key={post.id || i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+                <Link href={`/blog/${post.slug}`}>
+                  <article className="glass-panel rounded-2xl overflow-hidden hover:border-primary-500/30 transition-all hover:shadow-lg hover:shadow-primary-500/10 h-full flex flex-col">
+                    {displayImg ? (
+                      <img src={displayImg} alt={post.title} className="w-full h-48 object-cover" />
+                    ) : (
+                      <div className="h-48 bg-gradient-to-br from-primary-500/20 to-accent-500/10 flex items-center justify-center">
+                        <BookOpen className="w-12 h-12 text-primary-400/40" />
+                      </div>
+                    )}
+                    <div className="p-5 flex flex-col flex-1">
+                      <div className="flex items-center gap-3 text-xs text-text-secondary mb-3">
+                        <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(post.publishedAt || post.createdAt || Date.now()).toLocaleDateString()}</span>
+                        <span className="flex items-center gap-1"><User className="w-3 h-3" />@{post.author?.username || 'admin'}</span>
+                      </div>
+                      <h2 className="text-lg font-bold text-white mb-2 line-clamp-2">{post.title}</h2>
+                      {post.summary && <p className="text-text-secondary text-sm line-clamp-3 flex-1">{post.summary}</p>}
+                      <div className="flex items-center gap-2 mt-4 text-primary-400 text-sm font-medium">
+                        Read More <ArrowRight className="w-4 h-4" />
+                      </div>
                     </div>
-                  )}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center gap-3 text-xs text-text-secondary mb-3">
-                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(post.publishedAt || post.createdAt).toLocaleDateString()}</span>
-                      <span className="flex items-center gap-1"><User className="w-3 h-3" />@{post.author?.username}</span>
-                    </div>
-                    <h2 className="text-lg font-bold text-white mb-2 line-clamp-2">{post.title}</h2>
-                    {post.summary && <p className="text-text-secondary text-sm line-clamp-3 flex-1">{post.summary}</p>}
-                    <div className="flex items-center gap-2 mt-4 text-primary-400 text-sm font-medium">
-                      Read More <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            </motion.div>
-          ))}
+                  </article>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </main>

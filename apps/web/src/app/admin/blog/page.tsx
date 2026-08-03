@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText, Upload, Image as ImageIcon, X } from 'lucide-react';
 import { getAdminPosts, deletePost, api } from '@/lib/api';
 
 const emptyForm = { title: '', slug: '', content: '', summary: '', status: 'DRAFT', imageUrl: '' };
@@ -27,9 +27,13 @@ export default function AdminBlog() {
     getAdminPosts()
       .then(res => {
         const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
-        const combined = [...(Array.isArray(res) ? res : []), ...local];
+        const apiPosts = Array.isArray(res) ? res : [];
+        const combined = [...apiPosts, ...local];
         const unique = combined.filter((v, i, a) => a.findIndex(t => t.slug === v.slug) === i);
         setPosts(unique);
+        if (typeof window !== 'undefined' && unique.length > 0) {
+          localStorage.setItem('local_blog_posts', JSON.stringify(unique));
+        }
       })
       .catch(() => {
         const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
@@ -39,6 +43,19 @@ export default function AdminBlog() {
   };
 
   useEffect(() => { load(); }, []);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setForm(p => ({ ...p, imageUrl: event.target!.result as string }));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +83,7 @@ export default function AdminBlog() {
       author: { username: 'admin' }
     };
 
-    // 1. Immediately update LocalStorage & State without blocking
+    // 1. Immediately update LocalStorage & State
     if (typeof window !== 'undefined') {
       const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
       let updatedLocal;
@@ -78,14 +95,13 @@ export default function AdminBlog() {
       localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
     }
 
-    // 2. Reset form & close editor instantly
+    // 2. Reset form & close editor
     setForm(emptyForm);
     setShowEditor(false);
     setEditId(null);
     setSubmitting(false);
-    load();
 
-    // 3. Background API sync (non-blocking)
+    // 3. API sync
     try {
       if (editId && !editId.startsWith('post-')) {
         await api.put(`/blog/posts/${editId}`, postPayload);
@@ -94,6 +110,8 @@ export default function AdminBlog() {
       }
     } catch (err: any) {
       console.warn('Backend sync saved locally:', err);
+    } finally {
+      load();
     }
   };
 
@@ -159,27 +177,47 @@ export default function AdminBlog() {
                 <option value="PUBLISHED" className="bg-slate-900 text-white">Published</option>
               </select>
             </div>
-            <div className="md:col-span-2 space-y-2">
-              <div className="flex justify-between items-center">
-                <label className="block text-sm font-semibold text-text-secondary">Featured Image URL (Optional)</label>
-                <button
-                  type="button"
-                  onClick={() => setShowMediaPicker(!showMediaPicker)}
-                  className="text-xs text-primary-400 hover:text-primary-300 font-bold flex items-center gap-1.5 bg-primary-500/15 px-3 py-1.5 rounded-lg border border-primary-500/30"
-                >
-                  Choose from Media Library
-                </button>
+
+            {/* Featured Image Selection & Direct Upload */}
+            <div className="md:col-span-2 space-y-3">
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label className="block text-sm font-semibold text-text-secondary">Featured Image (Required for thumbnail)</label>
+                <div className="flex items-center gap-2">
+                  <label className="cursor-pointer text-xs text-white font-bold flex items-center gap-1.5 bg-primary-600 hover:bg-primary-500 px-3 py-1.5 rounded-lg transition-colors">
+                    <Upload className="w-3.5 h-3.5" /> Upload from Computer
+                    <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowMediaPicker(!showMediaPicker)}
+                    className="text-xs text-primary-400 hover:text-primary-300 font-bold flex items-center gap-1.5 bg-primary-500/15 px-3 py-1.5 rounded-lg border border-primary-500/30"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" /> Media Library
+                  </button>
+                </div>
               </div>
+
               <input 
                 type="text"
                 className="w-full glass-input rounded-xl py-3 px-4 text-white font-mono text-sm" 
-                placeholder="Paste image link or select from Media Library..." 
+                placeholder="Or paste image URL (e.g. https://...)" 
                 value={form.imageUrl} 
                 onChange={e => setForm(p => ({ ...p, imageUrl: e.target.value }))} 
               />
+
               {form.imageUrl && (
-                <div className="mt-2 h-32 w-56 rounded-xl overflow-hidden border border-white/20 relative shadow-md">
-                  <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                <div className="mt-3 relative inline-block group">
+                  <div className="h-40 w-72 rounded-xl overflow-hidden border border-primary-500/40 relative shadow-lg">
+                    <img src={form.imageUrl} alt="Post Preview" className="w-full h-full object-cover" />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setForm(p => ({ ...p, imageUrl: '' }))}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600 transition-colors"
+                    title="Remove image"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
               )}
 
@@ -190,23 +228,28 @@ export default function AdminBlog() {
                     <p className="text-xs font-bold text-white uppercase tracking-wider">Select Image from Media Library</p>
                     <button type="button" onClick={() => setShowMediaPicker(false)} className="text-xs text-text-secondary hover:text-white">Close</button>
                   </div>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 max-h-48 overflow-y-auto p-1">
-                    {mediaAssets.map((asset: any) => (
-                      <div
-                        key={asset.id}
-                        onClick={() => {
-                          setForm(p => ({ ...p, imageUrl: asset.url }));
-                          setShowMediaPicker(false);
-                        }}
-                        className="aspect-square rounded-xl overflow-hidden border border-white/10 hover:border-primary-500 cursor-pointer relative group transition-all"
-                      >
-                        <img src={asset.url} alt={asset.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                      </div>
-                    ))}
-                  </div>
+                  {mediaAssets.length === 0 ? (
+                    <p className="text-xs text-text-secondary py-2 text-center">No media uploads found in library. Use "Upload from Computer" above.</p>
+                  ) : (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 max-h-48 overflow-y-auto p-1">
+                      {mediaAssets.map((asset: any) => (
+                        <div
+                          key={asset.id}
+                          onClick={() => {
+                            setForm(p => ({ ...p, imageUrl: asset.url }));
+                            setShowMediaPicker(false);
+                          }}
+                          className="aspect-square rounded-xl overflow-hidden border border-white/10 hover:border-primary-500 cursor-pointer relative group transition-all"
+                        >
+                          <img src={asset.url} alt={asset.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-sm text-text-secondary mb-2">Summary</label>
               <input className="w-full glass-input rounded-xl py-2.5 px-4" placeholder="Short description for listing..." value={form.summary} onChange={e => setForm(p => ({ ...p, summary: e.target.value }))} />
@@ -231,26 +274,39 @@ export default function AdminBlog() {
         ) : (
           <table className="w-full text-left">
             <thead><tr className="border-b border-white/10 text-text-secondary text-sm">
+              <th className="p-4 font-medium">Image</th>
               <th className="p-4 font-medium">Title</th>
               <th className="p-4 font-medium">Status</th>
               <th className="p-4 font-medium">Date</th>
               <th className="p-4 font-medium text-right">Actions</th>
             </tr></thead>
             <tbody>
-              {posts.map(post => (
-                <tr key={post.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="p-4"><p className="text-white font-medium">{post.title}</p><p className="text-text-secondary text-xs mt-0.5">/blog/{post.slug}</p></td>
-                  <td className="p-4"><span className={`px-2.5 py-1 rounded-full text-xs font-medium border ${post.status === 'PUBLISHED' ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'}`}>{post.status}</span></td>
-                  <td className="p-4 text-text-secondary text-sm">{new Date(post.createdAt).toLocaleDateString()}</td>
-                  <td className="p-4 text-right">
-                    <div className="flex justify-end gap-2">
-                      <a href={`/blog/${post.slug}`} target="_blank" className="p-2 text-text-secondary hover:text-primary-400 hover:bg-primary-500/10 rounded-lg transition-colors"><Eye className="w-4 h-4" /></a>
-                      <button onClick={() => handleEdit(post)} className="p-2 text-text-secondary hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors"><Edit2 className="w-4 h-4" /></button>
-                      <button onClick={() => handleDelete(post.id)} className="p-2 text-text-secondary hover:text-accent-400 hover:bg-accent-500/10 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {posts.map(post => {
+                const img = post.imageUrl || post.featuredImage?.url;
+                return (
+                  <tr key={post.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td className="p-4">
+                      {img ? (
+                        <div className="w-12 h-12 rounded-lg overflow-hidden border border-white/10">
+                          <img src={img} alt={post.title} className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-text-secondary text-xs font-bold">No Img</div>
+                      )}
+                    </td>
+                    <td className="p-4"><p className="text-white font-medium">{post.title}</p><p className="text-text-secondary text-xs mt-0.5">/blog/{post.slug}</p></td>
+                    <td className="p-4"><span className={`px-2.5 py-1 rounded-full text-xs font-medium border ${post.status === 'PUBLISHED' ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'}`}>{post.status}</span></td>
+                    <td className="p-4 text-text-secondary text-sm">{new Date(post.createdAt || post.publishedAt).toLocaleDateString()}</td>
+                    <td className="p-4 text-right">
+                      <div className="flex justify-end gap-2">
+                        <a href={`/blog/${post.slug}`} target="_blank" className="p-2 text-text-secondary hover:text-primary-400 hover:bg-primary-500/10 rounded-lg transition-colors"><Eye className="w-4 h-4" /></a>
+                        <button onClick={() => handleEdit(post)} className="p-2 text-text-secondary hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors"><Edit2 className="w-4 h-4" /></button>
+                        <button onClick={() => handleDelete(post.id)} className="p-2 text-text-secondary hover:text-accent-400 hover:bg-accent-500/10 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
@@ -258,3 +314,4 @@ export default function AdminBlog() {
     </div>
   );
 }
+
