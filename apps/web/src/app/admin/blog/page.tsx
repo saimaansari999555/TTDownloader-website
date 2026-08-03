@@ -93,60 +93,65 @@ export default function AdminBlog() {
     e.preventDefault();
     setSubmitting(true);
 
-    const generatedSlug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-
-    if (form.imageUrl) {
-      saveToMediaLibrary(`blog-${generatedSlug}.png`, form.imageUrl);
-    }
-
-    const postPayload = {
-      title: form.title,
-      slug: generatedSlug,
-      content: form.content,
-      summary: form.summary,
-      status: form.status,
-      imageUrl: form.imageUrl,
-      featuredImage: form.imageUrl ? { url: form.imageUrl } : null,
-      publishedAt: form.status === 'PUBLISHED' ? new Date().toISOString() : null,
-    };
-
-    const targetId = editId || 'post-' + Date.now();
-
-    const localItem = {
-      id: targetId,
-      ...postPayload,
-      createdAt: new Date().toISOString(),
-      author: { username: 'admin' }
-    };
-
-    // 1. Immediately update LocalStorage & State
-    if (typeof window !== 'undefined') {
-      const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
-      let updatedLocal;
-      if (editId) {
-        updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...localItem } : p);
-      } else {
-        updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug)];
-      }
-      localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
-    }
-
-    // 2. Reset form & close editor
-    setForm(emptyForm);
-    setShowEditor(false);
-    setEditId(null);
-    setSubmitting(false);
-
-    // 3. API sync
     try {
-      if (editId && !editId.startsWith('post-')) {
-        await api.put(`/blog/posts/${editId}`, postPayload);
-      } else {
-        await api.post('/blog/posts', postPayload);
+      const generatedSlug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+      if (form.imageUrl) {
+        saveToMediaLibrary(`blog-${generatedSlug}.png`, form.imageUrl);
       }
+
+      const postPayload = {
+        title: form.title,
+        slug: generatedSlug,
+        content: form.content,
+        summary: form.summary,
+        status: form.status,
+        imageUrl: form.imageUrl,
+        featuredImage: form.imageUrl ? { url: form.imageUrl } : null,
+        publishedAt: form.status === 'PUBLISHED' ? new Date().toISOString() : null,
+      };
+
+      const targetId = editId || 'post-' + Date.now();
+
+      const localItem = {
+        id: targetId,
+        ...postPayload,
+        createdAt: new Date().toISOString(),
+        author: { username: 'admin' }
+      };
+
+      // 1. Immediately update LocalStorage & State
+      if (typeof window !== 'undefined') {
+        const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
+        let updatedLocal;
+        if (editId) {
+          updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...localItem } : p);
+        } else {
+          updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug)];
+        }
+        localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
+      }
+
+      // 2. Reset form & close editor instantly
+      setForm(emptyForm);
+      setShowEditor(false);
+      setEditId(null);
+
+      // 3. API sync non-blocking with 2s race timeout so form never hangs
+      const apiCall = editId && !editId.startsWith('post-')
+        ? api.put(`/blog/posts/${editId}`, postPayload)
+        : api.post('/blog/posts', postPayload);
+
+      await Promise.race([
+        apiCall,
+        new Promise(res => setTimeout(res, 2000))
+      ]).catch(err => {
+        console.warn('Backend sync saved locally:', err);
+      });
     } catch (err: any) {
-      console.warn('Backend sync saved locally:', err);
+      console.warn('Form submit handler warning:', err);
     } finally {
+      setSubmitting(false);
       load();
     }
   };
