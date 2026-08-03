@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText, Upload, Image as ImageIcon, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText, Upload, Image as ImageIcon, X, Copy, Check } from 'lucide-react';
 import { getAdminPosts, deletePost, api } from '@/lib/api';
 
 const emptyForm = { title: '', slug: '', content: '', summary: '', status: 'DRAFT', imageUrl: '' };
@@ -14,13 +14,36 @@ export default function AdminBlog() {
   const [editId, setEditId] = useState<string | null>(null);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [mediaAssets, setMediaAssets] = useState<any[]>([]);
+  const [copiedUrl, setCopiedUrl] = useState(false);
 
   useEffect(() => {
     const saved = typeof window !== 'undefined' ? localStorage.getItem('uploaded_media_assets') : null;
     if (saved) {
       try { setMediaAssets(JSON.parse(saved)); } catch (e) {}
     }
-  }, [showMediaPicker]);
+  }, [showMediaPicker, showEditor]);
+
+  const saveToMediaLibrary = (fileOrUrlName: string, url: string) => {
+    if (typeof window === 'undefined' || !url) return;
+    try {
+      const saved = localStorage.getItem('uploaded_media_assets');
+      const list = saved ? JSON.parse(saved) : [];
+      const exists = list.some((item: any) => item.url === url);
+      if (!exists) {
+        const newAsset = {
+          id: 'media-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+          name: fileOrUrlName || 'blog-image.png',
+          url: url,
+          type: 'image/png',
+          size: 'Uploaded',
+          date: new Date().toISOString().split('T')[0],
+        };
+        const updated = [newAsset, ...list];
+        localStorage.setItem('uploaded_media_assets', JSON.stringify(updated));
+        setMediaAssets(updated);
+      }
+    } catch (e) {}
+  };
 
   const load = () => {
     setLoading(true);
@@ -50,11 +73,20 @@ export default function AdminBlog() {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          setForm(p => ({ ...p, imageUrl: event.target!.result as string }));
+          const resultUrl = event.target.result as string;
+          setForm(p => ({ ...p, imageUrl: resultUrl }));
+          saveToMediaLibrary(file.name, resultUrl);
         }
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const copyImageUrl = (url: string) => {
+    if (!url) return;
+    navigator.clipboard.writeText(url);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,6 +94,10 @@ export default function AdminBlog() {
     setSubmitting(true);
 
     const generatedSlug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    if (form.imageUrl) {
+      saveToMediaLibrary(`blog-${generatedSlug}.png`, form.imageUrl);
+    }
 
     const postPayload = {
       title: form.title,
@@ -181,7 +217,7 @@ export default function AdminBlog() {
             {/* Featured Image Selection & Direct Upload */}
             <div className="md:col-span-2 space-y-3">
               <div className="flex flex-wrap justify-between items-center gap-2">
-                <label className="block text-sm font-semibold text-text-secondary">Featured Image (Required for thumbnail)</label>
+                <label className="block text-sm font-semibold text-text-secondary">Featured Image (Saved to Media Library)</label>
                 <div className="flex items-center gap-2">
                   <label className="cursor-pointer text-xs text-white font-bold flex items-center gap-1.5 bg-primary-600 hover:bg-primary-500 px-3 py-1.5 rounded-lg transition-colors">
                     <Upload className="w-3.5 h-3.5" /> Upload from Computer
@@ -202,22 +238,40 @@ export default function AdminBlog() {
                 className="w-full glass-input rounded-xl py-3 px-4 text-white font-mono text-sm" 
                 placeholder="Or paste image URL (e.g. https://...)" 
                 value={form.imageUrl} 
-                onChange={e => setForm(p => ({ ...p, imageUrl: e.target.value }))} 
+                onChange={e => {
+                  const val = e.target.value;
+                  setForm(p => ({ ...p, imageUrl: val }));
+                  if (val) saveToMediaLibrary('pasted-image.png', val);
+                }} 
               />
 
               {form.imageUrl && (
-                <div className="mt-3 relative inline-block group">
-                  <div className="h-40 w-72 rounded-xl overflow-hidden border border-primary-500/40 relative shadow-lg">
+                <div className="mt-3 flex items-start gap-4 p-3 rounded-xl glass-panel border border-primary-500/30">
+                  <div className="h-28 w-44 rounded-lg overflow-hidden border border-white/20 shrink-0 relative">
                     <img src={form.imageUrl} alt="Post Preview" className="w-full h-full object-cover" />
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setForm(p => ({ ...p, imageUrl: '' }))}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600 transition-colors"
-                    title="Remove image"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-white">Image Preview Ready</p>
+                    <p className="text-xs font-mono text-text-secondary truncate">{form.imageUrl}</p>
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => copyImageUrl(form.imageUrl)}
+                        className={`text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all ${
+                          copiedUrl ? 'bg-green-500 text-white' : 'bg-primary-500/20 text-primary-400 border border-primary-500/30 hover:bg-primary-500/30'
+                        }`}
+                      >
+                        {copiedUrl ? <><Check className="w-3.5 h-3.5" /> URL Copied!</> : <><Copy className="w-3.5 h-3.5" /> Copy Image URL</>}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setForm(p => ({ ...p, imageUrl: '' }))}
+                        className="text-xs px-3 py-1.5 rounded-lg font-medium text-red-400 border border-red-500/30 hover:bg-red-500/10 flex items-center gap-1"
+                      >
+                        <X className="w-3.5 h-3.5" /> Remove
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
