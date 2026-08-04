@@ -17,6 +17,23 @@ export default function AdminBlog() {
   const [copiedUrl, setCopiedUrl] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const rawBlog = localStorage.getItem('local_blog_posts');
+        if (rawBlog && (rawBlog.length > 200000 || rawBlog.includes('data:image/'))) {
+          localStorage.removeItem('local_blog_posts');
+        }
+        const rawMedia = localStorage.getItem('uploaded_media_assets');
+        if (rawMedia && (rawMedia.length > 200000 || rawMedia.includes('data:image/'))) {
+          localStorage.removeItem('uploaded_media_assets');
+        }
+      } catch (e) {
+        try { localStorage.clear(); } catch (err) {}
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const saved = typeof window !== 'undefined' ? localStorage.getItem('uploaded_media_assets') : null;
     if (saved) {
       try { setMediaAssets(JSON.parse(saved)); } catch (e) {}
@@ -239,7 +256,19 @@ export default function AdminBlog() {
           <h1 className="text-3xl font-bold text-white mb-2">Blog Management</h1>
           <p className="text-text-secondary">{posts.length} posts total</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
+          <button
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                localStorage.clear();
+                window.location.reload();
+              }
+            }}
+            className="px-3.5 py-2.5 rounded-xl border border-red-500/30 text-red-400 hover:bg-red-500/10 text-xs font-bold transition-all"
+            title="Clear old browser storage cache"
+          >
+            Reset Cache
+          </button>
           <button onClick={load} className="p-2.5 rounded-xl border border-white/10 text-text-secondary hover:text-white hover:bg-white/5 transition-colors"><RefreshCw className="w-4 h-4" /></button>
           <button onClick={() => { setForm(emptyForm); setEditId(null); setShowEditor(true); }} className="btn-primary rounded-xl px-5 py-3 flex items-center gap-2">
             <Plus className="w-5 h-5" /> New Post
