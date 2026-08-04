@@ -16,6 +16,15 @@ let globalPosts: any[] = [
   }
 ];
 
+export function getPostsStore() {
+  return globalPosts;
+}
+
+export function savePostsStore(posts: any[]) {
+  globalPosts = posts;
+  return globalPosts;
+}
+
 export async function GET() {
   return NextResponse.json(globalPosts);
 }
@@ -46,3 +55,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
