@@ -364,9 +364,21 @@ export default function AdminBlog() {
               <textarea required rows={10} className="w-full glass-input rounded-xl py-3 px-4 resize-none font-mono text-sm" placeholder="Write your blog content here..." value={form.content} onChange={e => setForm(p => ({ ...p, content: e.target.value }))} />
             </div>
           </div>
-          <div className="flex gap-3">
-            <button type="submit" disabled={submitting} className="btn-primary rounded-xl px-6 py-2.5 disabled:opacity-70">{submitting ? 'Saving...' : editId ? 'Update Post' : 'Publish Post'}</button>
-            <button type="button" onClick={() => { setShowEditor(false); setEditId(null); }} className="px-6 py-2.5 rounded-xl border border-white/10 text-text-secondary hover:text-white hover:bg-white/5">Cancel</button>
+          <div className="flex items-center gap-3 pt-2">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="btn-primary rounded-xl px-6 py-3 cursor-pointer shadow-lg font-bold text-white bg-primary-600 hover:bg-primary-500 transition-all flex items-center gap-2"
+            >
+              {editId ? 'Update Post' : 'Publish Post Now'}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setShowEditor(false); setEditId(null); setSubmitting(false); }}
+              className="px-6 py-3 rounded-xl border border-white/10 text-text-secondary hover:text-white hover:bg-white/5 transition-colors font-medium text-sm"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       )}
