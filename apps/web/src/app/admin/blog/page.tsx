@@ -17,23 +17,6 @@ export default function AdminBlog() {
   const [copiedUrl, setCopiedUrl] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const rawBlog = localStorage.getItem('local_blog_posts');
-        if (rawBlog && (rawBlog.length > 200000 || rawBlog.includes('data:image/'))) {
-          localStorage.removeItem('local_blog_posts');
-        }
-        const rawMedia = localStorage.getItem('uploaded_media_assets');
-        if (rawMedia && (rawMedia.length > 200000 || rawMedia.includes('data:image/'))) {
-          localStorage.removeItem('uploaded_media_assets');
-        }
-      } catch (e) {
-        try { localStorage.clear(); } catch (err) {}
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     const saved = typeof window !== 'undefined' ? localStorage.getItem('uploaded_media_assets') : null;
     if (saved) {
       try { setMediaAssets(JSON.parse(saved)); } catch (e) {}
@@ -42,18 +25,10 @@ export default function AdminBlog() {
 
   const safeSaveLocalStorage = (key: string, data: any[]) => {
     if (typeof window === 'undefined' || !Array.isArray(data)) return;
-    const cleanData = data.map((item: any) => {
-      const isBase64 = typeof item.imageUrl === 'string' && item.imageUrl.startsWith('data:image/');
-      return {
-        ...item,
-        imageUrl: isBase64 ? (item.imageUrl.length > 10000 ? 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80' : item.imageUrl) : item.imageUrl,
-        featuredImage: isBase64 ? { url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80' } : item.featuredImage
-      };
-    });
     try {
-      localStorage.setItem(key, JSON.stringify(cleanData.slice(0, 15)));
+      localStorage.setItem(key, JSON.stringify(data.slice(0, 20)));
     } catch (e) {
-      try { localStorage.removeItem(key); } catch (err) {}
+      console.warn('LocalStorage save notice:', e);
     }
   };
 
@@ -64,13 +39,12 @@ export default function AdminBlog() {
       const list = saved ? JSON.parse(saved) : [];
       const exists = list.some((item: any) => item.url === url);
       if (!exists) {
-        const cleanUrl = url.startsWith('data:image/') && url.length > 50000 ? 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80' : url;
         const newAsset = {
           id: 'media-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
           name: fileOrUrlName || 'blog-image.png',
-          url: cleanUrl,
+          url: url,
           type: 'image/jpeg',
-          size: 'Compressed',
+          size: 'Uploaded Asset',
           date: new Date().toISOString().split('T')[0],
         };
         safeSaveLocalStorage('uploaded_media_assets', [newAsset, ...list]);
