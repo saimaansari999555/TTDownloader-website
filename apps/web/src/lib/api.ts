@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+let rawApiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+if (rawApiUrl.includes('localhost') || (typeof window !== 'undefined' && window.location.hostname !== 'localhost')) {
+  rawApiUrl = '';
+}
+const API_BASE = rawApiUrl;
 
 export const api = axios.create({
   baseURL: API_BASE,
@@ -9,7 +13,7 @@ export const api = axios.create({
 
 export const fetchVideo = async (url: string) => {
   try {
-    const res = await api.post('/downloader/fetch', { url });
+    const res = await api.post('/api/downloader/fetch', { url });
     if (res.data?.data) return res.data.data;
   } catch (err) {
     console.warn('Backend API fetch unavailable, falling back to direct provider:', err);
@@ -24,7 +28,7 @@ export const fetchVideo = async (url: string) => {
 
 export const fetchAudio = async (url: string) => {
   try {
-    const res = await api.post('/downloader/fetch-audio', { url });
+    const res = await api.post('/api/downloader/fetch-audio', { url });
     if (res.data?.data) return res.data.data;
   } catch (err) {
     console.warn('Backend API fetch-audio unavailable, falling back to direct provider:', err);
@@ -44,7 +48,7 @@ export const fetchAudio = async (url: string) => {
 
 export const fetchUserVideos = async (username: string, cursor = 0) => {
   try {
-    const res = await api.get(`/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`);
+    const res = await api.get(`/api/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`);
     if (res.data?.data) return res.data.data;
   } catch (err) {
     console.warn('Backend API bulk downloader unavailable, falling back to direct provider:', err);
@@ -139,6 +143,7 @@ export const getMediaAssets = () =>
 
 export const saveUrlMedia = (name: string, url: string) =>
   api.post('/api/media', { name, url }).then(r => r.data).catch(() => ({ url }));
+
 
 
 
