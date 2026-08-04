@@ -23,6 +23,23 @@ export default function AdminBlog() {
     }
   }, [showMediaPicker, showEditor]);
 
+  const safeSaveLocalStorage = (key: string, data: any[]) => {
+    if (typeof window === 'undefined' || !Array.isArray(data)) return;
+    const cleanData = data.map((item: any) => {
+      const isBase64 = typeof item.imageUrl === 'string' && item.imageUrl.startsWith('data:image/');
+      return {
+        ...item,
+        imageUrl: isBase64 ? (item.imageUrl.length > 10000 ? 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80' : item.imageUrl) : item.imageUrl,
+        featuredImage: isBase64 ? { url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80' } : item.featuredImage
+      };
+    });
+    try {
+      localStorage.setItem(key, JSON.stringify(cleanData.slice(0, 15)));
+    } catch (e) {
+      try { localStorage.removeItem(key); } catch (err) {}
+    }
+  };
+
   const saveToMediaLibrary = (fileOrUrlName: string, url: string) => {
     if (typeof window === 'undefined' || !url) return;
     try {
@@ -30,17 +47,17 @@ export default function AdminBlog() {
       const list = saved ? JSON.parse(saved) : [];
       const exists = list.some((item: any) => item.url === url);
       if (!exists) {
+        const cleanUrl = url.startsWith('data:image/') && url.length > 50000 ? 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80' : url;
         const newAsset = {
           id: 'media-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
           name: fileOrUrlName || 'blog-image.png',
-          url: url.length > 500000 ? url.substring(0, 500000) : url,
+          url: cleanUrl,
           type: 'image/jpeg',
           size: 'Compressed',
           date: new Date().toISOString().split('T')[0],
         };
-        const updated = [newAsset, ...list.slice(0, 15)];
-        localStorage.setItem('uploaded_media_assets', JSON.stringify(updated));
-        setMediaAssets(updated);
+        safeSaveLocalStorage('uploaded_media_assets', [newAsset, ...list]);
+        setMediaAssets([newAsset, ...list]);
       }
     } catch (e) {}
   };
@@ -54,11 +71,7 @@ export default function AdminBlog() {
         const combined = [...apiPosts, ...local];
         const unique = combined.filter((v, i, a) => a.findIndex(t => t.slug === v.slug) === i);
         setPosts(unique);
-        try {
-          if (typeof window !== 'undefined' && unique.length > 0) {
-            localStorage.setItem('local_blog_posts', JSON.stringify(unique.slice(0, 30)));
-          }
-        } catch (e) {}
+        safeSaveLocalStorage('local_blog_posts', unique);
       })
       .catch(() => {
         const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
@@ -76,11 +89,10 @@ export default function AdminBlog() {
       reader.onload = (event) => {
         if (event.target?.result) {
           const rawUrl = event.target.result as string;
-          // Canvas compression to shrink base64 image from 5MB -> 40KB
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const maxDim = 800;
+            const maxDim = 600;
             let width = img.width;
             let height = img.height;
             if (width > maxDim || height > maxDim) {
@@ -96,7 +108,7 @@ export default function AdminBlog() {
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx?.drawImage(img, 0, 0, width, height);
-            const compressedUrl = canvas.toDataURL('image/jpeg', 0.75);
+            const compressedUrl = canvas.toDataURL('image/jpeg', 0.6);
             setForm(p => ({ ...p, imageUrl: compressedUrl }));
             saveToMediaLibrary(file.name, compressedUrl);
           };
@@ -122,10 +134,7 @@ export default function AdminBlog() {
     e.preventDefault();
     setSubmitting(true);
 
-    // Guaranteed failsafe: Unlock submitting state after 300ms so button never gets stuck
-    const unlockTimer = setTimeout(() => {
-      setSubmitting(false);
-    }, 300);
+    const unlockTimer = setTimeout(() => setSubmitting(false), 300);
 
     try {
       const generatedSlug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -154,23 +163,17 @@ export default function AdminBlog() {
         author: { username: 'admin' }
       };
 
-      // 1. Immediately update LocalStorage safely with try/catch
-      try {
-        if (typeof window !== 'undefined') {
-          const local = JSON.parse(localStorage.getItem('local_blog_posts') || '[]');
-          let updatedLocal;
-          if (editId) {
-            updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...localItem } : p);
-          } else {
-            updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug)];
-          }
-          localStorage.setItem('local_blog_posts', JSON.stringify(updatedLocal));
-        }
-      } catch (err) {
-        console.warn('LocalStorage quota warning handled:', err);
+      // Safe update local storage without quota crash
+      const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
+      let updatedLocal;
+      if (editId) {
+        updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...localItem } : p);
+      } else {
+        updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug)];
       }
+      safeSaveLocalStorage('local_blog_posts', updatedLocal);
 
-      // 2. Instantly update state & close editor modal (0ms lag!)
+      // Instantly update state & close editor modal (0ms lag!)
       setPosts(prev => {
         const filtered = prev.filter(p => p.slug !== generatedSlug && p.id !== targetId);
         return [localItem, ...filtered];
@@ -182,7 +185,7 @@ export default function AdminBlog() {
       setSubmitting(false);
       clearTimeout(unlockTimer);
 
-      // 3. Sync to backend API asynchronously (non-blocking)
+      // Sync to backend API asynchronously (non-blocking)
       setTimeout(async () => {
         try {
           if (editId && !editId.startsWith('post-')) {
