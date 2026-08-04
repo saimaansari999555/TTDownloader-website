@@ -85,57 +85,58 @@ export const adminLogin = async (emailOrUsername: string, password: string) => {
 
 export const getMe = () => Promise.resolve({ username: 'admin' });
 
-export const getContactMessages = () => Promise.resolve([]);
+export const getContactMessages = (): Promise<any[]> => Promise.resolve([]);
 
-export const getAllApks = () => Promise.resolve([]);
+export const getAllApks = (): Promise<any[]> => Promise.resolve([]);
 
-export const createApk = (body: any) => Promise.resolve({ success: true });
+export const createApk = (body: any): Promise<any> => Promise.resolve({ success: true });
 
-export const deleteApk = (id: string) => Promise.resolve({ success: true });
+export const deleteApk = (id: string): Promise<any> => Promise.resolve({ success: true });
 
-export const getSettings = () => Promise.resolve([]);
+export const getSettings = (): Promise<any[]> => Promise.resolve([]);
 
-export const updateSetting = (key: string, value: string) => Promise.resolve({ success: true });
+export const updateSetting = (key: string, value: string): Promise<any> => Promise.resolve({ success: true });
 
-export const getAdminPosts = () =>
+export const getAdminPosts = (): Promise<any[]> =>
   api.get('/api/blog/posts?take=100').then(r => r.data).catch(() => []);
 
-export const createPost = (data: any) =>
+export const createPost = (data: any): Promise<any> =>
   api.post('/api/blog/posts', data).then(r => r.data).catch(() => data);
 
-export const deletePost = (id: string) =>
+export const deletePost = (id: string): Promise<any> =>
   api.delete(`/api/blog/posts/${id}`).then(r => r.data).catch(() => ({ success: true }));
 
 // Custom Pages
-export const getCustomPages = () => Promise.resolve([]);
+export const getCustomPages = (): Promise<any[]> => Promise.resolve([]);
 
-export const getCustomPage = (id: string) => Promise.resolve(null);
+export const getCustomPage = (id: string): Promise<any> => Promise.resolve(null);
 
-export const getCustomPageBySlug = (slug: string) => Promise.resolve(null);
+export const getCustomPageBySlug = (slug: string): Promise<any> => Promise.resolve(null);
 
-export const createCustomPage = (body: any) => Promise.resolve({ success: true });
+export const createCustomPage = (body: any): Promise<any> => Promise.resolve({ success: true });
 
-export const updateCustomPage = (id: string, body: any) => Promise.resolve({ success: true });
+export const updateCustomPage = (id: string, body: any): Promise<any> => Promise.resolve({ success: true });
 
-export const deleteCustomPage = (id: string) => Promise.resolve({ success: true });
+export const deleteCustomPage = (id: string): Promise<any> => Promise.resolve({ success: true });
 
 // Backup & Recovery
-export const exportDatabase = () => Promise.resolve({});
+export const exportDatabase = (): Promise<any> => Promise.resolve({});
 
-export const importDatabase = (payload: any) => Promise.resolve({ success: true });
+export const importDatabase = (payload: any): Promise<any> => Promise.resolve({ success: true });
 
 // Plugins Manager
-export const getPlugins = () => Promise.resolve([]);
+export const getPlugins = (): Promise<any[]> => Promise.resolve([]);
 
-export const getActivePlugins = () => Promise.resolve([]);
+export const getActivePlugins = (): Promise<any[]> => Promise.resolve([]);
 
-export const togglePluginActive = (id: string) => Promise.resolve({ success: true });
+export const togglePluginActive = (id: string): Promise<any> => Promise.resolve({ success: true });
 
-export const createPlugin = (body: any) => Promise.resolve({ success: true });
+export const createPlugin = (body: any): Promise<any> => Promise.resolve({ success: true });
 
-export const updatePlugin = (id: string, body: any) => Promise.resolve({ success: true });
+export const updatePlugin = (id: string, body: any): Promise<any> => Promise.resolve({ success: true });
 
-export const deletePlugin = (id: string) => Promise.resolve({ success: true });
+export const deletePlugin = (id: string): Promise<any> => Promise.resolve({ success: true });
+
 
 // Media Manager
 export const getMediaAssets = () =>
