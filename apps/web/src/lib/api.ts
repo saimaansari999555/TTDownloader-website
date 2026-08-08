@@ -103,8 +103,11 @@ export const getAdminPosts = (): Promise<any[]> =>
 export const createPost = (data: any): Promise<any> =>
   api.post('/api/blog/posts', data).then(r => r.data).catch(() => data);
 
+export const updatePost = (id: string, data: any): Promise<any> =>
+  api.put(`/api/blog/posts/${encodeURIComponent(id)}`, data).then(r => r.data).catch(() => data);
+
 export const deletePost = (id: string): Promise<any> =>
-  api.delete(`/api/blog/posts/${id}`).then(r => r.data).catch(() => ({ success: true }));
+  api.delete(`/api/blog/posts/${encodeURIComponent(id)}`).then(r => r.data).catch(() => ({ success: true }));
 
 // Custom Pages
 export const getCustomPages = (): Promise<any[]> => Promise.resolve([]);

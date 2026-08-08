@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText, Upload, Image as ImageIcon, X, Copy, Check } from 'lucide-react';
-import { getAdminPosts, deletePost, api } from '@/lib/api';
+import { getAdminPosts, createPost, updatePost, deletePost } from '@/lib/api';
 
 const emptyForm = { title: '', slug: '', content: '', summary: '', status: 'DRAFT', imageUrl: '' };
 
@@ -158,16 +158,26 @@ export default function AdminBlog() {
       const local = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('local_blog_posts') || '[]') : [];
       let updatedLocal;
       if (editId) {
-        updatedLocal = local.map((p: any) => p.id === editId ? { ...p, ...localItem } : p);
+        updatedLocal = local.map((p: any) =>
+          (p.id === editId || p.slug === generatedSlug || p.slug === editId) ? { ...p, ...localItem } : p
+        );
+        if (!updatedLocal.some((p: any) => p.id === editId || p.slug === generatedSlug)) {
+          updatedLocal = [localItem, ...updatedLocal];
+        }
       } else {
-        updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug)];
+        updatedLocal = [localItem, ...local.filter((p: any) => p.slug !== generatedSlug && p.id !== targetId)];
       }
       safeSaveLocalStorage('local_blog_posts', updatedLocal);
 
-      // Instantly update state & close editor modal (0ms lag!)
+      // Instantly update UI state & close editor modal (0ms lag!)
       setPosts(prev => {
-        const filtered = prev.filter(p => p.slug !== generatedSlug && p.id !== targetId);
-        return [localItem, ...filtered];
+        const index = prev.findIndex(p => p.id === editId || p.slug === generatedSlug || (editId && p.slug === editId));
+        if (index !== -1) {
+          const updated = [...prev];
+          updated[index] = { ...updated[index], ...localItem };
+          return updated;
+        }
+        return [localItem, ...prev.filter(p => p.slug !== generatedSlug && p.id !== targetId)];
       });
 
       setForm(emptyForm);
@@ -179,10 +189,10 @@ export default function AdminBlog() {
       // Sync to backend API asynchronously (non-blocking)
       setTimeout(async () => {
         try {
-          if (editId && !editId.startsWith('post-')) {
-            await api.put(`/blog/posts/${editId}`, postPayload);
+          if (editId) {
+            await updatePost(editId, postPayload);
           } else {
-            await api.post('/blog/posts', postPayload);
+            await createPost(postPayload);
           }
         } catch (err: any) {
           console.warn('Background API sync notice:', err);
