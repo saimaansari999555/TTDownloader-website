@@ -101,6 +101,9 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `0444788` | Fix TypeScript build error in api.ts | Next.js API client types validations related errors solve kar diye compile failure door karne ke liye. |
 | `9fd19ec` | Fix image URL replacement issue for user uploaded images | Article data update par user upload thumbnail dynamic path patterns clean kiye. |
 | `5c8e794` | Fix blog post editing to correctly update post picture | Existed elements overwrite issues logic aur backend parameters binding problem fix kar di. |
+| `fddcd23` | Update About Us page layout content | Website ke default 'About Us' page ke layouts ko visual page layout blocks me convert kiya aur update kiya. |
+| `46d44f5` | Add Privacy Policy static page template | Naya Privacy Policy dynamic page system default configs me insert aur render kiya. |
+| `af21244` | Enable pages CRUD in Page Builder and link to NextJS custom API routes | Admin panel Ke Page Builder me homepage samet website ke saare modules aur tools editable kar diye aur Next.js API routes se connect kiya. |
 
 ---
 
@@ -109,3 +112,4 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 1.  **Production Database Setup**: local SQLite space badal kar dynamic PostgreSQL use kar sakte hain (`docker-compose.yml` check karein).
 2.  **Plugin System Scaleup**: `headCode` and `footerCode` hook triggers me safety controls implement kar ke dynamic tracking verify kar sakte hain.
 3.  **Ad Placement Controls**: `AdSlot.tsx` website components header footer layout blocks configurations ko change karke live key setup badla ja sakta hai.
+
