@@ -110,17 +110,23 @@ export const deletePost = (id: string): Promise<any> =>
   api.delete(`/api/blog/posts/${encodeURIComponent(id)}`).then(r => r.data).catch(() => ({ success: true }));
 
 // Custom Pages
-export const getCustomPages = (): Promise<any[]> => Promise.resolve([]);
+export const getCustomPages = (): Promise<any[]> =>
+  api.get('/api/pages').then(r => r.data).catch(() => []);
 
-export const getCustomPage = (id: string): Promise<any> => Promise.resolve(null);
+export const getCustomPage = (id: string): Promise<any> =>
+  api.get(`/api/pages/${encodeURIComponent(id)}`).then(r => r.data).catch(() => null);
 
-export const getCustomPageBySlug = (slug: string): Promise<any> => Promise.resolve(null);
+export const getCustomPageBySlug = (slug: string): Promise<any> =>
+  api.get(`/api/pages/${encodeURIComponent(slug)}`).then(r => r.data).catch(() => null);
 
-export const createCustomPage = (body: any): Promise<any> => Promise.resolve({ success: true });
+export const createCustomPage = (body: any): Promise<any> =>
+  api.post('/api/pages', body).then(r => r.data).catch(() => body);
 
-export const updateCustomPage = (id: string, body: any): Promise<any> => Promise.resolve({ success: true });
+export const updateCustomPage = (id: string, body: any): Promise<any> =>
+  api.put(`/api/pages/${encodeURIComponent(id)}`, body).then(r => r.data).catch(() => body);
 
-export const deleteCustomPage = (id: string): Promise<any> => Promise.resolve({ success: true });
+export const deleteCustomPage = (id: string): Promise<any> =>
+  api.delete(`/api/pages/${encodeURIComponent(id)}`).then(r => r.data).catch(() => ({ success: true }));
 
 // Backup & Recovery
 export const exportDatabase = (): Promise<any> => Promise.resolve({});
