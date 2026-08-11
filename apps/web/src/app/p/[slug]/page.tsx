@@ -112,6 +112,27 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
       { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
       { id: 'c-2', type: 'contact_tool' }
     ])
+  },
+  privacy: {
+    title: 'Privacy Policy Page',
+    seoTitle: 'Privacy Policy - TTDownloader',
+    seoDescription: 'Read the privacy policy of Tik-TokDownloader.xyz to understand how we protect user privacy.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'p-1', type: 'hero', title: 'Privacy Policy', subtitle: 'Your privacy is extremely important to us. Learn how we handle information on Tik-TokDownloader.xyz.', bgColor: '#0f172a' },
+      { id: 'p-2', type: 'heading', level: 'h2', text: '1. Information We Collect' },
+      { id: 'p-3', type: 'paragraph', text: 'We believe in keeping things simple and secure. We do not require any personal registrations, accounts, or login details to use our services.\n\nHowever, standard web servers collect basic logs automatically. This includes your IP address, browser type, device details, and referencing pages. This info is used purely for diagnostics, analytics, and service optimizations.' },
+      { id: 'p-4', type: 'heading', level: 'h2', text: '2. TikTok URL Processing' },
+      { id: 'p-5', type: 'paragraph', text: 'Our downloader works entirely on URL processing. When you input a TikTok video URL, our platform processes that link to retrieve direct download media addresses.\n\nWe do not store downloaded videos or audio files on our servers. The actual download is processed in real-time and served to your browser client directly.' },
+      { id: 'p-6', type: 'heading', level: 'h2', text: '3. Cookies & Local Storage' },
+      { id: 'p-7', type: 'paragraph', text: 'TikTokDownloader.xyz may use cookies to store your preferences, search selections, or system theme status.\n\nWe also use browser localStorage to allow safe saving and layout settings cache. You can reset these settings anytime by clicking the Clear Cache option in user settings or deleting browser cookies.' },
+      { id: 'p-8', type: 'heading', level: 'h2', text: '4. Third-Party Advertisements' },
+      { id: 'p-9', type: 'paragraph', text: 'We may display banner advertisements from third-party networks (such as Google AdSense) to support website operation costs. These ad providers may set tracking cookies to serve targeted ads based on your search history and web visits.' },
+      { id: 'p-10', type: 'heading', level: 'h2', text: '5. Children\'s Privacy' },
+      { id: 'p-11', type: 'paragraph', text: 'Our tools are built for public web access and do not target or harvest data from children under the age of 13. If you believe a child has provided any tracking details, please contact us.' },
+      { id: 'p-12', type: 'heading', level: 'h2', text: '6. Policy Updates' },
+      { id: 'p-13', type: 'paragraph', text: 'This Privacy Policy is subject to change at any time to comply with legal guidelines or technical system additions. Any changes will be updated on this page immediately.' }
+    ])
   }
 };
 
