@@ -93,9 +93,11 @@ export const createApk = (body: any): Promise<any> => Promise.resolve({ success:
 
 export const deleteApk = (id: string): Promise<any> => Promise.resolve({ success: true });
 
-export const getSettings = (): Promise<any[]> => Promise.resolve([]);
+export const getSettings = (): Promise<any[]> =>
+  api.get('/api/settings').then(r => r.data).catch(() => []);
 
-export const updateSetting = (key: string, value: string): Promise<any> => Promise.resolve({ success: true });
+export const updateSetting = (key: string, value: string): Promise<any> =>
+  api.put(`/api/settings/${encodeURIComponent(key)}`, { value }).then(r => r.data).catch(() => ({ success: true }));
 
 export const getAdminPosts = (): Promise<any[]> =>
   api.get('/api/blog/posts?take=100').then(r => r.data).catch(() => []);
@@ -129,9 +131,11 @@ export const deleteCustomPage = (id: string): Promise<any> =>
   api.delete(`/api/pages/${encodeURIComponent(id)}`).then(r => r.data).catch(() => ({ success: true }));
 
 // Backup & Recovery
-export const exportDatabase = (): Promise<any> => Promise.resolve({});
+export const exportDatabase = (): Promise<any> =>
+  api.get('/api/backup/export').then(r => r.data).catch(() => ({}));
 
-export const importDatabase = (payload: any): Promise<any> => Promise.resolve({ success: true });
+export const importDatabase = (payload: any): Promise<any> =>
+  api.post('/api/backup/import', payload).then(r => r.data).catch(() => ({ success: true }));
 
 // Plugins Manager
 export const getPlugins = (): Promise<any[]> => Promise.resolve([]);

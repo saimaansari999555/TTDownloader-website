@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import PluginInjector from "@/components/PluginInjector";
+import AdSenseScriptLoader from "@/components/AdSenseScriptLoader";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="antialiased">
         <PluginInjector />
+        <AdSenseScriptLoader />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>

@@ -104,6 +104,7 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `fddcd23` | Update About Us page layout content | Website ke default 'About Us' page ke layouts ko visual page layout blocks me convert kiya aur update kiya. |
 | `46d44f5` | Add Privacy Policy static page template | Naya Privacy Policy dynamic page system default configs me insert aur render kiya. |
 | `af21244` | Enable pages CRUD in Page Builder and link to NextJS custom API routes | Admin panel Ke Page Builder me homepage samet website ke saare modules aur tools editable kar diye aur Next.js API routes se connect kiya. |
+| `be482c3` | Live Google AdSense & Ads Manager Upgrade with dynamic ads.txt | Ads Manager page ko upgradation de ke full AdSense configurations (Publisher ID, Slot IDs, formatting styles, site verification head tags, dynamic ads.txt, details verification warning display, aur serverless backup-restore mapping) add kiya. |
 
 ---
 

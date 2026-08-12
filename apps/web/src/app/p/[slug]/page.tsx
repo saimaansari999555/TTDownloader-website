@@ -223,7 +223,7 @@ export default function CustomPage({ params }: { params: any }) {
 
       {/* Ad slot (Top) */}
       <div className="max-w-5xl mx-auto px-4">
-        <AdSlot html={settings.ad_top_code} />
+        <AdSlot placement="header" settings={settings} />
       </div>
 
       <article className="max-w-5xl mx-auto px-4 mt-6">
@@ -313,7 +313,7 @@ export default function CustomPage({ params }: { params: any }) {
 
       {/* Ad slot (Bottom) */}
       <div className="max-w-5xl mx-auto px-4 mt-8">
-        <AdSlot html={settings.ad_bottom_code} />
+        <AdSlot placement="footer" settings={settings} />
       </div>
     </main>
   );

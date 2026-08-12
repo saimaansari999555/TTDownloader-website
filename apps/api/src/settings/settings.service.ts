@@ -34,6 +34,16 @@ export class SettingsService implements OnModuleInit {
       custom_css: '',
       maintenance_mode: 'false',
       allow_registration: 'false',
+      adsense_enabled: 'false',
+      adsense_publisher_id: '',
+      adsense_header_slot: '',
+      adsense_download_slot: '',
+      adsense_footer_slot: '',
+      adsense_sidebar_slot: '',
+      adsense_ad_format: 'auto',
+      adsense_full_width_responsive: 'true',
+      adsense_verification_code: '',
+      ads_txt_content: '',
     };
 
     for (const [key, value] of Object.entries(defaults)) {

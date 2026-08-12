@@ -260,31 +260,217 @@ export default function AdminSettings() {
 
               {/* ADS MANAGER TAB */}
               {activeTab === 'ads' && (
-                <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-white border-b border-white/10 pb-4 flex items-center gap-2">
-                    <Megaphone className="w-6 h-6 text-primary-400" /> Advertisement Code Manager
-                  </h2>
-                  <p className="text-sm text-text-secondary leading-relaxed">Paste Google AdSense, banners, or HTML codes directly into the available ad placement slots. These will render live on public pages.</p>
-                  
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-xs font-bold text-text-secondary mb-2">Top Header Ad Code (Slot: Top of all main tools pages)</label>
-                      <textarea rows={4} className="w-full glass-input rounded-xl py-3 px-4 text-xs font-mono resize-none" value={settings['ad_top_code'] || ''} onChange={e => set('ad_top_code', e.target.value)} />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-xs font-bold text-text-secondary mb-2">Download Result Ad Code (Slot: Displays under download link card output)</label>
-                      <textarea rows={4} className="w-full glass-input rounded-xl py-3 px-4 text-xs font-mono resize-none" value={settings['ad_result_code'] || ''} onChange={e => set('ad_result_code', e.target.value)} />
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white border-b border-white/10 pb-4 flex items-center gap-2">
+                      <Megaphone className="w-6 h-6 text-primary-400" /> Advertisement Manager
+                    </h2>
+                    <p className="text-sm text-text-secondary leading-relaxed mt-2">Configure Google AdSense integration, verification flags, and custom manual advertisement slot codes.</p>
+                  </div>
+
+                  {/* Validation warning */}
+                  {(() => {
+                    const isAdSenseEn = settings['adsense_enabled'] === 'true';
+                    const pubId = settings['adsense_publisher_id'] || '';
+                    if (isAdSenseEn) {
+                      if (!pubId.trim()) {
+                        return (
+                          <div className="flex items-center gap-2 text-accent-500 bg-accent-500/10 px-4 py-3 rounded-xl border border-accent-500/20 font-semibold text-sm">
+                            <HelpCircle className="w-4 h-4 shrink-0 animate-pulse" />
+                            Google AdSense is enabled, but Publisher ID is missing.
+                          </div>
+                        );
+                      }
+                      if (!pubId.startsWith('ca-pub-')) {
+                        return (
+                          <div className="flex items-center gap-2 text-accent-500 bg-accent-500/10 px-4 py-3 rounded-xl border border-accent-500/20 font-semibold text-sm">
+                            <HelpCircle className="w-4 h-4 shrink-0" />
+                            Invalid Publisher ID format. Example: ca-pub-XXXXXXXXXXXXXXXX
+                          </div>
+                        );
+                      }
+                      const missing: string[] = [];
+                      if (!settings['adsense_header_slot']?.trim()) missing.push("Header");
+                      if (!settings['adsense_download_slot']?.trim()) missing.push("Download Result");
+                      if (!settings['adsense_footer_slot']?.trim()) missing.push("Footer");
+                      if (!settings['adsense_sidebar_slot']?.trim()) missing.push("Sidebar");
+                      if (missing.length > 0) {
+                        return (
+                          <div className="flex items-center gap-2 text-yellow-500 bg-yellow-500/10 px-4 py-3 rounded-xl border border-yellow-500/20 font-semibold text-sm">
+                            <HelpCircle className="w-4 h-4 shrink-0" />
+                            AdSense Slot ID is missing for this placement: {missing.join(', ')}.
+                          </div>
+                        );
+                      }
+                    }
+                    return null;
+                  })()}
+
+                  {/* Grid layout */}
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    {/* LEFT COLUMN: Google AdSense Config */}
+                    <div className="p-6 bg-white/5 rounded-2xl border border-white/5 space-y-6">
+                      <div className="flex justify-between items-center pb-4 border-b border-white/5">
+                        <div>
+                          <h3 className="text-lg font-black text-white">Google AdSense Configuration</h3>
+                          <p className="text-xs text-text-secondary mt-0.5">Toggle auto adsense script injection and slots</p>
+                        </div>
+                        
+                        <button
+                          type="button"
+                          onClick={() => set('adsense_enabled', settings['adsense_enabled'] === 'true' ? 'false' : 'true')}
+                          className={`px-4 py-2 rounded-xl text-xs font-extrabold tracking-wide uppercase transition-all border ${
+                            settings['adsense_enabled'] === 'true'
+                              ? 'bg-green-500/15 text-green-400 border-green-500/30'
+                              : 'bg-white/5 text-text-secondary border-white/10 hover:text-white hover:bg-white/10'
+                          }`}
+                        >
+                          {settings['adsense_enabled'] === 'true' ? 'Enabled' : 'Disabled'}
+                        </button>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-2">Google AdSense Publisher ID</label>
+                          <input 
+                            type="text" 
+                            placeholder="e.g., ca-pub-1234567890123456"
+                            className="w-full glass-input rounded-xl py-2.5 px-4 text-sm" 
+                            value={settings['adsense_publisher_id'] || ''} 
+                            onChange={e => set('adsense_publisher_id', e.target.value)} 
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-bold text-text-secondary mb-2">Header Slot ID</label>
+                            <input 
+                              type="text" 
+                              className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono" 
+                              value={settings['adsense_header_slot'] || ''} 
+                              onChange={e => set('adsense_header_slot', e.target.value)} 
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-text-secondary mb-2">Download Result Slot ID</label>
+                            <input 
+                              type="text" 
+                              className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono" 
+                              value={settings['adsense_download_slot'] || ''} 
+                              onChange={e => set('adsense_download_slot', e.target.value)} 
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-text-secondary mb-2">Footer Slot ID</label>
+                            <input 
+                              type="text" 
+                              className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono" 
+                              value={settings['adsense_footer_slot'] || ''} 
+                              onChange={e => set('adsense_footer_slot', e.target.value)} 
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-text-secondary mb-2">Sidebar Slot ID</label>
+                            <input 
+                              type="text" 
+                              className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono" 
+                              value={settings['adsense_sidebar_slot'] || ''} 
+                              onChange={e => set('adsense_sidebar_slot', e.target.value)} 
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                          <div>
+                            <label className="block text-xs font-bold text-text-secondary mb-2">Ad Format</label>
+                            <select 
+                              className="w-full glass-input rounded-xl py-2.5 px-4 text-sm bg-slate-900 border border-white/10 text-white" 
+                              value={settings['adsense_ad_format'] || 'auto'} 
+                              onChange={e => set('adsense_ad_format', e.target.value)}
+                            >
+                              <option value="auto">Auto</option>
+                              <option value="rectangle">Rectangle</option>
+                              <option value="horizontal">Horizontal</option>
+                              <option value="vertical">Vertical</option>
+                              <option value="responsive">Responsive</option>
+                            </select>
+                          </div>
+
+                          <div className="flex flex-col justify-between">
+                            <label className="block text-xs font-bold text-text-secondary mb-2">Full Width Responsive</label>
+                            <button
+                              type="button"
+                              onClick={() => set('adsense_full_width_responsive', settings['adsense_full_width_responsive'] === 'true' ? 'false' : 'true')}
+                              className={`w-full py-2.5 rounded-xl text-xs font-extrabold uppercase transition-all tracking-wide border ${
+                                settings['adsense_full_width_responsive'] !== 'false'
+                                  ? 'bg-primary-500/15 text-primary-400 border-primary-500/30'
+                                  : 'bg-white/5 text-text-secondary border-white/10'
+                              }`}
+                            >
+                              {settings['adsense_full_width_responsive'] !== 'false' ? 'Responsive (ON)' : 'Fixed Layout (OFF)'}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold text-text-secondary mb-2">Bottom Footer Ad Code (Slot: Bottom wrapper above footer)</label>
-                      <textarea rows={4} className="w-full glass-input rounded-xl py-3 px-4 text-xs font-mono resize-none" value={settings['ad_bottom_code'] || ''} onChange={e => set('ad_bottom_code', e.target.value)} />
+                    {/* RIGHT COLUMN: Custom Placements (Fallback) */}
+                    <div className="p-6 bg-white/5 rounded-2xl border border-white/5 space-y-6">
+                      <div>
+                        <h3 className="text-lg font-black text-white">Manual HTML Ad Banners</h3>
+                        <p className="text-xs text-text-secondary mt-0.5">Used as backup fallbacks or direct code injection ads</p>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Top Header HTML Code</label>
+                          <textarea rows={2} className="w-full glass-input rounded-xl py-2 px-3 text-xs font-mono resize-none" value={settings['ad_top_code'] || ''} onChange={e => set('ad_top_code', e.target.value)} />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Download Result HTML Code</label>
+                          <textarea rows={2} className="w-full glass-input rounded-xl py-2 px-3 text-xs font-mono resize-none" value={settings['ad_result_code'] || ''} onChange={e => set('ad_result_code', e.target.value)} />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Bottom Footer HTML Code</label>
+                          <textarea rows={2} className="w-full glass-input rounded-xl py-2 px-3 text-xs font-mono resize-none" value={settings['ad_bottom_code'] || ''} onChange={e => set('ad_bottom_code', e.target.value)} />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Sidebar HTML Code</label>
+                          <textarea rows={2} className="w-full glass-input rounded-xl py-2 px-3 text-xs font-mono resize-none" value={settings['ad_sidebar_code'] || ''} onChange={e => set('ad_sidebar_code', e.target.value)} />
+                        </div>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold text-text-secondary mb-2">Sidebar / Compact Ad Code (Slot: Left/Right panels if needed)</label>
-                      <textarea rows={4} className="w-full glass-input rounded-xl py-3 px-4 text-xs font-mono resize-none" value={settings['ad_sidebar_code'] || ''} onChange={e => set('ad_sidebar_code', e.target.value)} />
+                    {/* Site Verification Meta Code */}
+                    <div className="p-6 bg-white/5 rounded-2xl border border-white/5 space-y-4 xl:col-span-2">
+                      <div>
+                        <h3 className="text-lg font-black text-white">AdSense Site Verification</h3>
+                        <p className="text-xs text-text-secondary mt-0.5">Paste Google Adsense site verification meta code or verification tags here. This is loaded globally in the page header structure.</p>
+                      </div>
+                      
+                      <textarea 
+                        rows={3} 
+                        placeholder={`<meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX" />`}
+                        className="w-full glass-input rounded-xl py-2 px-3 text-xs font-mono resize-none" 
+                        value={settings['adsense_verification_code'] || ''} 
+                        onChange={e => set('adsense_verification_code', e.target.value)} 
+                      />
+                    </div>
+
+                    {/* ads.txt file manager */}
+                    <div className="p-6 bg-white/5 rounded-2xl border border-white/5 space-y-4 xl:col-span-2 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-lg font-black text-white">ads.txt Content</h3>
+                        <p className="text-xs text-text-secondary mt-0.5">Define your publisher authentication codes. This is served live at the root address: <code className="text-primary-400">/ads.txt</code></p>
+                      </div>
+                      
+                      <textarea 
+                        rows={4} 
+                        placeholder="google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0"
+                        className="w-full glass-input rounded-xl py-2.5 px-4 text-xs font-mono resize-none" 
+                        value={settings['ads_txt_content'] || ''} 
+                        onChange={e => set('ads_txt_content', e.target.value)} 
+                      />
                     </div>
                   </div>
                 </div>

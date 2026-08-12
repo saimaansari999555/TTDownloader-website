@@ -1,16 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { api } from '@/lib/api';
+import { getSettings } from '@/lib/api';
 
 export function useSettings() {
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/settings')
-      .then(res => {
+    getSettings()
+      .then(list => {
         const map: Record<string, string> = {};
-        res.data.forEach((s: any) => {
+        list.forEach((s: any) => {
           map[s.key] = s.value;
         });
         setSettings(map);
