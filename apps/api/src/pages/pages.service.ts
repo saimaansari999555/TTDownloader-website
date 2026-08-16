@@ -15,7 +15,15 @@ export class PagesService implements OnModuleInit {
         seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
         isPublished: true,
         layout: JSON.stringify([
-          { id: 'h-1', type: 'hero', title: 'Download TikTok Videos Without Watermark', subtitle: 'Fast, free, and completely ad-free. Just paste the link and get your video.', bgColor: '#8b5cf6' },
+          { 
+            id: 'h-1', 
+            type: 'hero', 
+            title: 'Download TikTok Videos Without Watermark', 
+            subtitle: 'Fast, free, and ad-supported online tool. Paste any public TikTok link to download your video.', 
+            bgColor: '#0f172a',
+            bgImage: '/contact-banner.jpg',
+            badge: 'Fast & Watermark-Free'
+          },
           { id: 'h-2', type: 'downloader_tool' }
         ])
       },
@@ -26,7 +34,15 @@ export class PagesService implements OnModuleInit {
         seoDescription: 'Download HD videos without watermark in MP4 format.',
         isPublished: true,
         layout: JSON.stringify([
-          { id: 'v-1', type: 'hero', title: 'TikTok Video Downloader', subtitle: 'Download HD videos without watermark in MP4 format.', bgColor: '#3b82f6' },
+          { 
+            id: 'v-1', 
+            type: 'hero', 
+            title: 'TikTok Video Downloader', 
+            subtitle: 'Download available HD videos without watermark directly in MP4 format.', 
+            bgColor: '#0f172a',
+            bgImage: '/contact-banner.jpg',
+            badge: 'MP4 Video Downloader'
+          },
           { id: 'v-2', type: 'downloader_tool' }
         ])
       },
@@ -37,7 +53,15 @@ export class PagesService implements OnModuleInit {
         seoDescription: 'Extract and download MP3 audio from any TikTok video.',
         isPublished: true,
         layout: JSON.stringify([
-          { id: 'au-1', type: 'hero', title: 'TikTok Audio Extractor', subtitle: 'Extract and download MP3 audio from any TikTok video.', bgColor: '#ec4899' },
+          { 
+            id: 'au-1', 
+            type: 'hero', 
+            title: 'TikTok Audio Extractor', 
+            subtitle: 'Extract sound tracks and download audio in MP3 format from supported TikTok videos.', 
+            bgColor: '#0f172a',
+            bgImage: '/contact-banner.jpg',
+            badge: 'MP3 Audio Extractor'
+          },
           { id: 'au-2', type: 'audio_tool' }
         ])
       },
@@ -48,7 +72,15 @@ export class PagesService implements OnModuleInit {
         seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
         isPublished: true,
         layout: JSON.stringify([
-          { id: 'b-1', type: 'hero', title: 'TikTok Profile Bulk Downloader', subtitle: 'Enter any TikTok username to fetch and download all their videos at once.', bgColor: '#10b981' },
+          { 
+            id: 'b-1', 
+            type: 'hero', 
+            title: 'TikTok Profile Bulk Downloader', 
+            subtitle: 'Enter a public TikTok username to fetch and process multiple videos more conveniently.', 
+            bgColor: '#0f172a',
+            bgImage: '/contact-banner.jpg',
+            badge: 'Profile Bulk Downloader'
+          },
           { id: 'b-2', type: 'bulk_tool' }
         ])
       },
@@ -59,7 +91,15 @@ export class PagesService implements OnModuleInit {
         seoDescription: 'Download the TTDownloader Android app.',
         isPublished: true,
         layout: JSON.stringify([
-          { id: 'ap-1', type: 'hero', title: 'Download Our Android App', subtitle: 'Get the TTDownloader Android app and download TikTok videos directly.', bgColor: '#f59e0b' },
+          { 
+            id: 'ap-1', 
+            type: 'hero', 
+            title: 'Download Our Android App', 
+            subtitle: 'Get the official TTDownloader Android application for your smartphone.', 
+            bgColor: '#0f172a',
+            bgImage: '/contact-banner.jpg',
+            badge: 'Android APK Release'
+          },
           { id: 'ap-2', type: 'apk_tool' }
         ])
       },

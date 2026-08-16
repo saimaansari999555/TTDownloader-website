@@ -22,7 +22,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'h-1', type: 'hero', title: 'Download TikTok Videos Without Watermark', subtitle: 'Fast, free, and completely ad-free. Just paste the link and get your video.', bgColor: '#8b5cf6' },
+      { 
+        id: 'h-1', 
+        type: 'hero', 
+        title: 'Download TikTok Videos Without Watermark', 
+        subtitle: 'Fast, free, and ad-supported online tool. Paste any public TikTok link to download your video.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Fast & Watermark-Free'
+      },
       { id: 'h-2', type: 'downloader_tool' }
     ])
   },
@@ -32,7 +40,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Download HD videos without watermark in MP4 format.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'v-1', type: 'hero', title: 'TikTok Video Downloader', subtitle: 'Download HD videos without watermark in MP4 format.', bgColor: '#3b82f6' },
+      { 
+        id: 'v-1', 
+        type: 'hero', 
+        title: 'TikTok Video Downloader', 
+        subtitle: 'Download available HD videos without watermark directly in MP4 format.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'MP4 Video Downloader'
+      },
       { id: 'v-2', type: 'downloader_tool' }
     ])
   },
@@ -42,7 +58,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Extract and download MP3 audio from any TikTok video.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'au-1', type: 'hero', title: 'TikTok Audio Extractor', subtitle: 'Extract and download MP3 audio from any TikTok video.', bgColor: '#ec4899' },
+      { 
+        id: 'au-1', 
+        type: 'hero', 
+        title: 'TikTok Audio Extractor', 
+        subtitle: 'Extract sound tracks and download audio in MP3 format from supported TikTok videos.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'MP3 Audio Extractor'
+      },
       { id: 'au-2', type: 'audio_tool' }
     ])
   },
@@ -52,7 +76,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'b-1', type: 'hero', title: 'TikTok Profile Bulk Downloader', subtitle: 'Enter any TikTok username to fetch and download all their videos at once.', bgColor: '#10b981' },
+      { 
+        id: 'b-1', 
+        type: 'hero', 
+        title: 'TikTok Profile Bulk Downloader', 
+        subtitle: 'Enter a public TikTok username to fetch and process multiple videos more conveniently.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Profile Bulk Downloader'
+      },
       { id: 'b-2', type: 'bulk_tool' }
     ])
   },
@@ -62,7 +94,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Download the TTDownloader Android app.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'ap-1', type: 'hero', title: 'Download Our Android App', subtitle: 'Get the TTDownloader Android app and download TikTok videos directly.', bgColor: '#f59e0b' },
+      { 
+        id: 'ap-1', 
+        type: 'hero', 
+        title: 'Download Our Android App', 
+        subtitle: 'Get the official TTDownloader Android application for your smartphone.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Android APK Release'
+      },
       { id: 'ap-2', type: 'apk_tool' }
     ])
   },
@@ -398,20 +438,20 @@ export default function CustomPage({ params }: { params: any }) {
         <div className="glass-panel overflow-hidden rounded-2xl shadow-xl border border-white/5 bg-slate-950/20 backdrop-blur-xl">
           {blocks.map((block: any, idx: number) => {
             if (block.type === 'hero') {
-              const hasBgImage = Boolean(block.bgImage);
+              const bgImage = block.bgImage || '/contact-banner.jpg';
               return (
                 <div 
                   key={block.id || idx} 
                   className="p-8 sm:p-14 md:p-20 text-center space-y-4 border-b border-white/5 relative overflow-hidden bg-cover bg-center"
                   style={{ 
-                    backgroundColor: block.bgColor || '#1e293b',
-                    backgroundImage: hasBgImage ? `url(${block.bgImage})` : undefined,
+                    backgroundColor: '#0f172a',
+                    backgroundImage: `url(${bgImage})`,
                   }}
                 >
-                  <div className={`absolute inset-0 ${hasBgImage ? 'bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90 backdrop-blur-[1px]' : 'bg-gradient-to-b from-transparent to-black/40'} pointer-events-none`} />
+                  <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90 backdrop-blur-[1px] pointer-events-none" />
                   <div className="relative z-10 space-y-4 max-w-3xl mx-auto">
                     {block.badge && (
-                      <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500/20 text-primary-300 border border-primary-500/30 mb-1">
+                      <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500/20 text-primary-300 border border-primary-500/30 mb-1 shadow-sm">
                         <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
                         {block.badge}
                       </div>
