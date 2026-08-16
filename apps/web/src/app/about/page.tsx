@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     description: 'Learn about Tik-TokDownloader.xyz, our TikTok video, MP3, audio extraction and bulk download tools, and our commitment to a simple and responsible browsing experience.',
     url: 'https://tik-tokdownloader.xyz/about',
     type: 'website',
-    siteName: 'TTDownloader',
+    siteName: 'TikSavePro',
   },
   twitter: {
     card: 'summary',

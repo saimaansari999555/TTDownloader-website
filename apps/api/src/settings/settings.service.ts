@@ -8,9 +8,9 @@ export class SettingsService implements OnModuleInit {
 
   async onModuleInit() {
     const defaults = {
-      site_name: 'TTDownloader',
-      site_tagline: 'Fastest TikTok Video Downloader without Watermark',
-      meta_description: 'Download TikTok videos without watermark in ultra high quality (HD) for free. Supports MP4, MP3 audio, and bulk profile downloads.',
+      site_name: 'TikSavePro',
+      site_tagline: 'TikSavePro – TikTok Video Downloader, MP3 & Bulk Download Tools',
+      meta_description: 'TikSavePro – TikTok video downloader, MP3 audio extraction, and bulk download tools. Download TikTok videos without watermark in HD quality directly from your browser.',
       meta_keywords: 'tiktok downloader, no watermark, save tiktok, download tiktok mp4, tiktok audio, bulk download',
       google_analytics: 'G-XXXXXXXXXX',
       robots_txt: 'User-agent: *\nAllow: /',
@@ -19,7 +19,7 @@ export class SettingsService implements OnModuleInit {
       ad_sidebar_code: '<div class="w-full h-64 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-text-secondary text-sm italic">Advertisement Slot (Sidebar Banner)</div>',
       ad_result_code: '<div class="w-full h-24 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-text-secondary text-sm italic my-4">Advertisement Slot (Download Result Page Banner)</div>',
       page_home_title: 'Download TikTok Videos Without Watermark',
-      page_home_desc: 'Fast, free, and completely ad-free. Just paste the link and get your high-quality video instantly.',
+      page_home_desc: 'Fast, free, and ad-supported online tool. Paste any public TikTok link to download your video.',
       page_video_title: 'TikTok Video Downloader',
       page_video_desc: 'Download HD videos without watermark in MP4 format.',
       page_audio_title: 'TikTok Audio Extractor',
@@ -27,9 +27,9 @@ export class SettingsService implements OnModuleInit {
       page_bulk_title: 'TikTok Profile Bulk Downloader',
       page_bulk_desc: 'Enter any TikTok username to fetch all their videos at once.',
       page_apk_title: 'Download Our Android App',
-      page_apk_desc: 'Get the TTDownloader Android app and download TikTok videos directly from your phone with ease.',
-      page_about_content: 'TTDownloader is a free, open-access platform for downloading TikTok content for educational and personal use. We believe everyone should have access to the content they love, without limitations.',
-      page_contact_email: 'contact@ttdownloader.xyz',
+      page_apk_desc: 'Get the TikSavePro Android app and download TikTok videos directly from your phone with ease.',
+      page_about_content: 'TikSavePro is an independent, free online platform for downloading and working with publicly available TikTok content. Simple, browser-based tools without complicated software.',
+      page_contact_email: 'contact@tik-tokdownloader.xyz',
       primary_color: '#8b5cf6',
       custom_css: '',
       maintenance_mode: 'false',
@@ -50,8 +50,8 @@ export class SettingsService implements OnModuleInit {
       const exists = await this.prisma.systemSetting.findUnique({ where: { key } });
       if (!exists) {
         await this.prisma.systemSetting.create({ data: { key, value } });
-      } else if (exists.value.includes('TikSavePro') || exists.value.includes('tiksavepro.com')) {
-        const newValue = exists.value.replace(/TikSavePro/g, 'TTDownloader').replace(/tiksavepro\.com/g, 'ttdownloader.xyz');
+      } else if (exists.value.includes('TTDownloader')) {
+        const newValue = exists.value.replace(/TTDownloader/g, 'TikSavePro');
         await this.prisma.systemSetting.update({
           where: { key },
           data: { value: newValue }

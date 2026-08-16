@@ -108,6 +108,7 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `8d10ef4` | Fix /contact-us 404 indexing issue, add dynamic sitemap & robots | Contact Us public page create ki (`/contact-us`), full SEO metadata & canonical tags add kiye, `/contact` ko `/contact-us` par 301 redirect kiya, CMS slug aliasing handle ki, dynamic `sitemap.xml` aur `robots.txt` generate kiye, aur navbar/footer links update kiye. |
 | `a4921de` | Upgrade About Us page with rich tools grid, 3-step guide & FAQs | About Us page ko significantly upgrade kiya with custom cards grid, 3-step visual guide, 8-item FAQ accordion, CTA buttons, responsible-use & copyright notices, full SEO metadata, aur CMS Page Builder compatibility. |
 | `52f6c91` | Apply cohesive glowing brand banner to Video, Audio, Bulk & APK pages | Sabhi downloader pages (Home, Video, Audio, Bulk, APK) se plain yellow/blue/green/pink colors hata kar modern glowing brand banner background aur matching badges apply kiye. |
+| `c2518e9` | Safe rebrand from TTDownloader to TikSavePro | Poori website aur admin panel ko TTDownloader se TikSavePro par safely rebrand kiya (Navbar, Footer, Layout, Pages, Settings, Admin, CMS, DB records) jabke domain, URL routes, slugs, canonical tags aur SEO search keywords 100% intact rakhe. |
 
 ---
 

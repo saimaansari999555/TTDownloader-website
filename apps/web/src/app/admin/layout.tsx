@@ -95,7 +95,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <Home className="w-4 h-4 text-text-secondary" />
               <span className="text-xs text-text-secondary hover:text-white transition-colors">Back to Site</span>
             </Link>
-            <h2 className="text-lg font-bold heading-gradient mt-3">TTDownloader</h2>
+            <h2 className="text-lg font-bold heading-gradient mt-3">TikSavePro</h2>
             <p className="text-xs text-text-secondary">Admin Panel</p>
           </div>
           {/* Close button on Mobile */}
@@ -138,7 +138,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <button onClick={() => setSidebarOpen(true)} className="p-2 border border-white/10 rounded-xl text-white hover:bg-white/5 transition-colors">
             <Menu className="w-6 h-6" />
           </button>
-          <span className="font-black text-white text-lg tracking-tight">TTDownloader Admin</span>
+          <span className="font-black text-white text-lg tracking-tight">TikSavePro Admin</span>
           <div className="w-10" /> {/* Balancer */}
         </header>
 

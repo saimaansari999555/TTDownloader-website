@@ -31,7 +31,7 @@ export default function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
               <Download className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-lg text-white">TT<span className="text-primary-400">Downloader</span></span>
+            <span className="font-bold text-lg text-white">Tik<span className="text-primary-400">SavePro</span></span>
           </Link>
 
           {/* Desktop Nav */}

@@ -12,10 +12,10 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
                 <Download className="w-4 h-4 text-white" />
               </div>
-              <span className="font-bold text-lg text-white">TT<span className="text-primary-400">Downloader</span></span>
+              <span className="font-bold text-lg text-white">Tik<span className="text-primary-400">SavePro</span></span>
             </Link>
             <p className="text-text-secondary text-sm leading-relaxed">
-              The fastest TikTok downloader for saving videos and audio without watermark. Free forever.
+              TikSavePro provides simple browser-based tools for downloading and working with publicly available TikTok content.
             </p>
           </div>
 
@@ -65,9 +65,9 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-text-secondary text-sm">© 2026 TTDownloader. For educational purposes only. Not affiliated with TikTok.</p>
+          <p className="text-text-secondary text-sm">© 2026 TikSavePro. For educational purposes only. Not affiliated with TikTok.</p>
           <div className="flex items-center gap-4">
-            <a href="mailto:contact@ttdownloader.xyz" className="text-text-secondary hover:text-white transition-colors"><Mail className="w-5 h-5" /></a>
+            <a href="mailto:contact@tik-tokdownloader.xyz" className="text-text-secondary hover:text-white transition-colors"><Mail className="w-5 h-5" /></a>
             <a href="#" className="text-text-secondary hover:text-white transition-colors">
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />

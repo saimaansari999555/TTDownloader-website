@@ -5,7 +5,7 @@ let globalPages: any[] = [
     id: 'home',
     title: 'Home Downloader',
     slug: 'home',
-    seoTitle: 'TTDownloader - Download TikTok Videos Without Watermark',
+    seoTitle: 'TikSavePro - Download TikTok Videos Without Watermark',
     seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
     isPublished: true,
     layout: JSON.stringify([
@@ -25,7 +25,7 @@ let globalPages: any[] = [
     id: 'video',
     title: 'TikTok Video Downloader',
     slug: 'video',
-    seoTitle: 'TikTok Video Downloader - TTDownloader',
+    seoTitle: 'TikTok Video Downloader - TikSavePro',
     seoDescription: 'Download HD videos without watermark in MP4 format.',
     isPublished: true,
     layout: JSON.stringify([
@@ -45,7 +45,7 @@ let globalPages: any[] = [
     id: 'audio',
     title: 'TikTok Audio Extractor',
     slug: 'audio',
-    seoTitle: 'TikTok Audio Extractor - TTDownloader',
+    seoTitle: 'TikTok Audio Extractor - TikSavePro',
     seoDescription: 'Extract and download MP3 audio from any TikTok video.',
     isPublished: true,
     layout: JSON.stringify([
@@ -65,7 +65,7 @@ let globalPages: any[] = [
     id: 'bulk',
     title: 'TikTok Profile Bulk Downloader',
     slug: 'bulk',
-    seoTitle: 'TikTok Profile Bulk Downloader - TTDownloader',
+    seoTitle: 'TikTok Profile Bulk Downloader - TikSavePro',
     seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
     isPublished: true,
     layout: JSON.stringify([
@@ -85,15 +85,15 @@ let globalPages: any[] = [
     id: 'apk',
     title: 'Download Our Android App',
     slug: 'apk',
-    seoTitle: 'Android APK Release - TTDownloader',
-    seoDescription: 'Download the TTDownloader Android app.',
+    seoTitle: 'Android APK Release - TikSavePro',
+    seoDescription: 'Download the TikSavePro Android app.',
     isPublished: true,
     layout: JSON.stringify([
       { 
         id: 'ap-1', 
         type: 'hero', 
         title: 'Download Our Android App', 
-        subtitle: 'Get the official TTDownloader Android application for your smartphone.', 
+        subtitle: 'Get the official TikSavePro Android application for your smartphone.', 
         bgColor: '#0f172a',
         bgImage: '/contact-banner.jpg',
         badge: 'Android APK Release'
@@ -269,8 +269,8 @@ let globalPages: any[] = [
     id: 'contact-us',
     title: 'Contact Us Page',
     slug: 'contact-us',
-    seoTitle: 'Contact Us - TTDownloader',
-    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
+    seoTitle: 'Contact Us - TikSavePro',
+    seoDescription: 'Get in touch with the TikSavePro support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
       { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a', bgImage: '/contact-banner.jpg', badge: 'Support & Inquiries' },
@@ -281,8 +281,8 @@ let globalPages: any[] = [
     id: 'contact',
     title: 'Contact Us Page',
     slug: 'contact',
-    seoTitle: 'Contact Us - TTDownloader',
-    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
+    seoTitle: 'Contact Us - TikSavePro',
+    seoDescription: 'Get in touch with the TikSavePro support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
       { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a', bgImage: '/contact-banner.jpg', badge: 'Support & Inquiries' },
@@ -293,7 +293,7 @@ let globalPages: any[] = [
     id: 'privacy',
     title: 'Privacy Policy Page',
     slug: 'privacy',
-    seoTitle: 'Privacy Policy - TTDownloader',
+    seoTitle: 'Privacy Policy - TikSavePro',
     seoDescription: 'Read the privacy policy of Tik-TokDownloader.xyz to understand how we protect user privacy.',
     isPublished: true,
     layout: JSON.stringify([

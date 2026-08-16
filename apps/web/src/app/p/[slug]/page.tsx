@@ -18,7 +18,7 @@ import ContactFormTool from '@/components/tools/ContactFormTool';
 const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   home: {
     title: 'Home Downloader',
-    seoTitle: 'TTDownloader - Download TikTok Videos Without Watermark',
+    seoTitle: 'TikSavePro - Download TikTok Videos Without Watermark',
     seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
     isPublished: true,
     layout: JSON.stringify([
@@ -36,7 +36,7 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   video: {
     title: 'TikTok Video Downloader',
-    seoTitle: 'TikTok Video Downloader - TTDownloader',
+    seoTitle: 'TikTok Video Downloader - TikSavePro',
     seoDescription: 'Download HD videos without watermark in MP4 format.',
     isPublished: true,
     layout: JSON.stringify([
@@ -54,7 +54,7 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   audio: {
     title: 'TikTok Audio Extractor',
-    seoTitle: 'TikTok Audio Extractor - TTDownloader',
+    seoTitle: 'TikTok Audio Extractor - TikSavePro',
     seoDescription: 'Extract and download MP3 audio from any TikTok video.',
     isPublished: true,
     layout: JSON.stringify([
@@ -72,7 +72,7 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   bulk: {
     title: 'TikTok Profile Bulk Downloader',
-    seoTitle: 'TikTok Profile Bulk Downloader - TTDownloader',
+    seoTitle: 'TikTok Profile Bulk Downloader - TikSavePro',
     seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
     isPublished: true,
     layout: JSON.stringify([
@@ -90,15 +90,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   apk: {
     title: 'Download Our Android App',
-    seoTitle: 'Android APK Release - TTDownloader',
-    seoDescription: 'Download the TTDownloader Android app.',
+    seoTitle: 'Android APK Release - TikSavePro',
+    seoDescription: 'Download the TikSavePro Android app.',
     isPublished: true,
     layout: JSON.stringify([
       { 
         id: 'ap-1', 
         type: 'hero', 
         title: 'Download Our Android App', 
-        subtitle: 'Get the official TTDownloader Android application for your smartphone.', 
+        subtitle: 'Get the official TikSavePro Android application for your smartphone.', 
         bgColor: '#0f172a',
         bgImage: '/contact-banner.jpg',
         badge: 'Android APK Release'
@@ -270,8 +270,8 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   'contact-us': {
     title: 'Contact Us Page',
-    seoTitle: 'Contact Us - TTDownloader',
-    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
+    seoTitle: 'Contact Us - TikSavePro',
+    seoDescription: 'Get in touch with the TikSavePro support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
       { 
@@ -288,8 +288,8 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   contact: {
     title: 'Contact Us Page',
-    seoTitle: 'Contact Us - TTDownloader',
-    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
+    seoTitle: 'Contact Us - TikSavePro',
+    seoDescription: 'Get in touch with the TikSavePro support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
       { 
@@ -306,7 +306,7 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   },
   privacy: {
     title: 'Privacy Policy Page',
-    seoTitle: 'Privacy Policy - TTDownloader',
+    seoTitle: 'Privacy Policy - TikSavePro',
     seoDescription: 'Read the privacy policy of Tik-TokDownloader.xyz to understand how we protect user privacy.',
     isPublished: true,
     layout: JSON.stringify([
@@ -391,7 +391,7 @@ export default function CustomPage({ params }: { params: any }) {
 
   useEffect(() => {
     if (page) {
-      document.title = page.seoTitle || `${page.title} - ${settings.site_name || 'TTDownloader'}`;
+      document.title = page.seoTitle || `${page.title} - ${settings.site_name || 'TikSavePro'}`;
     }
   }, [page, settings]);
 

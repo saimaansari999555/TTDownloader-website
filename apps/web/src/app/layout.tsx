@@ -11,14 +11,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "TTDownloader - Download TikTok Videos Without Watermark",
-  description: "The fastest TikTok downloader to save videos, audio, and bulk downloads without watermark. Free forever.",
-  keywords: "tiktok downloader, no watermark, save tiktok, download tiktok mp4, tiktok audio",
+  title: "TikSavePro - Download TikTok Videos Without Watermark",
+  description: "TikSavePro – TikTok video downloader, MP3 audio extraction, and bulk download tools. Download TikTok videos without watermark in HD quality directly from your browser.",
+  keywords: "tiktok downloader, no watermark, save tiktok, download tiktok mp4, tiktok audio, tiktok bulk downloader",
   openGraph: {
-    title: "TTDownloader - TikTok Downloader",
-    description: "Download TikTok videos without watermark instantly.",
+    title: "TikSavePro - TikTok Downloader",
+    description: "Download TikTok videos without watermark in HD quality directly from your browser with TikSavePro.",
     type: "website",
-    siteName: "TTDownloader"
+    siteName: "TikSavePro"
   }
 };
 

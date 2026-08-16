@@ -33,7 +33,7 @@ export default function AdminLogin() {
             <Lock className="w-8 h-8 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">Admin Access</h2>
-          <p className="text-text-secondary">Sign in to manage TTDownloader CMS.</p>
+          <p className="text-text-secondary">Sign in to manage TikSavePro CMS.</p>
         </div>
 
         {error && (

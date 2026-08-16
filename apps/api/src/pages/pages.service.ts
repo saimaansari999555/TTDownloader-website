@@ -11,7 +11,7 @@ export class PagesService implements OnModuleInit {
       {
         title: 'Home Downloader',
         slug: 'home',
-        seoTitle: 'TTDownloader - Download TikTok Videos Without Watermark',
+        seoTitle: 'TikSavePro - Download TikTok Videos Without Watermark',
         seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
         isPublished: true,
         layout: JSON.stringify([
@@ -30,7 +30,7 @@ export class PagesService implements OnModuleInit {
       {
         title: 'Video Downloader Page',
         slug: 'video',
-        seoTitle: 'TikTok Video Downloader - TTDownloader',
+        seoTitle: 'TikTok Video Downloader - TikSavePro',
         seoDescription: 'Download HD videos without watermark in MP4 format.',
         isPublished: true,
         layout: JSON.stringify([
@@ -49,7 +49,7 @@ export class PagesService implements OnModuleInit {
       {
         title: 'Audio Extractor Page',
         slug: 'audio',
-        seoTitle: 'TikTok Audio Extractor - TTDownloader',
+        seoTitle: 'TikTok Audio Extractor - TikSavePro',
         seoDescription: 'Extract and download MP3 audio from any TikTok video.',
         isPublished: true,
         layout: JSON.stringify([
@@ -68,7 +68,7 @@ export class PagesService implements OnModuleInit {
       {
         title: 'Bulk Downloader Page',
         slug: 'bulk',
-        seoTitle: 'TikTok Profile Bulk Downloader - TTDownloader',
+        seoTitle: 'TikTok Profile Bulk Downloader - TikSavePro',
         seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
         isPublished: true,
         layout: JSON.stringify([
@@ -87,15 +87,15 @@ export class PagesService implements OnModuleInit {
       {
         title: 'APK Download Page',
         slug: 'apk',
-        seoTitle: 'Android APK Release - TTDownloader',
-        seoDescription: 'Download the TTDownloader Android app.',
+        seoTitle: 'Android APK Release - TikSavePro',
+        seoDescription: 'Download the TikSavePro Android app.',
         isPublished: true,
         layout: JSON.stringify([
           { 
             id: 'ap-1', 
             type: 'hero', 
             title: 'Download Our Android App', 
-            subtitle: 'Get the official TTDownloader Android application for your smartphone.', 
+            subtitle: 'Get the official TikSavePro Android application for your smartphone.', 
             bgColor: '#0f172a',
             bgImage: '/contact-banner.jpg',
             badge: 'Android APK Release'
@@ -269,8 +269,8 @@ export class PagesService implements OnModuleInit {
       {
         title: 'Contact Us Page',
         slug: 'contact',
-        seoTitle: 'Contact Us - TTDownloader',
-        seoDescription: 'Get in touch with the support team.',
+        seoTitle: 'Contact Us - TikSavePro',
+        seoDescription: 'Get in touch with the TikSavePro support team.',
         isPublished: true,
         layout: JSON.stringify([
           { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: 'Have a question, suggestion, or need support? We\'d love to hear from you.', bgColor: '#0f172a', bgImage: '/contact-banner.jpg', badge: 'Support & Inquiries' },
@@ -285,9 +285,9 @@ export class PagesService implements OnModuleInit {
         await this.prisma.page.create({ data: page });
       } else {
         // Update existing seeded records if they contain old brand
-        if (exists.seoTitle?.includes('TikSavePro') || exists.layout?.includes('TikSavePro')) {
-          const newSeoTitle = exists.seoTitle?.replace(/TikSavePro/g, 'TTDownloader');
-          const newLayout = exists.layout?.replace(/TikSavePro/g, 'TTDownloader');
+        if (exists.seoTitle?.includes('TTDownloader') || exists.layout?.includes('TTDownloader')) {
+          const newSeoTitle = exists.seoTitle?.replace(/TTDownloader/g, 'TikSavePro');
+          const newLayout = exists.layout?.replace(/TTDownloader/g, 'TikSavePro');
           await this.prisma.page.update({
             where: { slug: page.slug },
             data: { seoTitle: newSeoTitle, layout: newLayout }
