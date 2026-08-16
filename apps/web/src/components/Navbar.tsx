@@ -15,7 +15,7 @@ const navLinks = [
   { href: '/blog', label: 'Blog' },
   { href: '/apk', label: 'Android APK' },
   { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/contact-us', label: 'Contact' },
 ];
 
 export default function Navbar() {

@@ -4,8 +4,12 @@ import { getPagesStore, savePagesStore } from '../route';
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const pages = getPagesStore();
-  const decodedSlug = decodeURIComponent(slug);
-  const page = pages.find((p: any) => p.slug === slug || p.slug === decodedSlug || p.id === slug);
+  const decodedSlug = decodeURIComponent(slug).toLowerCase();
+  let page = pages.find((p: any) => p.slug?.toLowerCase() === slug.toLowerCase() || p.slug?.toLowerCase() === decodedSlug || p.id === slug);
+
+  if (!page && (decodedSlug === 'contact-us' || decodedSlug === 'contact')) {
+    page = pages.find((p: any) => p.slug === 'contact-us' || p.slug === 'contact');
+  }
 
   if (page) {
     return NextResponse.json(page);
@@ -18,9 +22,12 @@ export async function PUT(req: Request, { params }: { params: Promise<{ slug: st
     const { slug } = await params;
     const body = await req.json();
     const pages = getPagesStore();
-    const decodedSlug = decodeURIComponent(slug);
+    const decodedSlug = decodeURIComponent(slug).toLowerCase();
 
-    const index = pages.findIndex((p: any) => p.id === slug || p.slug === slug || p.slug === decodedSlug);
+    let index = pages.findIndex((p: any) => p.id === slug || p.slug?.toLowerCase() === slug.toLowerCase() || p.slug?.toLowerCase() === decodedSlug);
+    if (index === -1 && (decodedSlug === 'contact-us' || decodedSlug === 'contact')) {
+      index = pages.findIndex((p: any) => p.slug === 'contact-us' || p.slug === 'contact');
+    }
     if (index !== -1) {
       pages[index] = { ...pages[index], ...body, updatedAt: new Date().toISOString() };
       savePagesStore(pages);

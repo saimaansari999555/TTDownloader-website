@@ -125,9 +125,16 @@ export class PagesService implements OnModuleInit {
   }
 
   async findBySlug(slug: string): Promise<Page | null> {
-    return this.prisma.page.findUnique({
-      where: { slug: slug.toLowerCase() },
+    const cleanSlug = slug.toLowerCase();
+    let page = await this.prisma.page.findUnique({
+      where: { slug: cleanSlug },
     });
+    if (!page && (cleanSlug === 'contact-us' || cleanSlug === 'contact')) {
+      page = await this.prisma.page.findFirst({
+        where: { slug: { in: ['contact-us', 'contact'] } },
+      });
+    }
+    return page;
   }
 
   async create(data: {
@@ -195,7 +202,7 @@ export class PagesService implements OnModuleInit {
       throw new HttpException('Page not found', HttpStatus.NOT_FOUND);
     }
     // Prevent deleting system pages
-    const systemSlugs = ['home', 'video', 'audio', 'bulk', 'apk', 'about', 'contact'];
+    const systemSlugs = ['home', 'video', 'audio', 'bulk', 'apk', 'about', 'contact', 'contact-us'];
     if (systemSlugs.includes(page.slug)) {
       throw new HttpException('Cannot delete a system page', HttpStatus.BAD_REQUEST);
     }

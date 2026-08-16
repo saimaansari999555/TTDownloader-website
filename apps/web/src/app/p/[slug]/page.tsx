@@ -103,10 +103,20 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
       { id: 'ab-29', type: 'paragraph', text: 'Thank you for visiting Tik-TokDownloader.xyz.\n\nWhether you need to download a single TikTok video, process multiple links with our Bulk Downloader, extract audio, or use our MP3 Downloader, we aim to provide simple browser-based tools that are easy to access and use.\n\nTik-TokDownloader.xyz — Simple and convenient tools for working with supported TikTok content.' }
     ])
   },
+  'contact-us': {
+    title: 'Contact Us Page',
+    seoTitle: 'Contact Us - TTDownloader',
+    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
+      { id: 'c-2', type: 'contact_tool' }
+    ])
+  },
   contact: {
     title: 'Contact Us Page',
     seoTitle: 'Contact Us - TTDownloader',
-    seoDescription: 'Get in touch with the support team.',
+    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
       { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
@@ -145,40 +155,57 @@ export default function CustomPage({ params }: { params: any }) {
 
   useEffect(() => {
     if (!params) return;
-    // Check if params is a Promise
-    if (params instanceof Promise) {
-      params.then((res: any) => setSlug(res?.slug || null));
-    } else if (typeof (params as any).then === 'function') {
-      (params as any).then((res: any) => setSlug(res?.slug || null));
-    } else {
-      setSlug(params.slug || null);
-    }
+    // Check if params is a Promise or thenable (Next.js 15+)
+    Promise.resolve(params).then((res: any) => {
+      setSlug(res?.slug || (typeof params === 'object' && params?.slug) || null);
+    }).catch(() => {
+      setSlug(params?.slug || null);
+    });
   }, [params]);
 
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
     setNotFound(false);
-    getCustomPageBySlug(slug)
-      .then(res => {
+
+    const loadPageData = async () => {
+      const normalizedSlug = slug.toLowerCase();
+      try {
+        let res = await getCustomPageBySlug(normalizedSlug);
+        // If not found and slug is contact-us or contact, try the alias
         if (!res || !res.isPublished) {
-          if (DEFAULT_SYSTEM_PAGES[slug]) {
-            setPage(DEFAULT_SYSTEM_PAGES[slug]);
+          if (normalizedSlug === 'contact-us') {
+            res = await getCustomPageBySlug('contact');
+          } else if (normalizedSlug === 'contact') {
+            res = await getCustomPageBySlug('contact-us');
+          }
+        }
+
+        if (!res || !res.isPublished) {
+          if (DEFAULT_SYSTEM_PAGES[normalizedSlug]) {
+            setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug]);
+          } else if (DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]) {
+            setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]);
           } else {
             setNotFound(true);
           }
         } else {
           setPage(res);
         }
-      })
-      .catch(() => {
-        if (DEFAULT_SYSTEM_PAGES[slug]) {
-          setPage(DEFAULT_SYSTEM_PAGES[slug]);
+      } catch {
+        if (DEFAULT_SYSTEM_PAGES[normalizedSlug]) {
+          setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug]);
+        } else if (DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]) {
+          setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]);
         } else {
           setNotFound(true);
         }
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPageData();
   }, [slug]);
 
   useEffect(() => {

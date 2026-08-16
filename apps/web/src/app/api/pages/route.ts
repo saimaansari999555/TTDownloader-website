@@ -101,11 +101,23 @@ let globalPages: any[] = [
     ])
   },
   {
+    id: 'contact-us',
+    title: 'Contact Us Page',
+    slug: 'contact-us',
+    seoTitle: 'Contact Us - TTDownloader',
+    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
+      { id: 'c-2', type: 'contact_tool' }
+    ])
+  },
+  {
     id: 'contact',
     title: 'Contact Us Page',
     slug: 'contact',
     seoTitle: 'Contact Us - TTDownloader',
-    seoDescription: 'Get in touch with the support team.',
+    seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
       { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
