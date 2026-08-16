@@ -109,7 +109,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
+      { 
+        id: 'c-1', 
+        type: 'hero', 
+        title: 'Get In Touch', 
+        subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Support & Inquiries'
+      },
       { id: 'c-2', type: 'contact_tool' }
     ])
   },
@@ -119,7 +127,15 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     seoDescription: 'Get in touch with the TTDownloader support team for feedback, questions, assistance, bug reports, and general inquiries.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", bgColor: '#0f172a' },
+      { 
+        id: 'c-1', 
+        type: 'hero', 
+        title: 'Get In Touch', 
+        subtitle: "Have a question, suggestion, or need support? We'd love to hear from you.", 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Support & Inquiries'
+      },
       { id: 'c-2', type: 'contact_tool' }
     ])
   },
@@ -257,16 +273,26 @@ export default function CustomPage({ params }: { params: any }) {
         <div className="glass-panel overflow-hidden rounded-2xl shadow-xl border border-white/5 bg-slate-950/20 backdrop-blur-xl">
           {blocks.map((block: any, idx: number) => {
             if (block.type === 'hero') {
+              const hasBgImage = Boolean(block.bgImage);
               return (
                 <div 
                   key={block.id || idx} 
-                  className="p-6 sm:p-10 md:p-16 text-center space-y-4 border-b border-white/5 relative"
-                  style={{ backgroundColor: block.bgColor || '#1e293b' }}
+                  className="p-8 sm:p-12 md:p-16 text-center space-y-4 border-b border-white/5 relative overflow-hidden bg-cover bg-center"
+                  style={{ 
+                    backgroundColor: block.bgColor || '#1e293b',
+                    backgroundImage: hasBgImage ? `url(${block.bgImage})` : undefined,
+                  }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 pointer-events-none" />
-                  <div className="relative z-10 space-y-3">
-                    <h1 className="text-3xl md:text-5xl font-black text-white leading-tight break-words">{block.title}</h1>
-                    <p className="text-white/80 text-sm md:text-lg max-w-xl mx-auto break-words">{block.subtitle}</p>
+                  <div className={`absolute inset-0 ${hasBgImage ? 'bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90 backdrop-blur-[1px]' : 'bg-gradient-to-b from-transparent to-black/40'} pointer-events-none`} />
+                  <div className="relative z-10 space-y-3 max-w-2xl mx-auto">
+                    {block.badge && (
+                      <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500/20 text-primary-300 border border-primary-500/30 mb-1">
+                        <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+                        {block.badge}
+                      </div>
+                    )}
+                    <h1 className="text-3xl md:text-5xl font-black text-white leading-tight break-words tracking-tight drop-shadow-md">{block.title}</h1>
+                    <p className="text-white/85 text-sm md:text-lg max-w-xl mx-auto break-words leading-relaxed drop-shadow">{block.subtitle}</p>
                   </div>
                 </div>
               );

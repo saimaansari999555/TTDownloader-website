@@ -81,7 +81,7 @@ export class PagesService implements OnModuleInit {
         seoDescription: 'Get in touch with the support team.',
         isPublished: true,
         layout: JSON.stringify([
-          { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: 'Have a question, suggestion, or need support? We\'d love to hear from you.', bgColor: '#0f172a' },
+          { id: 'c-1', type: 'hero', title: 'Get In Touch', subtitle: 'Have a question, suggestion, or need support? We\'d love to hear from you.', bgColor: '#0f172a', bgImage: '/contact-banner.jpg', badge: 'Support & Inquiries' },
           { id: 'c-2', type: 'contact_tool' }
         ])
       }
