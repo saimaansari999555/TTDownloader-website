@@ -67,40 +67,165 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     ])
   },
   about: {
-    title: 'About Us Page',
-    seoTitle: 'About Us - TTDownloader',
-    seoDescription: 'Welcome to Tik-TokDownloader.xyz, a simple and user-friendly online platform designed to make downloading and saving publicly available TikTok content easier.',
+    title: 'About Us',
+    seoTitle: 'About Us | Tik-TokDownloader.xyz',
+    seoDescription: 'Learn about Tik-TokDownloader.xyz, our TikTok video, MP3, audio extraction and bulk download tools, and our commitment to a simple and responsible browsing experience.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'ab-1', type: 'hero', title: 'About Us', subtitle: 'Welcome to Tik-TokDownloader.xyz, a simple and user-friendly online platform designed to make downloading and saving publicly available TikTok content easier.', bgColor: '#1e293b' },
-      { id: 'ab-2', type: 'paragraph', text: 'Our goal is to provide useful tools that allow users to work with TikTok video links directly from their web browser. Whether you want to download a single video, process multiple videos, or extract audio from supported content, our tools are designed to keep the process simple and convenient.' },
-      { id: 'ab-3', type: 'heading', level: 'h2', text: 'What Is Tik-TokDownloader.xyz?' },
-      { id: 'ab-4', type: 'paragraph', text: 'Tik-TokDownloader.xyz is an online platform built for users who want a convenient way to work with TikTok video content without installing complicated software.\n\nTikTok contains millions of entertaining, educational, informative, and creative videos. Sometimes users want to save a video for offline viewing, keep a useful tutorial, save audio for personal use, or process multiple video links at once.\n\nOur platform provides several browser-based tools to make these tasks easier.' },
-      { id: 'ab-5', type: 'heading', level: 'h2', text: 'Our Main Tools' },
-      { id: 'ab-6', type: 'heading', level: 'h3', text: 'TikTok Video Downloader' },
-      { id: 'ab-7', type: 'paragraph', text: 'Our main TikTok Video Downloader allows users to process a publicly available TikTok video link and access the available download options.\n\nThe process is simple:\n\n1. Find a TikTok video.\n2. Copy its link.\n3. Paste the link into our downloader.\n4. Start the download.\n5. Save the available video to your device.\n\nThe available quality depends on the source video and the options available at the time of processing.' },
-      { id: 'ab-8', type: 'heading', level: 'h3', text: 'TikTok Audio Extractor' },
-      { id: 'ab-9', type: 'paragraph', text: 'Sometimes you may be interested in the audio from a TikTok video rather than the complete video.\n\nOur Audio Extractor is designed to provide a convenient way to extract available audio from supported TikTok video content.\n\nThis can be useful for users who want to listen to audio separately or keep audio for personal offline use.\n\nThe available audio quality depends on the source content and the processing options provided by the service.' },
-      { id: 'ab-10', type: 'heading', level: 'h3', text: 'TikTok MP3 Downloader' },
-      { id: 'ab-11', type: 'paragraph', text: 'For users who specifically want audio files, our TikTok MP3 Downloader provides a simple browser-based option for converting supported TikTok video content into an audio format.\n\nInstead of downloading the complete video, users can use the available audio option when supported.\n\nThis can be useful when you are interested in the sound, music, spoken content, or other audio contained in a TikTok video.' },
-      { id: 'ab-12', type: 'heading', level: 'h3', text: 'TikTok Bulk Downloader' },
-      { id: 'ab-13', type: 'paragraph', text: 'Downloading videos one at a time can become inconvenient when you have several links to process.\n\nThat\'s why we also provide a TikTok Bulk Downloader feature for users who need to work with multiple TikTok video URLs.\n\nInstead of processing every link individually, the bulk downloading feature is designed to make handling multiple URLs more convenient.\n\nUsers can provide multiple supported TikTok links and process them through the available bulk downloading options.\n\nThe actual availability and number of videos that can be processed may depend on the current service limitations and source content.' },
-      { id: 'ab-14', type: 'heading', level: 'h2', text: 'Why We Built These Tools' },
-      { id: 'ab-15', type: 'paragraph', text: 'Our goal is to reduce unnecessary complexity.\n\nMany online tools can be confusing, require unnecessary registrations, or ask users to install additional applications. We believe a useful online tool should be straightforward and accessible.\n\nThat\'s why Tik-TokDownloader.xyz focuses on:\n\n* Simple browser-based tools\n* Easy-to-understand interfaces\n* Mobile-friendly access\n* Support for different downloading needs\n* No unnecessary software installation\n* Convenient processing of supported TikTok links' },
-      { id: 'ab-16', type: 'heading', level: 'h2', text: 'Designed for Mobile and Desktop Users' },
-      { id: 'ab-17', type: 'paragraph', text: 'TikTok is primarily used on smartphones, so we understand the importance of a mobile-friendly experience.\n\nTik-TokDownloader.xyz can be accessed through modern browsers on:\n\n* Android phones\n* iPhones\n* Tablets\n* Windows computers\n* Mac computers\n* Other supported devices\n\nYou don\'t need to use a specific operating system to access our online tools. Simply open the website through a compatible browser and use the tool you need.' },
-      { id: 'ab-18', type: 'heading', level: 'h2', text: 'How Our Platform Works' },
-      { id: 'ab-19', type: 'paragraph', text: 'Our tools are designed around a simple URL-based workflow.\n\nYou provide a supported TikTok video link, and the relevant tool processes the available information associated with that URL. Depending on the tool you choose, you may then receive options for downloading the video, processing multiple videos, or extracting available audio.\n\nBecause the source content can vary, download formats, quality, and availability may not be identical for every video.' },
-      { id: 'ab-20', type: 'heading', level: 'h2', text: 'Privacy and Security' },
-      { id: 'ab-21', type: 'paragraph', text: 'We believe users should always be careful when using online downloading services.\n\nTik-TokDownloader.xyz does not require users to provide their TikTok password to use the downloader tools. We strongly recommend that users never share their TikTok login credentials with third-party downloading websites.\n\nYou should also avoid downloading unknown software, suspicious browser extensions, or files from websites that you do not trust.\n\nFor complete information about privacy and data handling, please visit our Privacy Policy page.' },
-      { id: 'ab-22', type: 'heading', level: 'h2', text: 'Respecting Content Creators' },
-      { id: 'ab-23', type: 'paragraph', text: 'TikTok videos, music, sounds, and other content may be protected by copyright or other intellectual property rights.\n\nDownloading a video or extracting its audio does not transfer ownership of that content to you.\n\nWe encourage all users to respect the original creators and rights holders. If you intend to repost, redistribute, modify, publish, or use downloaded content for commercial purposes, make sure you have the necessary permission and comply with applicable copyright laws and platform rules.\n\nOur tools are intended to provide technical functionality for supported content and should be used responsibly.' },
-      { id: 'ab-24', type: 'heading', level: 'h2', text: 'Our Commitment to a Better Experience' },
-      { id: 'ab-25', type: 'paragraph', text: 'We are continuously working to improve Tik-TokDownloader.xyz and make our tools easier and more convenient to use.\n\nAs the needs of TikTok users change, we may introduce improvements to our existing Video Downloader, Audio Extractor, MP3 Downloader, and Bulk Downloader tools.\n\nOur aim is to keep the platform simple while providing useful features for users around the world.' },
-      { id: 'ab-26', type: 'heading', level: 'h2', text: 'Have a Question or Suggestion?' },
-      { id: 'ab-27', type: 'paragraph', text: 'We value feedback from our visitors.\n\nIf you experience a problem, have a question about one of our tools, or have an idea that could improve the website, you can contact us through our Contact Us page.\n\nUser feedback helps us identify areas where the website can be improved and helps us build a better experience.' },
-      { id: 'ab-28', type: 'heading', level: 'h2', text: 'Thank You for Visiting' },
-      { id: 'ab-29', type: 'paragraph', text: 'Thank you for visiting Tik-TokDownloader.xyz.\n\nWhether you need to download a single TikTok video, process multiple links with our Bulk Downloader, extract audio, or use our MP3 Downloader, we aim to provide simple browser-based tools that are easy to access and use.\n\nTik-TokDownloader.xyz — Simple and convenient tools for working with supported TikTok content.' }
+      { 
+        id: 'ab-hero', 
+        type: 'hero', 
+        title: 'About Tik-TokDownloader.xyz', 
+        subtitle: 'Simple, browser-based tools for downloading and working with publicly available TikTok content without complicated software.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'About Our Platform',
+        ctaText: 'Start Downloading',
+        ctaLink: '/',
+        secondaryCtaText: 'Explore Our Tools',
+        secondaryCtaLink: '/video'
+      },
+      { id: 'ab-h2-1', type: 'heading', level: 'h2', text: 'About Tik-TokDownloader.xyz' },
+      { 
+        id: 'ab-p-1', 
+        type: 'paragraph', 
+        text: 'Tik-TokDownloader.xyz is an online platform created to make saving and working with publicly available TikTok content straightforward and accessible directly through modern web browsers.\n\nWhether you need to save a video for personal offline reference, extract audio from a favorite clip, or process multiple video links, our tools are built to help you accomplish these tasks without installing third-party applications or navigating complicated setups.\n\nOur general workflow is straightforward:\n1. Copy the link of the publicly available TikTok content.\n2. Paste the URL into the appropriate tool on our platform.\n3. Select from the available download or extraction options provided.\n4. Save the file to your device.\n\nWe focus on delivering an accessible experience for everyday users who want a quick, web-based solution.' 
+      },
+      { id: 'ab-h2-2', type: 'heading', level: 'h2', text: 'Our Tools' },
+      {
+        id: 'ab-cards-1',
+        type: 'cards_grid',
+        items: [
+          {
+            title: 'TikTok Video Downloader',
+            badge: 'Video MP4',
+            description: 'Paste a TikTok video link and download the available video file directly through your browser with a clean, straightforward download experience.',
+            ctaText: 'Try Video Downloader',
+            ctaLink: '/video'
+          },
+          {
+            title: 'TikTok MP3 Downloader',
+            badge: 'Audio MP3',
+            description: 'An audio-focused option designed for users who want to extract and download MP3 audio from supported TikTok content for offline listening.',
+            ctaText: 'Try MP3 Downloader',
+            ctaLink: '/audio'
+          },
+          {
+            title: 'TikTok Audio Extractor',
+            badge: 'Extractor',
+            description: 'Extract the sound or audio track from supported TikTok clips when you only need the audio portion for personal offline use.',
+            ctaText: 'Extract Audio',
+            ctaLink: '/audio'
+          },
+          {
+            title: 'TikTok Bulk Downloader',
+            badge: 'Batch Tool',
+            description: 'Process multiple TikTok video URLs more efficiently instead of downloading each individual video link one by one.',
+            ctaText: 'Try Bulk Downloader',
+            ctaLink: '/bulk'
+          },
+          {
+            title: 'APK Downloader',
+            badge: 'Android Utility',
+            description: 'Explore APK downloads and Android app release updates available through our dedicated APK utility section.',
+            ctaText: 'Explore APK Downloads',
+            ctaLink: '/apk'
+          }
+        ]
+      },
+      { id: 'ab-h2-3', type: 'heading', level: 'h2', text: 'Why We Built the Platform' },
+      { 
+        id: 'ab-p-2', 
+        type: 'paragraph', 
+        text: 'We built Tik-TokDownloader.xyz with a focus on simplicity, utility, and user convenience. Many online utilities are overloaded with confusing steps, mandatory software installations, or intrusive sign-ups.\n\nOur platform focuses on:\n• Simple, accessible browser-based tools\n• Clean interfaces with straightforward copy-and-paste workflows\n• Responsive support for both mobile smartphones and desktop computers\n• Multiple download utilities in one organized destination\n• No unnecessary software installations or account requirements' 
+      },
+      { id: 'ab-h2-4', type: 'heading', level: 'h2', text: 'How It Works' },
+      {
+        id: 'ab-steps-1',
+        type: 'steps',
+        items: [
+          {
+            number: 1,
+            title: 'Copy the TikTok Link',
+            description: 'Find the publicly available TikTok video or audio you wish to process and copy its link from the browser or app.'
+          },
+          {
+            number: 2,
+            title: 'Paste the Link',
+            description: 'Paste the copied URL into the input field of the relevant downloader tool on Tik-TokDownloader.xyz.'
+          },
+          {
+            number: 3,
+            title: 'Download Your File',
+            description: 'Choose from the available output options and save the downloaded video or audio file directly to your device.'
+          }
+        ]
+      },
+      { id: 'ab-h2-5', type: 'heading', level: 'h2', text: 'Built for Mobile and Desktop' },
+      { 
+        id: 'ab-p-3', 
+        type: 'paragraph', 
+        text: 'Tik-TokDownloader.xyz is designed to function smoothly across modern web browsers on smartphones, tablets, laptops, and desktop computers. You do not need a specific operating system or specialized hardware—simply open the website in a compatible browser such as Chrome, Safari, Edge, or Firefox to access all available tools.' 
+      },
+      { id: 'ab-h2-6', type: 'heading', level: 'h2', text: 'Privacy & Responsible Use' },
+      { 
+        id: 'ab-p-4', 
+        type: 'paragraph', 
+        text: 'User privacy and responsible platform usage are core priorities. Tik-TokDownloader.xyz operates on a direct URL processing model and does not require users to create an account or provide TikTok account credentials.\n\nTik-TokDownloader.xyz is an independent third-party website and is not affiliated with, sponsored by, or endorsed by TikTok or ByteDance Ltd. Users are responsible for ensuring that their use of our tools complies with applicable laws, platform terms, and copyright requirements. For more details on data handling, please review our [Privacy Policy](/privacy).' 
+      },
+      { id: 'ab-h2-7', type: 'heading', level: 'h2', text: 'Respect Creators and Copyright' },
+      { 
+        id: 'ab-p-5', 
+        type: 'paragraph', 
+        text: 'Downloading or extracting media through our platform does not grant copyright ownership or redistribution licenses. All trademarks, videos, music, sounds, and content remain the intellectual property of their respective creators and copyright holders.\n\nWe encourage all users to:\n• Process content they own or have received permission to use\n• Respect original creator attribution\n• Avoid unauthorized reposting or commercial redistribution\n• Comply with platform guidelines and applicable copyright regulations' 
+      },
+      { id: 'ab-h2-8', type: 'heading', level: 'h2', text: 'Frequently Asked Questions' },
+      {
+        id: 'ab-faq-1',
+        type: 'faq',
+        items: [
+          {
+            question: 'What is Tik-TokDownloader.xyz?',
+            answer: 'Tik-TokDownloader.xyz is a free, web-based platform providing online tools to download publicly available TikTok videos, extract MP3 audio, and process multiple links directly from your web browser.'
+          },
+          {
+            question: 'Do I need to install an application?',
+            answer: 'No installation is required. All tools run directly in any modern web browser on mobile or desktop devices. We also offer an optional Android app in our [APK section](/apk) for users who prefer a mobile app.'
+          },
+          {
+            question: 'Can I use the website on my phone?',
+            answer: 'Yes, the website is fully optimized for mobile browsers on iOS, Android, and tablets.'
+          },
+          {
+            question: 'What tools are available?',
+            answer: 'We provide a [TikTok Video Downloader](/video), [TikTok MP3 Downloader](/audio), [Audio Extractor](/audio), and [Bulk Profile Downloader](/bulk).'
+          },
+          {
+            question: 'Can I download multiple TikTok videos?',
+            answer: 'Yes, our [Bulk Downloader](/bulk) allows you to enter a public TikTok username to fetch and process multiple videos at once.'
+          },
+          {
+            question: 'Can I extract audio from TikTok videos?',
+            answer: 'Yes, our [Audio Extractor](/audio) extracts available audio tracks and allows you to download them in MP3 format.'
+          },
+          {
+            question: 'Is Tik-TokDownloader.xyz affiliated with TikTok?',
+            answer: 'No. Tik-TokDownloader.xyz is an independent third-party website and is not affiliated with, sponsored by, or endorsed by TikTok or ByteDance Ltd.'
+          },
+          {
+            question: 'Can I download any TikTok video?',
+            answer: 'Our tools process publicly available TikTok video links. Videos set to private, geo-restricted, or removed by creators/platform may not be accessible.'
+          }
+        ]
+      },
+      {
+        id: 'ab-cta-1',
+        type: 'cta_box',
+        title: 'Have a Question or Need Support?',
+        subtitle: 'If you have questions about our tools, experience an issue, or want to suggest improvements, get in touch with our team.',
+        buttonText: 'Contact Us',
+        buttonLink: '/contact-us'
+      }
     ])
   },
   'contact-us': {
@@ -277,14 +402,14 @@ export default function CustomPage({ params }: { params: any }) {
               return (
                 <div 
                   key={block.id || idx} 
-                  className="p-8 sm:p-12 md:p-16 text-center space-y-4 border-b border-white/5 relative overflow-hidden bg-cover bg-center"
+                  className="p-8 sm:p-14 md:p-20 text-center space-y-4 border-b border-white/5 relative overflow-hidden bg-cover bg-center"
                   style={{ 
                     backgroundColor: block.bgColor || '#1e293b',
                     backgroundImage: hasBgImage ? `url(${block.bgImage})` : undefined,
                   }}
                 >
                   <div className={`absolute inset-0 ${hasBgImage ? 'bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90 backdrop-blur-[1px]' : 'bg-gradient-to-b from-transparent to-black/40'} pointer-events-none`} />
-                  <div className="relative z-10 space-y-3 max-w-2xl mx-auto">
+                  <div className="relative z-10 space-y-4 max-w-3xl mx-auto">
                     {block.badge && (
                       <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500/20 text-primary-300 border border-primary-500/30 mb-1">
                         <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
@@ -292,7 +417,28 @@ export default function CustomPage({ params }: { params: any }) {
                       </div>
                     )}
                     <h1 className="text-3xl md:text-5xl font-black text-white leading-tight break-words tracking-tight drop-shadow-md">{block.title}</h1>
-                    <p className="text-white/85 text-sm md:text-lg max-w-xl mx-auto break-words leading-relaxed drop-shadow">{block.subtitle}</p>
+                    <p className="text-white/85 text-sm md:text-lg max-w-2xl mx-auto break-words leading-relaxed drop-shadow">{block.subtitle}</p>
+
+                    {(block.ctaText || block.secondaryCtaText) && (
+                      <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+                        {block.ctaText && (
+                          <Link 
+                            href={block.ctaLink || '/'} 
+                            className="btn-primary px-6 py-3 rounded-xl font-bold text-sm md:text-base inline-flex items-center gap-2 shadow-lg shadow-primary-500/25 transition-transform hover:scale-105"
+                          >
+                            {block.ctaText}
+                          </Link>
+                        )}
+                        {block.secondaryCtaText && (
+                          <Link 
+                            href={block.secondaryCtaLink || '/video'} 
+                            className="px-6 py-3 rounded-xl font-bold text-sm md:text-base bg-white/10 hover:bg-white/15 text-white border border-white/15 inline-flex items-center gap-2 transition-all hover:scale-105"
+                          >
+                            {block.secondaryCtaText}
+                          </Link>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -326,16 +472,138 @@ export default function CustomPage({ params }: { params: any }) {
                 'text-lg md:text-2xl font-bold';
               
               return (
-                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 pt-6">
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 pt-8 pb-2">
                   <Tag className={`${sizeClass} text-white break-words`}>{block.text}</Tag>
                 </div>
               );
             }
 
             if (block.type === 'paragraph') {
+              const formatParagraphWithLinks = (content: string) => {
+                if (!content) return null;
+                const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+                const parts: React.ReactNode[] = [];
+                let lastIndex = 0;
+                let match;
+
+                while ((match = linkRegex.exec(content)) !== null) {
+                  if (match.index > lastIndex) {
+                    parts.push(content.substring(lastIndex, match.index));
+                  }
+                  const label = match[1];
+                  const href = match[2];
+                  const isInternal = href.startsWith('/') || href.startsWith('#');
+                  if (isInternal) {
+                    parts.push(
+                      <Link key={match.index} href={href} className="text-primary-400 font-semibold hover:underline">
+                        {label}
+                      </Link>
+                    );
+                  } else {
+                    parts.push(
+                      <a key={match.index} href={href} target="_blank" rel="noopener noreferrer" className="text-primary-400 font-semibold hover:underline">
+                        {label}
+                      </a>
+                    );
+                  }
+                  lastIndex = linkRegex.lastIndex;
+                }
+                if (lastIndex < content.length) {
+                  parts.push(content.substring(lastIndex));
+                }
+                return parts;
+              };
+
               return (
-                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-3">
-                  <p className="text-text-secondary text-sm md:text-lg leading-relaxed whitespace-pre-wrap break-words">{block.text}</p>
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-2">
+                  <p className="text-text-secondary text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">
+                    {formatParagraphWithLinks(block.text)}
+                  </p>
+                </div>
+              );
+            }
+
+            if (block.type === 'cards_grid' && Array.isArray(block.items)) {
+              return (
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    {block.items.map((item: any, iIdx: number) => (
+                      <div key={iIdx} className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-primary-500/30 transition-all flex flex-col justify-between space-y-4">
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="text-base sm:text-lg font-bold text-white">{item.title}</h3>
+                            {item.badge && (
+                              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-primary-500/15 text-primary-300 border border-primary-500/25 shrink-0">
+                                {item.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-text-secondary text-sm leading-relaxed">{item.description}</p>
+                        </div>
+                        {item.ctaText && item.ctaLink && (
+                          <div>
+                            <Link href={item.ctaLink} className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-primary-400 hover:text-primary-300 transition-colors">
+                              {item.ctaText} →
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
+            if (block.type === 'steps' && Array.isArray(block.items)) {
+              return (
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                    {block.items.map((step: any, sIdx: number) => (
+                      <div key={sIdx} className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 relative space-y-3">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 border border-primary-500/30 flex items-center justify-center font-black text-primary-400 text-lg">
+                          {step.number || sIdx + 1}
+                        </div>
+                        <h3 className="text-base font-bold text-white">{step.title}</h3>
+                        <p className="text-text-secondary text-sm leading-relaxed">{step.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
+            if (block.type === 'faq' && Array.isArray(block.items)) {
+              return (
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4 space-y-3">
+                  {block.items.map((item: any, fIdx: number) => (
+                    <details key={fIdx} className="group p-4 rounded-xl bg-white/[0.02] border border-white/5 open:border-primary-500/25 open:bg-white/[0.04] transition-all">
+                      <summary className="font-bold text-white text-sm sm:text-base cursor-pointer list-none flex items-center justify-between gap-3">
+                        <span>{item.question}</span>
+                        <span className="text-primary-400 text-xs transition-transform duration-200 group-open:rotate-180">▼</span>
+                      </summary>
+                      <p className="text-text-secondary text-sm leading-relaxed mt-3 pt-3 border-t border-white/5 whitespace-pre-wrap">
+                        {item.answer}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              );
+            }
+
+            if (block.type === 'cta_box') {
+              return (
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-6">
+                  <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-primary-950/40 via-purple-950/30 to-slate-900/60 border border-primary-500/20 text-center space-y-4">
+                    <h3 className="text-xl md:text-2xl font-black text-white">{block.title}</h3>
+                    <p className="text-text-secondary text-sm sm:text-base max-w-xl mx-auto">{block.subtitle}</p>
+                    {block.buttonText && block.buttonLink && (
+                      <div className="pt-2">
+                        <Link href={block.buttonLink} className="btn-primary px-6 py-2.5 rounded-xl font-bold text-sm inline-flex items-center gap-2 shadow-lg shadow-primary-500/20">
+                          {block.buttonText} →
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             }

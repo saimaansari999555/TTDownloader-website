@@ -106,6 +106,7 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `af21244` | Enable pages CRUD in Page Builder and link to NextJS custom API routes | Admin panel Ke Page Builder me homepage samet website ke saare modules aur tools editable kar diye aur Next.js API routes se connect kiya. |
 | `be482c3` | Live Google AdSense & Ads Manager Upgrade with dynamic ads.txt | Ads Manager page ko upgradation de ke full AdSense configurations (Publisher ID, Slot IDs, formatting styles, site verification head tags, dynamic ads.txt, details verification warning display, aur serverless backup-restore mapping) add kiya. |
 | `8d10ef4` | Fix /contact-us 404 indexing issue, add dynamic sitemap & robots | Contact Us public page create ki (`/contact-us`), full SEO metadata & canonical tags add kiye, `/contact` ko `/contact-us` par 301 redirect kiya, CMS slug aliasing handle ki, dynamic `sitemap.xml` aur `robots.txt` generate kiye, aur navbar/footer links update kiye. |
+| `a4921de` | Upgrade About Us page with rich tools grid, 3-step guide & FAQs | About Us page ko significantly upgrade kiya with custom cards grid, 3-step visual guide, 8-item FAQ accordion, CTA buttons, responsible-use & copyright notices, full SEO metadata, aur CMS Page Builder compatibility. |
 
 ---
 
