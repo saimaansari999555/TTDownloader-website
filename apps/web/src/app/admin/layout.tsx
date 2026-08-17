@@ -2,13 +2,14 @@
 import { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Image as ImageIcon, Settings, LogOut, Package, Mail, Home, Layout, Loader, Puzzle, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, Image as ImageIcon, Settings, LogOut, Package, Mail, Home, Layout, Loader, Puzzle, Menu, X, ArrowLeftRight } from 'lucide-react';
 import { api } from '@/lib/api';
 
 const sidebarLinks = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/blog', label: 'Blog Posts', icon: FileText },
   { href: '/admin/pages', label: 'Page Builder', icon: Layout },
+  { href: '/admin/redirects', label: 'Redirect Manager', icon: ArrowLeftRight },
   { href: '/admin/plugins', label: 'Plugins & Hooks', icon: Puzzle },
   { href: '/admin/media', label: 'Media Library', icon: ImageIcon },
   { href: '/admin/contact', label: 'Contact Inbox', icon: Mail },

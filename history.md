@@ -112,6 +112,7 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `8e09f2b` | Fix blog images cropping with full uncropped display and ambient blur | Blog index grid aur individual blog post headers par image cropping khatam kar ke full uncropped `object-contain` display aur sleek ambient blurred background apply kiya taake har image aur screenshot poori show ho. |
 | `f3918a0` | Upgrade Blog Post Editor with Rich Text, H1-H3, Links, & ChatGPT Paste Support | Blog Post Editor me WYSIWYG Rich Text Toolbar (H1/H2/H3, Bold, Italic, Underline, Link modal, Lists, Quotes, Code block, Source mode) add kiya, ChatGPT rich copy-paste formatting ko preserve kiya, aur frontend blog renderer me semantic sanitized HTML display aur separate SEO metadata controls integrate kiye. |
 | `a7f9201` | Migrate About page slug to /about-us with permanent 301 redirect | About Us page ka public slug `about` se badal kar `about-us` kiya (HTTP 200), `/about` par server-side permanent 301 redirect setup kiya, canonical URL `https://tik-tokdownloader.xyz/about-us` set ki, sitemap aur header/footer links update kiye aur SQLite DB me slug & redirect safely update kiya. |
+| `b92d710` | Build Admin-Controlled Dynamic Redirect Manager (301/302/307/308) with loop protection & middleware | Complete Redirect Manager system build kiya: Admin Panel UI (`/admin/redirects` aur Settings Tab), Next.js dynamic routing middleware, NestJS REST controller & service, Prisma schema update, backup/export/import integration, aur real-time redirect loop/chain detection. |
 
 ---
 

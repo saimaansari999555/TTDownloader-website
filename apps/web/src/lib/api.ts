@@ -158,6 +158,20 @@ export const getMediaAssets = () =>
 export const saveUrlMedia = (name: string, url: string) =>
   api.post('/api/media', { name, url }).then(r => r.data).catch(() => ({ url }));
 
+// Redirects Manager
+export const getRedirects = (): Promise<any[]> =>
+  api.get('/api/redirects').then(r => r.data).catch(() => []);
+
+export const createRedirect = (body: any): Promise<any> =>
+  api.post('/api/redirects', body).then(r => r.data);
+
+export const updateRedirect = (id: string, body: any): Promise<any> =>
+  api.put(`/api/redirects/${encodeURIComponent(id)}`, body).then(r => r.data);
+
+export const deleteRedirect = (id: string): Promise<any> =>
+  api.delete(`/api/redirects/${encodeURIComponent(id)}`).then(r => r.data);
+
+
 
 
 

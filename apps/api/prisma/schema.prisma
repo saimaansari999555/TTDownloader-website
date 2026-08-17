@@ -132,8 +132,11 @@ model Redirect {
   id         String   @id @default(uuid())
   sourcePath String   @unique
   targetPath String
-  statusCode Int      @default(301) // 301 or 302
+  statusCode Int      @default(301) // 301, 302, 307, 308
+  isActive   Boolean  @default(true)
+  notes      String?
   createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model ContactMessage {

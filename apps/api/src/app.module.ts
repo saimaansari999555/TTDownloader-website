@@ -19,6 +19,7 @@ import { ContactModule } from './contact/contact.module';
 import { ApkModule } from './apk/apk.module';
 import { PagesModule } from './pages/pages.module';
 import { BackupModule } from './backup/backup.module';
+import { RedirectsModule } from './redirects/redirects.module';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { BackupModule } from './backup/backup.module';
     BlogModule, 
     SettingsModule, 
     MediaModule, 
-    PluginsModule, ContactModule, ApkModule, PagesModule, BackupModule
+    PluginsModule, ContactModule, ApkModule, PagesModule, BackupModule, RedirectsModule
   ],
   controllers: [AppController],
   providers: [

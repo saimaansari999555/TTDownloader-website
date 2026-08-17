@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { savePagesStore } from '../../pages/route';
 import { saveSettingsStore } from '../../settings/route';
 import { savePostsStore } from '../../blog/posts/route';
+import { saveRedirectsStore } from '../../redirects/route';
 
 export async function POST(req: Request) {
   try {
@@ -10,7 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid backup file format.' }, { status: 400 });
     }
 
-    const { pages, settings, posts } = payload.data;
+    const { pages, settings, posts, redirects } = payload.data;
 
     if (Array.isArray(pages)) {
       savePagesStore(pages);
@@ -24,6 +25,9 @@ export async function POST(req: Request) {
     }
     if (Array.isArray(posts)) {
       savePostsStore(posts);
+    }
+    if (Array.isArray(redirects)) {
+      saveRedirectsStore(redirects);
     }
 
     return NextResponse.json({ message: 'Database backup restored successfully.' });

@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Settings2, Palette, Save, RefreshCw, Globe, HelpCircle, Code, Megaphone, FileText, Database, Download, Upload } from 'lucide-react';
+import { Settings2, Palette, Save, RefreshCw, Globe, HelpCircle, Code, Megaphone, FileText, Database, Download, Upload, ArrowLeftRight } from 'lucide-react';
 import { getSettings, updateSetting, exportDatabase, importDatabase } from '@/lib/api';
 import SeoChecker from '@/components/SeoChecker';
+import RedirectManager from '@/components/admin/RedirectManager';
 
 export default function AdminSettings() {
   const [activeTab, setActiveTab] = useState('general');
@@ -87,6 +88,7 @@ export default function AdminSettings() {
   const tabs = [
     { id: 'general', label: 'Page Content', icon: FileText },
     { id: 'seo', label: 'SEO Optimization', icon: Globe },
+    { id: 'redirects', label: 'Redirect Manager', icon: ArrowLeftRight },
     { id: 'ads', label: 'Ads Manager', icon: Megaphone },
     { id: 'theme', label: 'Theme Customizer', icon: Palette },
     { id: 'backup', label: 'Backup & Recovery', icon: Database },
@@ -255,6 +257,21 @@ export default function AdminSettings() {
                       <textarea rows={4} className="w-full glass-input rounded-xl py-3 px-4 text-sm font-mono resize-none" value={settings['robots_txt'] || ''} onChange={e => set('robots_txt', e.target.value)} />
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* REDIRECT MANAGER TAB */}
+              {activeTab === 'redirects' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white border-b border-white/10 pb-4 flex items-center gap-2">
+                      <ArrowLeftRight className="w-6 h-6 text-primary-400" /> Redirect Manager
+                    </h2>
+                    <p className="text-sm text-text-secondary leading-relaxed mt-2">
+                      Create and manage permanent (301) and temporary (302) URL redirects to preserve SEO rankings, prevent 404 errors, and map old page/blog paths seamlessly.
+                    </p>
+                  </div>
+                  <RedirectManager />
                 </div>
               )}
 
