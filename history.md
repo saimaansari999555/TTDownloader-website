@@ -109,6 +109,7 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `a4921de` | Upgrade About Us page with rich tools grid, 3-step guide & FAQs | About Us page ko significantly upgrade kiya with custom cards grid, 3-step visual guide, 8-item FAQ accordion, CTA buttons, responsible-use & copyright notices, full SEO metadata, aur CMS Page Builder compatibility. |
 | `52f6c91` | Apply cohesive glowing brand banner to Video, Audio, Bulk & APK pages | Sabhi downloader pages (Home, Video, Audio, Bulk, APK) se plain yellow/blue/green/pink colors hata kar modern glowing brand banner background aur matching badges apply kiye. |
 | `c2518e9` | Safe rebrand from TTDownloader to TikSavePro | Poori website aur admin panel ko TTDownloader se TikSavePro par safely rebrand kiya (Navbar, Footer, Layout, Pages, Settings, Admin, CMS, DB records) jabke domain, URL routes, slugs, canonical tags aur SEO search keywords 100% intact rakhe. |
+| `8e09f2b` | Fix blog images cropping with full uncropped display and ambient blur | Blog index grid aur individual blog post headers par image cropping khatam kar ke full uncropped `object-contain` display aur sleek ambient blurred background apply kiya taake har image aur screenshot poori show ho. |
 
 ---
 

@@ -78,7 +78,19 @@ export default function BlogPostPage({ params }: { params: any }) {
 
         <article className="glass-panel rounded-2xl overflow-hidden">
           {imageUrl && (
-            <img src={imageUrl} alt={post.title} className="w-full h-80 object-cover" />
+            <div className="relative w-full max-h-[520px] min-h-[260px] bg-slate-950/80 overflow-hidden flex items-center justify-center border-b border-white/5">
+              <img 
+                src={imageUrl} 
+                alt="" 
+                aria-hidden="true" 
+                className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-25 scale-110 pointer-events-none" 
+              />
+              <img 
+                src={imageUrl} 
+                alt={post.title} 
+                className="relative z-10 w-full h-auto max-h-[520px] object-contain p-4 md:p-6" 
+              />
+            </div>
           )}
           <div className="p-8 md:p-12">
             <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary mb-6">

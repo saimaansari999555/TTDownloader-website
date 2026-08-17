@@ -58,9 +58,21 @@ export default function BlogPage() {
                 <Link href={`/blog/${post.slug}`}>
                   <article className="glass-panel rounded-2xl overflow-hidden hover:border-primary-500/30 transition-all hover:shadow-lg hover:shadow-primary-500/10 h-full flex flex-col">
                     {displayImg ? (
-                      <img src={displayImg} alt={post.title} className="w-full h-48 object-cover" />
+                      <div className="relative w-full h-52 bg-slate-950/80 overflow-hidden flex items-center justify-center border-b border-white/5 group">
+                        <img 
+                          src={displayImg} 
+                          alt="" 
+                          aria-hidden="true" 
+                          className="absolute inset-0 w-full h-full object-cover blur-xl opacity-30 scale-110 pointer-events-none" 
+                        />
+                        <img 
+                          src={displayImg} 
+                          alt={post.title} 
+                          className="relative z-10 w-full h-full object-contain p-2 transition-transform duration-300 group-hover:scale-105" 
+                        />
+                      </div>
                     ) : (
-                      <div className="h-48 bg-gradient-to-br from-primary-500/20 to-accent-500/10 flex items-center justify-center">
+                      <div className="h-52 bg-gradient-to-br from-primary-500/20 to-accent-500/10 flex items-center justify-center border-b border-white/5">
                         <BookOpen className="w-12 h-12 text-primary-400/40" />
                       </div>
                     )}
