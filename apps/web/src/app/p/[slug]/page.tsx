@@ -351,6 +351,36 @@ export default function CustomPage({ params }: { params: any }) {
 
     const loadPageData = async () => {
       const normalizedSlug = slug.toLowerCase();
+
+      // Check client-side / cookie / local redirects first
+      if (typeof window !== 'undefined') {
+        try {
+          const cookieVal = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('active_redirects='))
+            ?.split('=')[1];
+          const localStr = localStorage.getItem('local_redirects');
+          const list: any[] = cookieVal
+            ? JSON.parse(decodeURIComponent(cookieVal))
+            : localStr
+            ? JSON.parse(localStr)
+            : [];
+
+          const currentPath = `/${normalizedSlug}`;
+          const currentPPath = `/p/${normalizedSlug}`;
+          const match = list.find(
+            (r) =>
+              r.isActive !== false &&
+              (r.sourcePath?.toLowerCase() === currentPath || r.sourcePath?.toLowerCase() === currentPPath)
+          );
+
+          if (match && match.targetPath) {
+            window.location.replace(match.targetPath);
+            return;
+          }
+        } catch {}
+      }
+
       try {
         let res = await getCustomPageBySlug(normalizedSlug);
         // If not found and slug is contact-us/contact or about-us/about, try the alias

@@ -9,6 +9,7 @@ const STATIC_REDIRECTS: Record<string, { target: string; status: number }> = {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const normalizedPath = pathname.toLowerCase();
 
   // Skip Next.js internal files, api routes, and static assets
   if (
@@ -20,8 +21,30 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 1. Fast static check
-  const staticRule = STATIC_REDIRECTS[pathname.toLowerCase()];
+  // 1. Check synchronous cookie-cached active redirects (0ms latency)
+  try {
+    const cookieVal = request.cookies.get('active_redirects')?.value;
+    if (cookieVal) {
+      const decoded = decodeURIComponent(cookieVal);
+      const redirects: any[] = JSON.parse(decoded);
+      if (Array.isArray(redirects)) {
+        const match = redirects.find(
+          (r) => r.isActive !== false && r.sourcePath?.toLowerCase() === normalizedPath
+        );
+        if (match && match.targetPath) {
+          const targetUrl = match.targetPath.startsWith('http')
+            ? match.targetPath
+            : new URL(match.targetPath, request.url);
+          return NextResponse.redirect(targetUrl, { status: Number(match.statusCode) || 301 });
+        }
+      }
+    }
+  } catch (e) {
+    // ignore cookie parse error
+  }
+
+  // 2. Fast static fallback check
+  const staticRule = STATIC_REDIRECTS[normalizedPath];
   if (staticRule) {
     const targetUrl = staticRule.target.startsWith('http')
       ? staticRule.target
@@ -29,28 +52,33 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(targetUrl, { status: staticRule.status });
   }
 
-  // 2. Dynamic API check for admin-created redirects
+  // 3. Dynamic API check for admin-created redirects with 500ms timeout
   try {
     const origin = request.nextUrl.origin;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 500);
+
     const res = await fetch(`${origin}/api/redirects?activeOnly=true`, {
-      next: { revalidate: 10 },
+      signal: controller.signal,
+      headers: { 'Accept': 'application/json' },
     });
+    clearTimeout(timeoutId);
 
     if (res.ok) {
       const redirects: any[] = await res.json();
       const match = redirects.find(
-        (r) => r.isActive && r.sourcePath.toLowerCase() === pathname.toLowerCase()
+        (r) => r.isActive && r.sourcePath?.toLowerCase() === normalizedPath
       );
 
-      if (match) {
+      if (match && match.targetPath) {
         const targetUrl = match.targetPath.startsWith('http')
           ? match.targetPath
           : new URL(match.targetPath, request.url);
         return NextResponse.redirect(targetUrl, { status: Number(match.statusCode) || 301 });
       }
     }
-  } catch (err) {
-    // If internal fetch fails, silently proceed without blocking request
+  } catch {
+    // If internal fetch fails or aborts, proceed normally
   }
 
   return NextResponse.next();
