@@ -111,6 +111,7 @@ Niche aapki website development ki A to Z commits history list di gayi hai:
 | `c2518e9` | Safe rebrand from TTDownloader to TikSavePro | Poori website aur admin panel ko TTDownloader se TikSavePro par safely rebrand kiya (Navbar, Footer, Layout, Pages, Settings, Admin, CMS, DB records) jabke domain, URL routes, slugs, canonical tags aur SEO search keywords 100% intact rakhe. |
 | `8e09f2b` | Fix blog images cropping with full uncropped display and ambient blur | Blog index grid aur individual blog post headers par image cropping khatam kar ke full uncropped `object-contain` display aur sleek ambient blurred background apply kiya taake har image aur screenshot poori show ho. |
 | `f3918a0` | Upgrade Blog Post Editor with Rich Text, H1-H3, Links, & ChatGPT Paste Support | Blog Post Editor me WYSIWYG Rich Text Toolbar (H1/H2/H3, Bold, Italic, Underline, Link modal, Lists, Quotes, Code block, Source mode) add kiya, ChatGPT rich copy-paste formatting ko preserve kiya, aur frontend blog renderer me semantic sanitized HTML display aur separate SEO metadata controls integrate kiye. |
+| `a7f9201` | Migrate About page slug to /about-us with permanent 301 redirect | About Us page ka public slug `about` se badal kar `about-us` kiya (HTTP 200), `/about` par server-side permanent 301 redirect setup kiya, canonical URL `https://tik-tokdownloader.xyz/about-us` set ki, sitemap aur header/footer links update kiye aur SQLite DB me slug & redirect safely update kiya. |
 
 ---
 

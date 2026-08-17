@@ -14,7 +14,7 @@ const tools = [
 const navLinks = [
   { href: '/blog', label: 'Blog' },
   { href: '/apk', label: 'Android APK' },
-  { href: '/about', label: 'About' },
+  { href: '/about-us', label: 'About' },
   { href: '/contact-us', label: 'Contact' },
 ];
 

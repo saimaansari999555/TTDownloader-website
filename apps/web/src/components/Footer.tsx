@@ -40,7 +40,7 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2.5">
               {[
-                { href: '/about', label: 'About Us' },
+                { href: '/about-us', label: 'About Us' },
                 { href: '/blog', label: 'Blog' },
                 { href: '/contact-us', label: 'Contact Us' },
               ].map((l) => (

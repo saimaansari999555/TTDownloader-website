@@ -105,7 +105,7 @@ export class PagesService implements OnModuleInit {
       },
       {
         title: 'About Us',
-        slug: 'about',
+        slug: 'about-us',
         seoTitle: 'About Us | Tik-TokDownloader.xyz',
         seoDescription: 'Learn about Tik-TokDownloader.xyz, our TikTok video, MP3, audio extraction and bulk download tools, and our commitment to a simple and responsible browsing experience.',
         isPublished: true,
@@ -394,7 +394,7 @@ export class PagesService implements OnModuleInit {
       throw new HttpException('Page not found', HttpStatus.NOT_FOUND);
     }
     // Prevent deleting system pages
-    const systemSlugs = ['home', 'video', 'audio', 'bulk', 'apk', 'about', 'contact', 'contact-us'];
+    const systemSlugs = ['home', 'video', 'audio', 'bulk', 'apk', 'about', 'about-us', 'contact', 'contact-us'];
     if (systemSlugs.includes(page.slug)) {
       throw new HttpException('Cannot delete a system page', HttpStatus.BAD_REQUEST);
     }

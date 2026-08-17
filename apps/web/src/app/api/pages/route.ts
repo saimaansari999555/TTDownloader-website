@@ -102,9 +102,9 @@ let globalPages: any[] = [
     ])
   },
   {
-    id: 'about',
+    id: 'about-us',
     title: 'About Us',
-    slug: 'about',
+    slug: 'about-us',
     seoTitle: 'About Us | Tik-TokDownloader.xyz',
     seoDescription: 'Learn about Tik-TokDownloader.xyz, our TikTok video, MP3, audio extraction and bulk download tools, and our commitment to a simple and responsible browsing experience.',
     isPublished: true,

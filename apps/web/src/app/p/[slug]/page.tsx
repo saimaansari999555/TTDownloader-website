@@ -106,7 +106,7 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
       { id: 'ap-2', type: 'apk_tool' }
     ])
   },
-  about: {
+  'about-us': {
     title: 'About Us',
     seoTitle: 'About Us | Tik-TokDownloader.xyz',
     seoDescription: 'Learn about Tik-TokDownloader.xyz, our TikTok video, MP3, audio extraction and bulk download tools, and our commitment to a simple and responsible browsing experience.',
@@ -353,20 +353,32 @@ export default function CustomPage({ params }: { params: any }) {
       const normalizedSlug = slug.toLowerCase();
       try {
         let res = await getCustomPageBySlug(normalizedSlug);
-        // If not found and slug is contact-us or contact, try the alias
+        // If not found and slug is contact-us/contact or about-us/about, try the alias
         if (!res || !res.isPublished) {
           if (normalizedSlug === 'contact-us') {
             res = await getCustomPageBySlug('contact');
           } else if (normalizedSlug === 'contact') {
             res = await getCustomPageBySlug('contact-us');
+          } else if (normalizedSlug === 'about-us') {
+            res = await getCustomPageBySlug('about');
+          } else if (normalizedSlug === 'about') {
+            res = await getCustomPageBySlug('about-us');
           }
         }
 
+        const resolveFallback = (s: string) => {
+          if (DEFAULT_SYSTEM_PAGES[s]) return DEFAULT_SYSTEM_PAGES[s];
+          if (s === 'contact-us') return DEFAULT_SYSTEM_PAGES['contact'];
+          if (s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'];
+          if (s === 'about-us') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          if (s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          return null;
+        };
+
         if (!res || !res.isPublished) {
-          if (DEFAULT_SYSTEM_PAGES[normalizedSlug]) {
-            setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug]);
-          } else if (DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]) {
-            setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]);
+          const fallback = resolveFallback(normalizedSlug);
+          if (fallback) {
+            setPage(fallback);
           } else {
             setNotFound(true);
           }
@@ -374,10 +386,17 @@ export default function CustomPage({ params }: { params: any }) {
           setPage(res);
         }
       } catch {
-        if (DEFAULT_SYSTEM_PAGES[normalizedSlug]) {
-          setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug]);
-        } else if (DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]) {
-          setPage(DEFAULT_SYSTEM_PAGES[normalizedSlug === 'contact-us' ? 'contact' : normalizedSlug]);
+        const resolveFallback = (s: string) => {
+          if (DEFAULT_SYSTEM_PAGES[s]) return DEFAULT_SYSTEM_PAGES[s];
+          if (s === 'contact-us') return DEFAULT_SYSTEM_PAGES['contact'];
+          if (s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'];
+          if (s === 'about-us') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          if (s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          return null;
+        };
+        const fallback = resolveFallback(normalizedSlug);
+        if (fallback) {
+          setPage(fallback);
         } else {
           setNotFound(true);
         }
