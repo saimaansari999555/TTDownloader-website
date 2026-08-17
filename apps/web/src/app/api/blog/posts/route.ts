@@ -45,7 +45,10 @@ export async function POST(req: Request) {
       createdAt: body.createdAt || new Date().toISOString(),
       author: { username: 'admin' },
       imageUrl: body.imageUrl || body.featuredImage?.url || null,
-      featuredImage: body.imageUrl ? { url: body.imageUrl } : (body.featuredImage || null)
+      featuredImage: body.imageUrl ? { url: body.imageUrl } : (body.featuredImage || null),
+      seoTitle: body.seoTitle || body.title || '',
+      seoDescription: body.seoDescription || body.summary || '',
+      seoKeywords: body.seoKeywords || '',
     };
 
     globalPosts = [newPost, ...globalPosts.filter(p => p.slug !== generatedSlug && p.id !== newPost.id)];

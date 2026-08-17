@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft, BookOpen } from 'lucide-react';
 import { getBlogPost } from '@/lib/api';
 import Link from 'next/link';
+import BlogContentRenderer from '@/components/BlogContentRenderer';
 
 export default function BlogPostPage({ params }: { params: any }) {
   const [slug, setSlug] = useState<string>('');
@@ -46,6 +47,12 @@ export default function BlogPostPage({ params }: { params: any }) {
       }
     }
   }, [slug]);
+
+  useEffect(() => {
+    if (post?.title) {
+      document.title = post.seoTitle || `${post.title} | TikSavePro Blog`;
+    }
+  }, [post]);
 
   if (loading) return (
     <main className="min-h-screen max-w-4xl mx-auto px-4 py-20">
@@ -104,9 +111,7 @@ export default function BlogPostPage({ params }: { params: any }) {
             <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-4">{post.title}</h1>
             {post.summary && <p className="text-text-secondary text-lg mb-8 border-l-4 border-primary-500/40 pl-4 italic">{post.summary}</p>}
 
-            <div className="prose prose-invert prose-lg max-w-none text-text-secondary leading-relaxed whitespace-pre-wrap">
-              {post.content}
-            </div>
+            <BlogContentRenderer content={post.content} />
 
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-10 pt-8 border-t border-white/10">

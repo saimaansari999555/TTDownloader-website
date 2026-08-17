@@ -1,9 +1,20 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText, Upload, Image as ImageIcon, X, Copy, Check } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, RefreshCw, FileText, Upload, Image as ImageIcon, X, Copy, Check, Sparkles } from 'lucide-react';
 import { getAdminPosts, createPost, updatePost, deletePost } from '@/lib/api';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
-const emptyForm = { title: '', slug: '', content: '', summary: '', status: 'DRAFT', imageUrl: '' };
+const emptyForm = {
+  title: '',
+  slug: '',
+  content: '',
+  summary: '',
+  status: 'DRAFT',
+  imageUrl: '',
+  seoTitle: '',
+  seoDescription: '',
+  seoKeywords: ''
+};
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -142,6 +153,9 @@ export default function AdminBlog() {
         status: form.status,
         imageUrl: form.imageUrl,
         featuredImage: form.imageUrl ? { url: form.imageUrl } : null,
+        seoTitle: form.seoTitle || form.title,
+        seoDescription: form.seoDescription || form.summary,
+        seoKeywords: form.seoKeywords || '',
         publishedAt: form.status === 'PUBLISHED' ? new Date().toISOString() : null,
       };
 
@@ -208,12 +222,15 @@ export default function AdminBlog() {
 
   const handleEdit = (post: any) => {
     setForm({
-      title: post.title,
-      slug: post.slug,
-      content: post.content,
+      title: post.title || '',
+      slug: post.slug || '',
+      content: post.content || '',
       summary: post.summary || '',
-      status: post.status,
+      status: post.status || 'DRAFT',
       imageUrl: post.imageUrl || post.featuredImage?.url || '',
+      seoTitle: post.seoTitle || '',
+      seoDescription: post.seoDescription || '',
+      seoKeywords: post.seoKeywords || '',
     });
     setEditId(post.id);
     setShowEditor(true);
@@ -372,12 +389,61 @@ export default function AdminBlog() {
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm text-text-secondary mb-2">Summary</label>
-              <input className="w-full glass-input rounded-xl py-2.5 px-4" placeholder="Short description for listing..." value={form.summary} onChange={e => setForm(p => ({ ...p, summary: e.target.value }))} />
+              <label className="block text-sm font-semibold text-text-secondary mb-2">Short Summary / Excerpt</label>
+              <input className="w-full glass-input rounded-xl py-2.5 px-4 text-white text-sm" placeholder="Short description for blog listing..." value={form.summary} onChange={e => setForm(p => ({ ...p, summary: e.target.value }))} />
             </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm text-text-secondary mb-2">Content *</label>
-              <textarea required rows={10} className="w-full glass-input rounded-xl py-3 px-4 resize-none font-mono text-sm" placeholder="Write your blog content here..." value={form.content} onChange={e => setForm(p => ({ ...p, content: e.target.value }))} />
+
+            {/* Rich Text Editor */}
+            <div className="md:col-span-2 space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-semibold text-text-secondary">Article Body & Content *</label>
+                <span className="text-xs text-primary-400 font-medium">Supports rich formatting, H1/H2/H3, lists, links, & ChatGPT copy-paste</span>
+              </div>
+              <RichTextEditor
+                value={form.content}
+                onChange={val => setForm(p => ({ ...p, content: val }))}
+                placeholder="Write your article, or paste formatted text directly from ChatGPT..."
+              />
+            </div>
+
+            {/* Separate SEO Metadata Section */}
+            <div className="md:col-span-2 p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+              <div className="flex items-center gap-2 text-white font-bold text-sm">
+                <Sparkles className="w-4 h-4 text-primary-400" />
+                <span>Search Engine Optimization (SEO Metadata)</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-text-secondary mb-1">Custom SEO Title (Optional)</label>
+                  <input
+                    type="text"
+                    className="w-full glass-input rounded-xl py-2.5 px-3 text-xs text-white"
+                    placeholder="Defaults to post title if left empty"
+                    value={form.seoTitle}
+                    onChange={e => setForm(p => ({ ...p, seoTitle: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-text-secondary mb-1">Focus Keywords (Comma separated)</label>
+                  <input
+                    type="text"
+                    className="w-full glass-input rounded-xl py-2.5 px-3 text-xs text-white"
+                    placeholder="e.g. tiktok downloader, save video, mp3"
+                    value={form.seoKeywords}
+                    onChange={e => setForm(p => ({ ...p, seoKeywords: e.target.value }))}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-xs font-semibold text-text-secondary mb-1">Custom Meta Description (Optional)</label>
+                  <input
+                    type="text"
+                    className="w-full glass-input rounded-xl py-2.5 px-3 text-xs text-white"
+                    placeholder="Defaults to post summary if left empty"
+                    value={form.seoDescription}
+                    onChange={e => setForm(p => ({ ...p, seoDescription: e.target.value }))}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-3 pt-2">

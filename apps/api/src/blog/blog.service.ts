@@ -34,7 +34,7 @@ export class BlogService {
       authorId = admin.id;
     }
 
-    const { imageUrl, featuredImage, title, slug, content, summary, status, publishedAt } = data;
+    const { imageUrl, featuredImage, title, slug, content, summary, status, publishedAt, seoTitle, seoDescription, seoKeywords } = data;
     const imgUrl = imageUrl || featuredImage?.url || null;
 
     let featuredImageId: string | undefined = undefined;
@@ -58,6 +58,9 @@ export class BlogService {
       summary: summary || '',
       status: status || 'PUBLISHED',
       publishedAt: status === 'PUBLISHED' ? (publishedAt ? new Date(publishedAt) : new Date()) : null,
+      seoTitle: seoTitle || title || null,
+      seoDescription: seoDescription || summary || null,
+      seoKeywords: seoKeywords || null,
       author: { connect: { id: authorId } },
       ...(featuredImageId ? { featuredImage: { connect: { id: featuredImageId } } } : {}),
     };
@@ -94,7 +97,7 @@ export class BlogService {
   }
 
   async updatePost(id: string, data: any): Promise<BlogPost> {
-    const { imageUrl, featuredImage, title, slug, content, summary, status, publishedAt } = data;
+    const { imageUrl, featuredImage, title, slug, content, summary, status, publishedAt, seoTitle, seoDescription, seoKeywords } = data;
     const imgUrl = imageUrl || featuredImage?.url || null;
 
     let featuredImageId: string | undefined = undefined;
@@ -117,6 +120,9 @@ export class BlogService {
       ...(content !== undefined ? { content } : {}),
       ...(summary !== undefined ? { summary } : {}),
       ...(status ? { status } : {}),
+      ...(seoTitle !== undefined ? { seoTitle } : {}),
+      ...(seoDescription !== undefined ? { seoDescription } : {}),
+      ...(seoKeywords !== undefined ? { seoKeywords } : {}),
       ...(publishedAt !== undefined ? { publishedAt: publishedAt ? new Date(publishedAt) : null } : {}),
       ...(featuredImageId ? { featuredImage: { connect: { id: featuredImageId } } } : {}),
     };
