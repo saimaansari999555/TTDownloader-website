@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Settings2, Palette, Save, RefreshCw, Globe, HelpCircle, Code, Megaphone, FileText, Database, Download, Upload, ArrowLeftRight } from 'lucide-react';
+import { Settings2, Palette, Save, RefreshCw, Globe, HelpCircle, Code, Megaphone, FileText, Database, Download, Upload, ArrowLeftRight, Menu, Layout } from 'lucide-react';
 import { getSettings, updateSetting, exportDatabase, importDatabase } from '@/lib/api';
 import SeoChecker from '@/components/SeoChecker';
 import RedirectManager from '@/components/admin/RedirectManager';
+import NavbarManager from '@/components/admin/NavbarManager';
+import FooterManager from '@/components/admin/FooterManager';
 
 export default function AdminSettings() {
   const [activeTab, setActiveTab] = useState('general');
@@ -89,6 +91,8 @@ export default function AdminSettings() {
     { id: 'general', label: 'Page Content', icon: FileText },
     { id: 'seo', label: 'SEO Optimization', icon: Globe },
     { id: 'redirects', label: 'Redirect Manager', icon: ArrowLeftRight },
+    { id: 'navbar', label: 'Navbar & Header', icon: Menu },
+    { id: 'footer', label: 'Footer Customizer', icon: Layout },
     { id: 'ads', label: 'Ads Manager', icon: Megaphone },
     { id: 'theme', label: 'Theme Customizer', icon: Palette },
     { id: 'backup', label: 'Backup & Recovery', icon: Database },
@@ -272,6 +276,42 @@ export default function AdminSettings() {
                     </p>
                   </div>
                   <RedirectManager />
+                </div>
+              )}
+
+              {/* NAVBAR & HEADER MANAGER TAB */}
+              {activeTab === 'navbar' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white border-b border-white/10 pb-4 flex items-center gap-2">
+                      <Menu className="w-6 h-6 text-primary-400" /> Navbar & Header Manager
+                    </h2>
+                    <p className="text-sm text-text-secondary leading-relaxed mt-2">
+                      Customize your website logo, navigation menu links, CTA button, announcement bar, and mobile header without editing source code.
+                    </p>
+                  </div>
+                  <NavbarManager
+                    value={settings['navbar_config'] || ''}
+                    onChange={(val) => set('navbar_config', val)}
+                  />
+                </div>
+              )}
+
+              {/* FOOTER CUSTOMIZER TAB */}
+              {activeTab === 'footer' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white border-b border-white/10 pb-4 flex items-center gap-2">
+                      <Layout className="w-6 h-6 text-primary-400" /> Footer Customizer
+                    </h2>
+                    <p className="text-sm text-text-secondary leading-relaxed mt-2">
+                      Customize your multi-column footer layout, company description, social profiles, copyright notice, and legal links.
+                    </p>
+                  </div>
+                  <FooterManager
+                    value={settings['footer_config'] || ''}
+                    onChange={(val) => set('footer_config', val)}
+                  />
                 </div>
               )}
 
