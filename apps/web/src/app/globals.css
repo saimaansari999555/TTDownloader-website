@@ -104,3 +104,231 @@
 .animate-fade-in {
   animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+/* ==========================================================================
+   Blog & Rich Text Typography System (Semantic HTML & Visual Hierarchy)
+   ========================================================================== */
+.blog-content-body,
+.rich-editor-content {
+  color: #cbd5e1;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  word-break: break-word;
+}
+
+/* Headings Hierarchy */
+.blog-content-body h1,
+.rich-editor-content h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.blog-content-body h2,
+.rich-editor-content h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.blog-content-body h3,
+.rich-editor-content h3 {
+  font-size: 1.3125rem;
+  font-weight: 700;
+  color: #c4b5fd;
+  margin-top: 1.875rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+.blog-content-body h4,
+.rich-editor-content h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Paragraphs & Text Formatting */
+.blog-content-body p,
+.rich-editor-content p {
+  color: #cbd5e1;
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+}
+
+.blog-content-body strong,
+.blog-content-body b,
+.rich-editor-content strong,
+.rich-editor-content b {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.blog-content-body em,
+.blog-content-body i,
+.rich-editor-content em,
+.rich-editor-content i {
+  color: #f1f5f9;
+  font-style: italic;
+}
+
+.blog-content-body u,
+.rich-editor-content u {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-content-body s,
+.rich-editor-content s {
+  text-decoration: line-through;
+  opacity: 0.75;
+}
+
+/* Hyperlinks & Anchor Text */
+.blog-content-body a,
+.rich-editor-content a {
+  color: #a78bfa !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+  text-decoration-color: rgba(167, 139, 250, 0.4) !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  cursor: pointer;
+}
+
+.blog-content-body a:hover,
+.rich-editor-content a:hover {
+  color: #c4b5fd !important;
+  text-decoration-color: #c4b5fd !important;
+}
+
+/* Unordered & Ordered Lists */
+.blog-content-body ul,
+.rich-editor-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.875rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.375rem !important;
+}
+
+.blog-content-body ol,
+.rich-editor-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.875rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.375rem !important;
+}
+
+.blog-content-body li,
+.rich-editor-content li {
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+  display: list-item !important;
+}
+
+.blog-content-body li::marker,
+.rich-editor-content li::marker {
+  color: #a78bfa;
+  font-weight: 700;
+}
+
+/* Blockquotes */
+.blog-content-body blockquote,
+.rich-editor-content blockquote {
+  border-left: 4px solid #8b5cf6 !important;
+  background: rgba(139, 92, 246, 0.08) !important;
+  padding: 1rem 1.375rem !important;
+  border-radius: 0 1rem 1rem 0 !important;
+  margin: 1.5rem 0 !important;
+  font-style: italic !important;
+  color: #e2e8f0 !important;
+}
+
+/* Code Blocks & Inline Code */
+.blog-content-body pre,
+.rich-editor-content pre {
+  background: #020617 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 1.125rem !important;
+  border-radius: 0.875rem !important;
+  margin: 1.5rem 0 !important;
+  overflow-x: auto !important;
+}
+
+.blog-content-body code,
+.rich-editor-content code {
+  color: #34d399 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 0.9em !important;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+}
+
+.blog-content-body pre code,
+.rich-editor-content pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  color: #34d399 !important;
+  font-size: 0.925em !important;
+}
+
+/* Images & Media */
+.blog-content-body img,
+.rich-editor-content img {
+  border-radius: 1rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  margin: 1.75rem auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  display: block;
+}
+
+/* Tables */
+.blog-content-body table,
+.rich-editor-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1.75rem 0 !important;
+  font-size: 0.95rem !important;
+}
+
+.blog-content-body th,
+.rich-editor-content th {
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 0.75rem 1rem !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+}
+
+.blog-content-body td,
+.rich-editor-content td {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 0.75rem 1rem !important;
+  color: #cbd5e1 !important;
+}
+
+.blog-content-body hr,
+.rich-editor-content hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+

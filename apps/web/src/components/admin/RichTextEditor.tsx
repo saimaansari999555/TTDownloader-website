@@ -317,17 +317,11 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write o
 
     // If pasted from ChatGPT / Google Docs rich HTML
     if (htmlData && htmlData.trim().length > 0) {
-      processedHtml = sanitizePastedHtml(htmlData);
+      const sanitized = sanitizePastedHtml(htmlData);
+      processedHtml = convertMarkdownToHtml(sanitized);
     } else if (textData) {
-      // Check if plain text is markdown formatted (# Heading, **bold**, etc.)
-      const isMarkdown = /(^#+\s|\*\*|_|\[.*\]\(.*\)|\n\s*[-*]\s|\n\s*\d+\.\s|```)/m.test(textData);
-      if (isMarkdown) {
-        processedHtml = convertMarkdownToHtml(textData);
-      } else {
-        // Convert multi-line plain text into clean paragraphs
-        const paragraphs = textData.split(/\n\s*\n/).map((p) => `<p>${escapeHtml(p.trim()).replace(/\n/g, '<br />')}</p>`).join('');
-        processedHtml = paragraphs || `<p>${escapeHtml(textData)}</p>`;
-      }
+      // Convert plain text or markdown into rich semantic HTML
+      processedHtml = convertMarkdownToHtml(textData);
     }
 
     if (processedHtml) {
@@ -584,7 +578,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write o
           onKeyDown={handleKeyDown}
           onKeyUp={updateActiveFormats}
           onMouseUp={updateActiveFormats}
-          className="min-h-[360px] max-h-[600px] overflow-y-auto p-5 text-white outline-none prose prose-invert max-w-none prose-headings:font-bold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-p:leading-relaxed prose-a:text-primary-400 prose-a:underline hover:prose-a:text-primary-300 prose-blockquote:border-l-4 prose-blockquote:border-primary-500/60 prose-blockquote:pl-4 prose-blockquote:italic prose-pre:bg-slate-900 prose-pre:border prose-pre:border-white/10 prose-ul:list-disc prose-ol:list-decimal"
+          className="min-h-[360px] max-h-[600px] overflow-y-auto p-5 text-white outline-none rich-editor-content"
           data-placeholder={placeholder}
         />
       ) : (

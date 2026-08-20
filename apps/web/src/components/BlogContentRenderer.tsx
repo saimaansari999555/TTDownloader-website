@@ -1,17 +1,112 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { convertMarkdownToHtml } from './admin/RichTextEditor';
 
 interface BlogContentRendererProps {
   content: string;
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Multi-pass comprehensive Markdown & Rich HTML Normalizer
+export function normalizeBlogContent(rawContent: string): string {
+  if (!rawContent) return '';
+
+  let html = rawContent.trim();
+
+  // 1. Un-wrap markdown tokens that got trapped inside paragraph wrappers
+  // e.g. <p>### Heading</p> or <p>## Heading</p> or <p># Heading</p>
+  html = html.replace(/<p>\s*###\s+(.*?)<\/p>/gi, '<h3>$1</h3>');
+  html = html.replace(/<p>\s*##\s+(.*?)<\/p>/gi, '<h2>$1</h2>');
+  html = html.replace(/<p>\s*#\s+(.*?)<\/p>/gi, '<h2>$1</h2>');
+  html = html.replace(/<p>\s*&gt;\s+(.*?)<\/p>/gi, '<blockquote>$1</blockquote>');
+  html = html.replace(/<p>\s*>\s+(.*?)<\/p>/gi, '<blockquote>$1</blockquote>');
+
+  // 2. Demote any <h1> inside article body to <h2> so there is strictly ONE <h1> per page (the post title)
+  html = html.replace(/<h1(\s*[^>]*)>(.*?)<\/h1>/gi, '<h2$1>$2</h2>');
+
+  // 3. Raw markdown headings (# H1, ## H2, ### H3, #### H4)
+  html = html.replace(/^####\s+(.*$)/gim, '<h4>$1</h4>');
+  html = html.replace(/^###\s+(.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^##\s+(.*$)/gim, '<h2>$1</h2>');
+  html = html.replace(/^#\s+(.*$)/gim, '<h2>$1</h2>');
+
+  // 4. Blockquotes (> text)
+  html = html.replace(/^>\s+(.*$)/gim, '<blockquote>$1</blockquote>');
+  html = html.replace(/^&gt;\s+(.*$)/gim, '<blockquote>$1</blockquote>');
+
+  // 5. Code blocks (```lang ... ```)
+  html = html.replace(/```([a-z0-9_-]*)\n([\s\S]*?)```/gi, (_m, lang, code) => {
+    return `<pre><code class="language-${lang || 'text'}">${escapeHtml(code.trim())}</code></pre>`;
+  });
+
+  // 6. Inline code (`code`)
+  html = html.replace(/`([^`\n]+)`/g, (_m, code) => `<code>${escapeHtml(code)}</code>`);
+
+  // 7. Markdown Links: [Anchor Text](URL) -> <a href="URL">Anchor Text</a>
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/gi, (_m, anchorText, url) => {
+    const isExternal = url.startsWith('http://') || url.startsWith('https://');
+    const target = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+    return `<a href="${url}"${target}>${anchorText}</a>`;
+  });
+
+  // 8. Bold & Italic markdown tokens
+  html = html.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  html = html.replace(/___([^_]+)___/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+  html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+
+  // 9. Markdown Ordered Lists (1. text, 2. text)
+  html = html.replace(/^\s*\d+\.\s+(.*$)/gim, '<oli>$1</oli>');
+  html = html.replace(/(<oli>[\s\S]*?<\/oli>(\s*<oli>[\s\S]*?<\/oli>)*)/gi, (match) => {
+    const items = match.replace(/<\/?oli>/gi, (t) => (t.toLowerCase() === '<oli>' ? '<li>' : '</li>'));
+    return `<ol>${items}</ol>`;
+  });
+
+  // 10. Markdown Unordered Lists (- text, * text, + text)
+  html = html.replace(/^\s*[-*+]\s+(.*$)/gim, '<uli>$1</uli>');
+  html = html.replace(/(<uli>[\s\S]*?<\/uli>(\s*<uli>[\s\S]*?<\/uli>)*)/gi, (match) => {
+    const items = match.replace(/<\/?uli>/gi, (t) => (t.toLowerCase() === '<uli>' ? '<li>' : '</li>'));
+    return `<ul>${items}</ul>`;
+  });
+
+  // 11. Format paragraphs if content is raw blocks without HTML tags
+  const hasBlockTags = /<(h[1-6]|ul|ol|blockquote|pre|table|p|div|section)/i.test(html);
+  if (!hasBlockTags) {
+    const blocks = html.split(/\n\s*\n/);
+    html = blocks
+      .map((block) => {
+        const trimmed = block.trim();
+        if (!trimmed) return '';
+        if (/^<(h[1-6]|ul|ol|blockquote|pre|table)/i.test(trimmed)) {
+          return trimmed;
+        }
+        return `<p>${trimmed.replace(/\n/g, '<br />')}</p>`;
+      })
+      .filter(Boolean)
+      .join('\n');
+  }
+
+  // 12. Clean up any empty <p></p> or accidental paragraph nesting around block elements
+  html = html.replace(/<p>\s*<(h[1-6]|ul|ol|blockquote|pre|table)([\s\S]*?)<\/\1>\s*<\/p>/gi, '<$1$2</$1>');
+
+  return html;
+}
+
 // Sanitize HTML string to prevent XSS attacks while preserving valid semantic styling and links
-function sanitizeHtmlForPublicRender(rawHtml: string): string {
+function sanitizeHtml(rawHtml: string): string {
   if (!rawHtml) return '';
 
-  // 1. Remove dangerous script and iframe elements
+  // 1. Remove dangerous executable elements
   let cleaned = rawHtml
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
     .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
@@ -43,17 +138,8 @@ function sanitizeHtmlForPublicRender(rawHtml: string): string {
 export default function BlogContentRenderer({ content }: BlogContentRendererProps) {
   const renderedHtml = useMemo(() => {
     if (!content) return '';
-
-    // Check if content already contains HTML tags (e.g. <p>, <h2>, <h3>, <a, <ul, <ol)
-    const hasHtmlTags = /<\/?(p|h[1-6]|a|ul|ol|li|blockquote|pre|code|table|div|span|strong|em|b|i)\b/i.test(content);
-
-    let html = content;
-    if (!hasHtmlTags) {
-      // It's legacy plain text or raw Markdown -> Convert to rich semantic HTML
-      html = convertMarkdownToHtml(content);
-    }
-
-    return sanitizeHtmlForPublicRender(html);
+    const normalized = normalizeBlogContent(content);
+    return sanitizeHtml(normalized);
   }, [content]);
 
   if (!content) {
@@ -62,26 +148,7 @@ export default function BlogContentRenderer({ content }: BlogContentRendererProp
 
   return (
     <div
-      className="blog-content-body prose prose-invert prose-lg max-w-none text-text-secondary leading-relaxed
-        prose-headings:text-white prose-headings:font-bold
-        prose-h1:text-2xl sm:prose-h1:text-3xl prose-h1:mt-10 prose-h1:mb-4 prose-h1:leading-tight
-        prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-white prose-h2:border-b prose-h2:border-white/10 prose-h2:pb-3 prose-h2:leading-snug
-        prose-h3:text-lg sm:prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-primary-300 prose-h3:leading-snug
-        prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-5 prose-p:text-base sm:prose-p:text-lg
-        prose-strong:text-white prose-strong:font-semibold
-        prose-em:text-slate-200
-        prose-a:text-primary-400 prose-a:font-medium prose-a:underline prose-a:underline-offset-4 prose-a:decoration-primary-500/40 hover:prose-a:text-primary-300 hover:prose-a:decoration-primary-400 prose-a:transition-colors
-        prose-ul:list-disc prose-ul:my-5 prose-ul:pl-6 prose-ul:space-y-2
-        prose-ol:list-decimal prose-ol:my-5 prose-ol:pl-6 prose-ol:space-y-2
-        prose-li:text-slate-300 prose-li:leading-relaxed
-        prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-primary-500/5 prose-blockquote:px-5 prose-blockquote:py-4 prose-blockquote:rounded-r-2xl prose-blockquote:my-6 prose-blockquote:italic prose-blockquote:text-slate-200
-        prose-pre:bg-slate-950 prose-pre:border prose-pre:border-white/10 prose-pre:p-4 prose-pre:rounded-2xl prose-pre:my-6 prose-pre:overflow-x-auto
-        prose-code:text-emerald-400 prose-code:font-mono prose-code:text-sm
-        prose-img:rounded-2xl prose-img:border prose-img:border-white/10 prose-img:my-6 prose-img:shadow-xl
-        prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:border prose-table:border-white/10 prose-table:rounded-xl
-        prose-th:border prose-th:border-white/10 prose-th:p-3 prose-th:bg-white/5 prose-th:text-white prose-th:font-semibold
-        prose-td:border prose-td:border-white/10 prose-td:p-3 prose-td:text-slate-300
-        prose-hr:border-white/10 prose-hr:my-8"
+      className="blog-content-body"
       dangerouslySetInnerHTML={{ __html: renderedHtml }}
     />
   );
