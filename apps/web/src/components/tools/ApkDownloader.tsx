@@ -19,10 +19,39 @@ export default function ApkDownloader() {
 
   if (!apk) {
     return (
-      <div className="glass-panel p-12 rounded-2xl text-center max-w-xl mx-auto my-6">
-        <Smartphone className="w-16 h-16 text-text-secondary mx-auto mb-4 opacity-50" />
-        <h3 className="text-xl font-bold text-white mb-2">App Coming Soon</h3>
-        <p className="text-text-secondary">We're working on our Android app. Check back soon!</p>
+      <div className="w-full max-w-2xl mx-auto py-6 px-4">
+        <div className="glass-panel p-8 sm:p-12 rounded-3xl text-center relative overflow-hidden border border-white/10 shadow-2xl bg-gradient-to-b from-white/[0.04] to-transparent">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-primary-500/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-500/10 rounded-full blur-3xl -z-10" />
+          
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/15 border border-primary-500/30 text-primary-300 text-xs font-extrabold uppercase tracking-wider mb-6">
+            <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+            Coming Soon
+          </div>
+
+          <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 border border-primary-500/30 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-primary-500/10">
+            <Smartphone className="w-12 h-12 text-primary-400" />
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">
+            App Coming Soon
+          </h3>
+
+          <p className="text-text-secondary text-sm sm:text-base max-w-lg mx-auto leading-relaxed mb-6">
+            We're working on the TikSavePro Android experience. The app is not available for download yet, but we're preparing a mobile experience that makes accessing your favorite TikSavePro tools more convenient.
+          </p>
+
+          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 max-w-md mx-auto mb-8 text-xs text-text-secondary">
+            <span className="font-bold text-white">Status:</span> Release date will be announced when the app is ready. No APK download is required to use our web tools.
+          </div>
+
+          <a 
+            href="/video" 
+            className="btn-primary rounded-xl px-8 py-3.5 font-bold text-base shadow-lg shadow-primary-500/20 hover:scale-105 transition-all inline-flex items-center gap-2"
+          >
+            Use TikSavePro Online →
+          </a>
+        </div>
       </div>
     );
   }

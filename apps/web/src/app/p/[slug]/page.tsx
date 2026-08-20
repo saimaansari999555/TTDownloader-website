@@ -89,21 +89,96 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
     ])
   },
   apk: {
-    title: 'Download Our Android App',
-    seoTitle: 'Android APK Release - TikSavePro',
-    seoDescription: 'Download the TikSavePro Android app.',
+    title: 'TikSavePro Android App – Coming Soon',
+    seoTitle: 'TikSavePro Android App – Coming Soon | TikTok Downloader',
+    seoDescription: 'Learn about the upcoming TikSavePro Android app and use our browser-based TikTok video, audio, MP3 and bulk downloader tools on Android today.',
     isPublished: true,
     layout: JSON.stringify([
       { 
-        id: 'ap-1', 
+        id: 'apk-hero', 
         type: 'hero', 
-        title: 'Download Our Android App', 
-        subtitle: 'Get the official TikSavePro Android application for your smartphone.', 
+        title: 'Coming Soon: TikSavePro Android App', 
+        subtitle: "We're working on a dedicated Android experience to make TikSavePro tools more convenient on mobile devices.", 
         bgColor: '#0f172a',
         bgImage: '/contact-banner.jpg',
-        badge: 'Android APK Release'
+        badge: 'Android App • In Development',
+        ctaText: 'Use TikSavePro Online',
+        ctaLink: '/video',
+        secondaryCtaText: 'Explore Planned Features',
+        secondaryCtaLink: '#features'
       },
-      { id: 'ap-2', type: 'apk_tool' }
+      { id: 'apk-h2-why', type: 'heading', level: 'h2', text: "Why We're Building a TikSavePro Android App" },
+      { 
+        id: 'apk-p-why', 
+        type: 'paragraph', 
+        text: "TikSavePro is currently accessible worldwide through any standard web browser on smartphones, tablets, and computers.\n\nWhile our web-based tools work smoothly on mobile browsers, we know that many power users prefer the speed and familiarity of a dedicated Android application. We are actively designing a native-feeling Android application to provide streamlined touch navigation, fast media retrieval, and one-tap utility shortcuts without needing to open a browser.\n\nIn the meantime, you can continue using all of our browser-based tools directly from your Android smartphone without installing anything." 
+      },
+      { id: 'apk-h2-expect', type: 'heading', level: 'h2', text: 'What to Expect from the TikSavePro Android App' },
+      {
+        id: 'apk-cards-expect',
+        type: 'cards_grid',
+        items: [
+          { title: 'Easy Mobile Access', description: 'A dedicated mobile-first interface designed for seamless, one-tap access to TikSavePro tools on your Android device.', badge: 'Planned' },
+          { title: 'Video Downloader', description: 'Quick access to download supported public TikTok videos directly to your device gallery in high definition.', badge: 'Core Tool' },
+          { title: 'MP3 & Audio Tools', description: 'Effortlessly extract soundtracks and download background audio in crisp MP3 format.', badge: 'Audio' },
+          { title: 'Bulk Downloader', description: 'Process multiple supported public links from your favorite creators in a clean, batch workflow.', badge: 'Batch' },
+          { title: 'Simple Navigation', description: 'Intuitive touch-friendly navigation designed specifically for comfortable one-handed smartphone use.', badge: 'UX Design' },
+          { title: 'Instant Processing', description: 'Fast URL parsing and download delivery optimized for Android mobile network connections.', badge: 'Speed' }
+        ]
+      },
+      { id: 'apk-h2-android-users', type: 'heading', level: 'h2', text: 'Designed for Android Users' },
+      { 
+        id: 'apk-p-android-users', 
+        type: 'paragraph', 
+        text: 'The planned TikSavePro Android app is built around the needs of mobile content consumers and creators:\n\n• Mobile-First Interface: Clean, uncluttered layout optimized for smartphone screens of every resolution\n• Quick Link Sharing: Effortlessly paste TikTok video links or use the Android share sheet directly into the app\n• Fast Switching: Switch seamlessly between [Video Downloader](/video), [Audio Extractor](/audio), and [Bulk Downloader](/bulk)\n• Familiar Dark Theme: Modern dark-navy styling with smooth animations that match the web experience\n• Privacy-Focused: Direct real-time URL processing with no account registration or unnecessary device permissions required' 
+      },
+      {
+        id: 'apk-cta-browser',
+        type: 'cta_box',
+        title: 'Use TikSavePro in Your Browser Today',
+        subtitle: "The TikSavePro Android app is coming soon, but you don't have to wait. You can use all our browser-based tools on your Android phone right now with zero installation.",
+        buttonText: 'Use TikSavePro Online',
+        buttonLink: '/video'
+      },
+      { id: 'apk-h2-tools', type: 'heading', level: 'h2', text: 'Explore TikSavePro Web Tools' },
+      {
+        id: 'apk-cards-tools',
+        type: 'cards_grid',
+        items: [
+          { title: 'TikTok Video Downloader', description: 'Download public TikTok videos in HD MP4 format without watermarks directly to your phone storage.', badge: 'Most Popular', ctaText: 'Open Video Downloader', ctaLink: '/video' },
+          { title: 'TikTok Audio Extractor', description: 'Extract audio and soundtrack clips from TikTok videos and save them as high-quality MP3 files.', badge: 'MP3 Audio', ctaText: 'Open Audio Extractor', ctaLink: '/audio' },
+          { title: 'TikTok Bulk Downloader', description: 'Batch download multiple public TikTok videos from supported creator profiles with one click.', badge: 'Bulk Tool', ctaText: 'Open Bulk Downloader', ctaLink: '/bulk' },
+          { title: 'TikSavePro Blog & Guides', description: 'Read tutorials, troubleshooting tips, and guides on working with TikTok videos and audio.', badge: 'Guides', ctaText: 'Read Blog Guides', ctaLink: '/blog' }
+        ]
+      },
+      { id: 'apk-h2-security', type: 'heading', level: 'h2', text: 'Download Safely & Security Notice' },
+      { 
+        id: 'apk-p-security', 
+        type: 'paragraph', 
+        text: 'User security and device protection are fundamental principles of TikSavePro. Please keep the following safety practices in mind:\n\n• Official Source Only: When the official TikSavePro APK is released, it will be published exclusively on this official page ([https://tik-tokdownloader.xyz/apk](/apk)) or verified distribution channels.\n• Avoid Unofficial Clones: Never download APK packages claiming to be TikSavePro from unverified third-party websites or untrusted file hosts.\n• No Passwords Required: TikSavePro will never ask for your TikTok password or personal social media account credentials.\n• Release Announcements: The official release date and package details will be posted directly on this page once development and quality assurance are complete.' 
+      },
+      { id: 'apk-tool-block', type: 'apk_tool' },
+      {
+        id: 'apk-cta-contact',
+        type: 'cta_box',
+        title: 'Want to Know When the App is Ready?',
+        subtitle: 'Have feature suggestions, questions, or want early announcements regarding the Android release? Reach out to our team.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      },
+      { id: 'apk-h2-faq', type: 'heading', level: 'h2', text: 'Frequently Asked Questions' },
+      {
+        id: 'apk-faq-block',
+        type: 'faq',
+        items: [
+          { question: 'Is the TikSavePro Android app available now?', answer: 'No. The Android app is currently in development and coming soon. No official APK file is available for download at this time.' },
+          { question: 'Can I use TikSavePro on Android right now?', answer: 'Yes! You can use all TikSavePro tools (Video Downloader, Audio Extractor, Bulk Downloader) directly through Google Chrome, Firefox, Samsung Internet, or any mobile browser on Android today.' },
+          { question: 'When will the TikSavePro APK be released?', answer: 'The official release date will be announced on this page as soon as development and testing are finalized.' },
+          { question: 'Will I need an APK to use TikSavePro?', answer: 'No. An APK is completely optional. The browser-based version will always remain free and fully accessible without installing any software.' },
+          { question: 'Will the Android app include all the downloader tools?', answer: 'The planned app is intended to provide convenient access to our core tools, including video downloading, MP3 extraction, and bulk processing. Final features will be confirmed upon release.' },
+          { question: 'Where should I download the APK when it is released?', answer: 'Always download the APK exclusively from the official TikSavePro website (https://tik-tokdownloader.xyz/apk) to ensure you receive a verified, safe, and authentic package.' }
+        ]
+      }
     ])
   },
   'about-us': {
