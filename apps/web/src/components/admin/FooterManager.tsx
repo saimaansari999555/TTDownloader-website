@@ -90,7 +90,7 @@ export const DEFAULT_FOOTER_CONFIG: FooterConfig = {
       id: 'col-legal',
       title: 'Legal',
       links: [
-        { id: 'fl-9', label: 'Privacy Policy', url: '/privacy', target: '_self' },
+        { id: 'fl-9', label: 'Privacy Policy', url: '/privacy-policy', target: '_self' },
         { id: 'fl-10', label: 'Terms of Service', url: '/terms', target: '_self' },
         { id: 'fl-11', label: 'DMCA & Disclaimer', url: '/dmca', target: '_self' },
       ],
@@ -116,7 +116,7 @@ const CMS_PAGE_PRESETS = [
   { label: 'Blog Index', url: '/blog' },
   { label: 'About Us', url: '/about-us' },
   { label: 'Contact Us', url: '/contact-us' },
-  { label: 'Privacy Policy', url: '/privacy' },
+  { label: 'Privacy Policy', url: '/privacy-policy' },
   { label: 'Terms of Service', url: '/terms' },
   { label: 'DMCA', url: '/dmca' },
 ];

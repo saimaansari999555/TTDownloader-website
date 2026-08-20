@@ -304,25 +304,234 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
       { id: 'c-2', type: 'contact_tool' }
     ])
   },
-  privacy: {
-    title: 'Privacy Policy Page',
-    seoTitle: 'Privacy Policy - TikSavePro',
-    seoDescription: 'Read the privacy policy of Tik-TokDownloader.xyz to understand how we protect user privacy.',
+  'privacy-policy': {
+    title: 'Privacy Policy',
+    seoTitle: 'Privacy Policy | TikSavePro',
+    seoDescription: 'Read the TikSavePro Privacy Policy to learn how information, cookies, advertising technologies, and third-party services may be used when you visit our website.',
     isPublished: true,
     layout: JSON.stringify([
-      { id: 'p-1', type: 'hero', title: 'Privacy Policy', subtitle: 'Your privacy is extremely important to us. Learn how we handle information on Tik-TokDownloader.xyz.', bgColor: '#0f172a' },
-      { id: 'p-2', type: 'heading', level: 'h2', text: '1. Information We Collect' },
-      { id: 'p-3', type: 'paragraph', text: 'We believe in keeping things simple and secure. We do not require any personal registrations, accounts, or login details to use our services.\n\nHowever, standard web servers collect basic logs automatically. This includes your IP address, browser type, device details, and referencing pages. This info is used purely for diagnostics, analytics, and service optimizations.' },
-      { id: 'p-4', type: 'heading', level: 'h2', text: '2. TikTok URL Processing' },
-      { id: 'p-5', type: 'paragraph', text: 'Our downloader works entirely on URL processing. When you input a TikTok video URL, our platform processes that link to retrieve direct download media addresses.\n\nWe do not store downloaded videos or audio files on our servers. The actual download is processed in real-time and served to your browser client directly.' },
-      { id: 'p-6', type: 'heading', level: 'h2', text: '3. Cookies & Local Storage' },
-      { id: 'p-7', type: 'paragraph', text: 'TikTokDownloader.xyz may use cookies to store your preferences, search selections, or system theme status.\n\nWe also use browser localStorage to allow safe saving and layout settings cache. You can reset these settings anytime by clicking the Clear Cache option in user settings or deleting browser cookies.' },
-      { id: 'p-8', type: 'heading', level: 'h2', text: '4. Third-Party Advertisements' },
-      { id: 'p-9', type: 'paragraph', text: 'We may display banner advertisements from third-party networks (such as Google AdSense) to support website operation costs. These ad providers may set tracking cookies to serve targeted ads based on your search history and web visits.' },
-      { id: 'p-10', type: 'heading', level: 'h2', text: '5. Children\'s Privacy' },
-      { id: 'p-11', type: 'paragraph', text: 'Our tools are built for public web access and do not target or harvest data from children under the age of 13. If you believe a child has provided any tracking details, please contact us.' },
-      { id: 'p-12', type: 'heading', level: 'h2', text: '6. Policy Updates' },
-      { id: 'p-13', type: 'paragraph', text: 'This Privacy Policy is subject to change at any time to comply with legal guidelines or technical system additions. Any changes will be updated on this page immediately.' }
+      { 
+        id: 'pp-hero', 
+        type: 'hero', 
+        title: 'Privacy Policy', 
+        subtitle: 'This Privacy Policy describes how TikSavePro handles information, technologies, and services associated with your use of our website.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Privacy & Trust'
+      },
+      { id: 'pp-h2-intro', type: 'heading', level: 'h2', text: 'Effective Date & Introduction' },
+      { 
+        id: 'pp-p-intro', 
+        type: 'paragraph', 
+        text: 'Effective Date: February 2026 | Last Updated: February 2026\n\nWelcome to TikSavePro (accessible at [https://tik-tokdownloader.xyz](https://tik-tokdownloader.xyz)). We respect your privacy and are committed to maintaining a transparent, secure, and user-focused web browsing experience.\n\nThis Privacy Policy explains what information may be collected or processed when you visit our website, use our browser-based tools, or communicate with us, and how that information is handled.\n\nTikSavePro is an independent third-party web utility platform providing tools for downloading and working with publicly available TikTok content. TikSavePro is not affiliated with, sponsored by, or endorsed by TikTok, ByteDance Ltd., or any of their subsidiaries.' 
+      },
+      { id: 'pp-h2-1', type: 'heading', level: 'h2', text: '1. Information We May Collect' },
+      { 
+        id: 'pp-p-1', 
+        type: 'paragraph', 
+        text: 'Depending on how you interact with TikSavePro, we may collect or process the following categories of information:\n\n• Information Submitted Through Our Contact Form: When you contact us via our [Contact Us page](/contact-us), we receive the details you choose to provide, including your Name, Email address, Subject, and Message content. This information is provided voluntarily for support and communication.\n\n• Technical and Device Information: Like standard web services, our web servers automatically log basic technical data when you access pages. This may include your Internet Protocol (IP) address, browser type and version, operating system, referring URLs, timestamps, and page request details. This data is used for network diagnostics, service optimization, security monitoring, and abuse prevention.\n\n• Downloader URL Requests: When you use our tools to download videos, extract audio, or process public content, you provide the public TikTok URL of the media. We process this URL in real-time to locate the media stream.' 
+      },
+      { id: 'pp-h2-2', type: 'heading', level: 'h2', text: '2. Downloader Processing and Media Handling' },
+      { 
+        id: 'pp-p-2', 
+        type: 'paragraph', 
+        text: 'Our downloader utilities operate on a direct URL processing model. We do NOT host or permanently store downloaded video files, MP3 audio clips, or creator media on our servers.\n\nWhen a link is submitted, our system fetches the available media stream from the public URL and delivers the download directly to your browser client. Once the transfer completes or the session expires, temporary server processing caches are cleared.' 
+      },
+      { id: 'pp-h2-3', type: 'heading', level: 'h2', text: '3. Cookies and Similar Technologies' },
+      { 
+        id: 'pp-p-3', 
+        type: 'paragraph', 
+        text: 'TikSavePro may use cookies, web beacons, and local storage technologies for essential platform functionality and enhanced user experience:\n\n• Essential & Functional Technologies: We use browser localStorage and first-party cookies to remember your interface preferences, system theme settings, and UI configurations.\n\n• Third-Party Cookies: Third-party service providers, including advertising networks and content delivery networks (CDNs), may place or read cookies on your browser when you visit our website.\n\nYou have full control over cookies. You can manage or disable cookies through your web browser settings at any time. Please note that disabling essential cookies may impact certain interface preferences.' 
+      },
+      { id: 'pp-h2-4', type: 'heading', level: 'h2', text: '4. Google AdSense and Advertising Technologies' },
+      { 
+        id: 'pp-p-4', 
+        type: 'paragraph', 
+        text: 'We may display advertisements served by Google AdSense and other advertising partners to help fund the operational and server costs of keeping our tools free.\n\nIn accordance with Google Publisher Policies, we disclose the following:\n\n• Third-party vendors, including Google, use cookies, web beacons, and device identifiers to serve ads based on a user\'s prior visits to TikSavePro or other websites on the internet.\n\n• Google\'s use of advertising cookies enables it and its partners to serve ads to users based on their visits to our site and/or other sites across the web.\n\n• Users may opt out of personalized advertising by visiting [Google Ads Settings](https://www.google.com/settings/ads). Alternatively, you can opt out of a third-party vendor\'s use of cookies for personalized advertising by visiting [aboutads.info](https://www.aboutads.info/choices/).\n\nFor more details on how Google processes information collected through partner sites, please review [How Google uses information from sites or apps that use our services](https://policies.google.com/technologies/partner-sites).' 
+      },
+      { id: 'pp-h2-5', type: 'heading', level: 'h2', text: '5. Analytics and Web Performance' },
+      { 
+        id: 'pp-p-5', 
+        type: 'paragraph', 
+        text: 'To ensure platform reliability, fast loading times, and search engine discoverability, we may use webmaster tools (such as Google Search Console) and server-level diagnostics. These services help us monitor site health, indexation status, error rates, and traffic volume without tracking personal identifiable profiles.' 
+      },
+      { id: 'pp-h2-6', type: 'heading', level: 'h2', text: '6. Affiliate Links and Third-Party Services' },
+      { 
+        id: 'pp-p-6', 
+        type: 'paragraph', 
+        text: 'Some links or promotional banners on TikSavePro may be affiliate links. If you click on an affiliate link and complete a qualifying purchase or action, we may earn a small referral commission at no additional cost to you. We only recommend utilities, apps, and services that we believe provide genuine value to our visitors.' 
+      },
+      { id: 'pp-h2-7', type: 'heading', level: 'h2', text: '7. How We Use Information' },
+      { 
+        id: 'pp-p-7', 
+        type: 'paragraph', 
+        text: 'We process collected information solely for legitimate operational purposes, including:\n\n• Delivering, operating, and optimizing our web-based tools and pages\n• Responding to your questions, feedback, and support inquiries sent through the contact form\n• Monitoring platform security, diagnosing server issues, and preventing malicious automated bot attacks\n• Serving non-intrusive advertisements to maintain free public access\n• Complying with applicable legal obligations and enforcing website terms' 
+      },
+      { id: 'pp-h2-8', type: 'heading', level: 'h2', text: '8. Information Sharing and Disclosure' },
+      { 
+        id: 'pp-p-8', 
+        type: 'paragraph', 
+        text: 'TikSavePro does NOT sell, rent, or trade your personal information to data brokers or third-party marketers.\n\nWe may share information only under the following limited circumstances:\n\n• Service Providers: Trusted infrastructure, hosting, security firewall, and CDN vendors who assist in operating our website under confidentiality agreements.\n• Advertising Partners: Third-party advertising networks (such as Google AdSense) that process technical identifiers for ad serving as described above.\n• Legal Compliance: If required to do so by applicable law, court order, subpoena, or governmental request, or to protect the safety, rights, and property of our users and the public.' 
+      },
+      { id: 'pp-h2-9', type: 'heading', level: 'h2', text: '9. Data Retention and Security' },
+      { 
+        id: 'pp-p-9', 
+        type: 'paragraph', 
+        text: 'We retain personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, provide customer support, resolve disputes, and comply with legal requirements.\n\nWe implement reasonable administrative, technical, and physical safeguards—including SSL/TLS encryption for all data transmissions—to protect information from unauthorized access, alteration, or disclosure. However, please be aware that no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.' 
+      },
+      { id: 'pp-h2-10', type: 'heading', level: 'h2', text: '10. Your Privacy Rights and Choices' },
+      { 
+        id: 'pp-p-10', 
+        type: 'paragraph', 
+        text: 'Depending on your jurisdiction and applicable privacy legislation (such as GDPR, CCPA/CPRA, or UK GDPR), you may have specific rights regarding your personal information, which may include:\n\n• The right to request access to personal information you have submitted to us\n• The right to request correction or updating of inaccurate information\n• The right to request deletion of your contact inbox submissions\n• The right to opt out of personalized advertising and manage cookie preferences\n\nTo exercise any applicable rights or submit an inquiry regarding your data, please contact us through our [Contact Us page](/contact-us).' 
+      },
+      { id: 'pp-h2-11', type: 'heading', level: 'h2', text: '11. Children\'s Privacy' },
+      { 
+        id: 'pp-p-11', 
+        type: 'paragraph', 
+        text: 'TikSavePro is intended for a general audience and is not directed at children under the age of 13 (or under 16 where required by local law). We do not knowingly collect personal information from children. If you believe that a child has submitted personal details through our contact form, please notify us immediately via our [Contact Us page](/contact-us), and we will promptly delete the record.' 
+      },
+      { id: 'pp-h2-12', type: 'heading', level: 'h2', text: '12. Third-Party Links' },
+      { 
+        id: 'pp-p-12', 
+        type: 'paragraph', 
+        text: 'Our website contains links to external websites, including TikTok, social media networks, and third-party tools. TikSavePro has no control over and assumes no responsibility for the content, privacy policies, or practices of external third-party websites. We encourage you to review the privacy policy of every website you visit.' 
+      },
+      { id: 'pp-h2-13', type: 'heading', level: 'h2', text: '13. Changes to This Privacy Policy' },
+      { 
+        id: 'pp-p-13', 
+        type: 'paragraph', 
+        text: 'We may update this Privacy Policy from time to time to reflect modifications in website features, legal requirements, or advertising practices. When updates occur, the "Last Updated" date at the top of this policy will be revised. We encourage you to check this page periodically to stay informed about our data handling practices.' 
+      },
+      { id: 'pp-h2-14', type: 'heading', level: 'h2', text: '14. Contact Us' },
+      { 
+        id: 'pp-p-14', 
+        type: 'paragraph', 
+        text: 'If you have any questions, suggestions, or concerns regarding this Privacy Policy or our data practices, please reach out to us through our dedicated contact form at:\n\n[https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)' 
+      },
+      {
+        id: 'pp-cta',
+        type: 'cta_box',
+        title: 'Have Questions About Your Privacy?',
+        subtitle: 'Our team is available to assist you with any questions regarding data handling, cookies, or website features.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      }
+    ])
+  },
+  privacy: {
+    title: 'Privacy Policy',
+    seoTitle: 'Privacy Policy | TikSavePro',
+    seoDescription: 'Read the TikSavePro Privacy Policy to learn how information, cookies, advertising technologies, and third-party services may be used when you visit our website.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'pp-hero', 
+        type: 'hero', 
+        title: 'Privacy Policy', 
+        subtitle: 'This Privacy Policy describes how TikSavePro handles information, technologies, and services associated with your use of our website.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Privacy & Trust'
+      },
+      { id: 'pp-h2-intro', type: 'heading', level: 'h2', text: 'Effective Date & Introduction' },
+      { 
+        id: 'pp-p-intro', 
+        type: 'paragraph', 
+        text: 'Effective Date: February 2026 | Last Updated: February 2026\n\nWelcome to TikSavePro (accessible at [https://tik-tokdownloader.xyz](https://tik-tokdownloader.xyz)). We respect your privacy and are committed to maintaining a transparent, secure, and user-focused web browsing experience.\n\nThis Privacy Policy explains what information may be collected or processed when you visit our website, use our browser-based tools, or communicate with us, and how that information is handled.\n\nTikSavePro is an independent third-party web utility platform providing tools for downloading and working with publicly available TikTok content. TikSavePro is not affiliated with, sponsored by, or endorsed by TikTok, ByteDance Ltd., or any of their subsidiaries.' 
+      },
+      { id: 'pp-h2-1', type: 'heading', level: 'h2', text: '1. Information We May Collect' },
+      { 
+        id: 'pp-p-1', 
+        type: 'paragraph', 
+        text: 'Depending on how you interact with TikSavePro, we may collect or process the following categories of information:\n\n• Information Submitted Through Our Contact Form: When you contact us via our [Contact Us page](/contact-us), we receive the details you choose to provide, including your Name, Email address, Subject, and Message content. This information is provided voluntarily for support and communication.\n\n• Technical and Device Information: Like standard web services, our web servers automatically log basic technical data when you access pages. This may include your Internet Protocol (IP) address, browser type and version, operating system, referring URLs, timestamps, and page request details. This data is used for network diagnostics, service optimization, security monitoring, and abuse prevention.\n\n• Downloader URL Requests: When you use our tools to download videos, extract audio, or process public content, you provide the public TikTok URL of the media. We process this URL in real-time to locate the media stream.' 
+      },
+      { id: 'pp-h2-2', type: 'heading', level: 'h2', text: '2. Downloader Processing and Media Handling' },
+      { 
+        id: 'pp-p-2', 
+        type: 'paragraph', 
+        text: 'Our downloader utilities operate on a direct URL processing model. We do NOT host or permanently store downloaded video files, MP3 audio clips, or creator media on our servers.\n\nWhen a link is submitted, our system fetches the available media stream from the public URL and delivers the download directly to your browser client. Once the transfer completes or the session expires, temporary server processing caches are cleared.' 
+      },
+      { id: 'pp-h2-3', type: 'heading', level: 'h2', text: '3. Cookies and Similar Technologies' },
+      { 
+        id: 'pp-p-3', 
+        type: 'paragraph', 
+        text: 'TikSavePro may use cookies, web beacons, and local storage technologies for essential platform functionality and enhanced user experience:\n\n• Essential & Functional Technologies: We use browser localStorage and first-party cookies to remember your interface preferences, system theme settings, and UI configurations.\n\n• Third-Party Cookies: Third-party service providers, including advertising networks and content delivery networks (CDNs), may place or read cookies on your browser when you visit our website.\n\nYou have full control over cookies. You can manage or disable cookies through your web browser settings at any time. Please note that disabling essential cookies may impact certain interface preferences.' 
+      },
+      { id: 'pp-h2-4', type: 'heading', level: 'h2', text: '4. Google AdSense and Advertising Technologies' },
+      { 
+        id: 'pp-p-4', 
+        type: 'paragraph', 
+        text: 'We may display advertisements served by Google AdSense and other advertising partners to help fund the operational and server costs of keeping our tools free.\n\nIn accordance with Google Publisher Policies, we disclose the following:\n\n• Third-party vendors, including Google, use cookies, web beacons, and device identifiers to serve ads based on a user\'s prior visits to TikSavePro or other websites on the internet.\n\n• Google\'s use of advertising cookies enables it and its partners to serve ads to users based on their visits to our site and/or other sites across the web.\n\n• Users may opt out of personalized advertising by visiting [Google Ads Settings](https://www.google.com/settings/ads). Alternatively, you can opt out of a third-party vendor\'s use of cookies for personalized advertising by visiting [aboutads.info](https://www.aboutads.info/choices/).\n\nFor more details on how Google processes information collected through partner sites, please review [How Google uses information from sites or apps that use our services](https://policies.google.com/technologies/partner-sites).' 
+      },
+      { id: 'pp-h2-5', type: 'heading', level: 'h2', text: '5. Analytics and Web Performance' },
+      { 
+        id: 'pp-p-5', 
+        type: 'paragraph', 
+        text: 'To ensure platform reliability, fast loading times, and search engine discoverability, we may use webmaster tools (such as Google Search Console) and server-level diagnostics. These services help us monitor site health, indexation status, error rates, and traffic volume without tracking personal identifiable profiles.' 
+      },
+      { id: 'pp-h2-6', type: 'heading', level: 'h2', text: '6. Affiliate Links and Third-Party Services' },
+      { 
+        id: 'pp-p-6', 
+        type: 'paragraph', 
+        text: 'Some links or promotional banners on TikSavePro may be affiliate links. If you click on an affiliate link and complete a qualifying purchase or action, we may earn a small referral commission at no additional cost to you. We only recommend utilities, apps, and services that we believe provide genuine value to our visitors.' 
+      },
+      { id: 'pp-h2-7', type: 'heading', level: 'h2', text: '7. How We Use Information' },
+      { 
+        id: 'pp-p-7', 
+        type: 'paragraph', 
+        text: 'We process collected information solely for legitimate operational purposes, including:\n\n• Delivering, operating, and optimizing our web-based tools and pages\n• Responding to your questions, feedback, and support inquiries sent through the contact form\n• Monitoring platform security, diagnosing server issues, and preventing malicious automated bot attacks\n• Serving non-intrusive advertisements to maintain free public access\n• Complying with applicable legal obligations and enforcing website terms' 
+      },
+      { id: 'pp-h2-8', type: 'heading', level: 'h2', text: '8. Information Sharing and Disclosure' },
+      { 
+        id: 'pp-p-8', 
+        type: 'paragraph', 
+        text: 'TikSavePro does NOT sell, rent, or trade your personal information to data brokers or third-party marketers.\n\nWe may share information only under the following limited circumstances:\n\n• Service Providers: Trusted infrastructure, hosting, security firewall, and CDN vendors who assist in operating our website under confidentiality agreements.\n• Advertising Partners: Third-party advertising networks (such as Google AdSense) that process technical identifiers for ad serving as described above.\n• Legal Compliance: If required to do so by applicable law, court order, subpoena, or governmental request, or to protect the safety, rights, and property of our users and the public.' 
+      },
+      { id: 'pp-h2-9', type: 'heading', level: 'h2', text: '9. Data Retention and Security' },
+      { 
+        id: 'pp-p-9', 
+        type: 'paragraph', 
+        text: 'We retain personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, provide customer support, resolve disputes, and comply with legal requirements.\n\nWe implement reasonable administrative, technical, and physical safeguards—including SSL/TLS encryption for all data transmissions—to protect information from unauthorized access, alteration, or disclosure. However, please be aware that no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.' 
+      },
+      { id: 'pp-h2-10', type: 'heading', level: 'h2', text: '10. Your Privacy Rights and Choices' },
+      { 
+        id: 'pp-p-10', 
+        type: 'paragraph', 
+        text: 'Depending on your jurisdiction and applicable privacy legislation (such as GDPR, CCPA/CPRA, or UK GDPR), you may have specific rights regarding your personal information, which may include:\n\n• The right to request access to personal information you have submitted to us\n• The right to request correction or updating of inaccurate information\n• The right to request deletion of your contact inbox submissions\n• The right to opt out of personalized advertising and manage cookie preferences\n\nTo exercise any applicable rights or submit an inquiry regarding your data, please contact us through our [Contact Us page](/contact-us).' 
+      },
+      { id: 'pp-h2-11', type: 'heading', level: 'h2', text: '11. Children\'s Privacy' },
+      { 
+        id: 'pp-p-11', 
+        type: 'paragraph', 
+        text: 'TikSavePro is intended for a general audience and is not directed at children under the age of 13 (or under 16 where required by local law). We do not knowingly collect personal information from children. If you believe that a child has submitted personal details through our contact form, please notify us immediately via our [Contact Us page](/contact-us), and we will promptly delete the record.' 
+      },
+      { id: 'pp-h2-12', type: 'heading', level: 'h2', text: '12. Third-Party Links' },
+      { 
+        id: 'pp-p-12', 
+        type: 'paragraph', 
+        text: 'Our website contains links to external websites, including TikTok, social media networks, and third-party tools. TikSavePro has no control over and assumes no responsibility for the content, privacy policies, or practices of external third-party websites. We encourage you to review the privacy policy of every website you visit.' 
+      },
+      { id: 'pp-h2-13', type: 'heading', level: 'h2', text: '13. Changes to This Privacy Policy' },
+      { 
+        id: 'pp-p-13', 
+        type: 'paragraph', 
+        text: 'We may update this Privacy Policy from time to time to reflect modifications in website features, legal requirements, or advertising practices. When updates occur, the "Last Updated" date at the top of this policy will be revised. We encourage you to check this page periodically to stay informed about our data handling practices.' 
+      },
+      { id: 'pp-h2-14', type: 'heading', level: 'h2', text: '14. Contact Us' },
+      { 
+        id: 'pp-p-14', 
+        type: 'paragraph', 
+        text: 'If you have any questions, suggestions, or concerns regarding this Privacy Policy or our data practices, please reach out to us through our dedicated contact form at:\n\n[https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)' 
+      },
+      {
+        id: 'pp-cta',
+        type: 'cta_box',
+        title: 'Have Questions About Your Privacy?',
+        subtitle: 'Our team is available to assist you with any questions regarding data handling, cookies, or website features.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      }
     ])
   }
 };
@@ -383,7 +592,7 @@ export default function CustomPage({ params }: { params: any }) {
 
       try {
         let res = await getCustomPageBySlug(normalizedSlug);
-        // If not found and slug is contact-us/contact or about-us/about, try the alias
+        // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy, try the alias
         if (!res || !res.isPublished) {
           if (normalizedSlug === 'contact-us') {
             res = await getCustomPageBySlug('contact');
@@ -393,6 +602,10 @@ export default function CustomPage({ params }: { params: any }) {
             res = await getCustomPageBySlug('about');
           } else if (normalizedSlug === 'about') {
             res = await getCustomPageBySlug('about-us');
+          } else if (normalizedSlug === 'privacy-policy') {
+            res = await getCustomPageBySlug('privacy');
+          } else if (normalizedSlug === 'privacy') {
+            res = await getCustomPageBySlug('privacy-policy');
           }
         }
 
@@ -402,6 +615,8 @@ export default function CustomPage({ params }: { params: any }) {
           if (s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'];
           if (s === 'about-us') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
           if (s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          if (s === 'privacy-policy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
+          if (s === 'privacy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
           return null;
         };
 

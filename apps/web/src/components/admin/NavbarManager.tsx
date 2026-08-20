@@ -103,7 +103,7 @@ const CMS_PAGE_PRESETS = [
   { label: 'Blog Index', url: '/blog' },
   { label: 'About Us', url: '/about-us' },
   { label: 'Contact Us', url: '/contact-us' },
-  { label: 'Privacy Policy', url: '/privacy' },
+  { label: 'Privacy Policy', url: '/privacy-policy' },
 ];
 
 interface Props {

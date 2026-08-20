@@ -53,10 +53,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/privacy`,
+      url: `${BASE_URL}/privacy-policy`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      changeFrequency: 'monthly',
+      priority: 0.6,
     },
   ];
 
