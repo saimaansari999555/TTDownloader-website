@@ -105,6 +105,7 @@ const CMS_PAGE_PRESETS = [
   { label: 'Contact Us', url: '/contact-us' },
   { label: 'Privacy Policy', url: '/privacy-policy' },
   { label: 'Terms of Service', url: '/terms-of-service' },
+  { label: 'DMCA & Disclaimer', url: '/dmca-disclaimer' },
 ];
 
 interface Props {

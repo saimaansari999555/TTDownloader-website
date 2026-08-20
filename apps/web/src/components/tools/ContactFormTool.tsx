@@ -83,6 +83,7 @@ export default function ContactFormTool() {
                   <option value="Technical Support">Technical Support</option>
                   <option value="Bug Report">Bug Report</option>
                   <option value="Business Partnership">Business Partnership</option>
+                  <option value="Copyright / DMCA Notice">Copyright / DMCA Notice</option>
                   <option value="DMCA / Legal">DMCA / Legal</option>
                 </select>
               </div>

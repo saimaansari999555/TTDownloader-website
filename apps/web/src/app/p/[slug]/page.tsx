@@ -775,6 +775,236 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
         buttonLink: '/contact-us'
       }
     ])
+  },
+  'dmca-disclaimer': {
+    title: 'DMCA & Disclaimer',
+    seoTitle: 'DMCA & Disclaimer | TikSavePro',
+    seoDescription: "Learn about TikSavePro's copyright, DMCA notice process, content-use responsibilities, third-party services, and website disclaimers.",
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'dmca-hero', 
+        type: 'hero', 
+        title: 'DMCA & Disclaimer', 
+        subtitle: 'Copyright considerations, DMCA notice procedures, content responsibilities, and website disclaimers for TikSavePro.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Copyright & Disclaimers'
+      },
+      { id: 'dmca-h2-intro', type: 'heading', level: 'h2', text: 'Effective Date & Overview' },
+      { 
+        id: 'dmca-p-intro', 
+        type: 'paragraph', 
+        text: 'Effective Date: February 2026 | Last Updated: February 2026\n\nWelcome to the DMCA & Disclaimer page of TikSavePro (accessible at [https://tik-tokdownloader.xyz](https://tik-tokdownloader.xyz)). This document describes our copyright policies, the procedure for submitting intellectual property complaints, user responsibilities regarding downloaded content, and comprehensive operational disclaimers.\n\nTikSavePro is an independent third-party online service providing browser-based tools for supported public media formats. TikSavePro is NOT affiliated with, sponsored by, endorsed by, or officially connected to TikTok, ByteDance Ltd., or any of their subsidiaries.' 
+      },
+      { id: 'dmca-h2-1', type: 'heading', level: 'h2', text: '1. Independent Third-Party Platform' },
+      { 
+        id: 'dmca-p-1', 
+        type: 'paragraph', 
+        text: 'TikSavePro operates strictly as an independent, browser-based media utility. We do not claim official partnership, endorsement, authorization, or sponsorship by TikTok or any other platform.\n\nAll platform names, trademarks, logos, and brand elements mentioned on this website belong exclusively to their respective owners. Their reference on TikSavePro is solely for informational and descriptive identification of supported public URL formats under fair use principles.' 
+      },
+      { id: 'dmca-h2-2', type: 'heading', level: 'h2', text: '2. Copyright & Intellectual Property Rights' },
+      { 
+        id: 'dmca-p-2', 
+        type: 'paragraph', 
+        text: 'TikSavePro respects the intellectual property rights of content creators, artists, songwriters, publishers, and platforms, and we expect all users of our service to do the same.\n\n• Creator Ownership: All videos, music recordings, sound bites, images, visual effects, and creator profiles available on TikTok remain the exclusive intellectual property and copyright of their respective creators or authorized rights holders.\n\n• No Transfer of Ownership: Using our downloader or extraction tools does NOT transfer copyright ownership, grant a reproduction license, or confer commercial redistribution rights to the user.\n\n• User Responsibility for Rights: Users are solely responsible for ensuring that their use of any downloaded media complies with applicable copyright laws, fair use exceptions, platform terms of service, and creator permissions. You should not publish, broadcast, monetize, or commercially exploit another person\'s content without proper authorization.' 
+      },
+      { id: 'dmca-h2-3', type: 'heading', level: 'h2', text: '3. DMCA & Copyright Complaint Policy' },
+      { 
+        id: 'dmca-p-3', 
+        type: 'paragraph', 
+        text: 'In accordance with applicable intellectual property principles and the framework of the Digital Millennium Copyright Act (17 U.S.C. §512), TikSavePro responds to clear, complete, and actionable notices of alleged copyright infringement.\n\nIf you are a copyright owner, or an authorized representative acting on behalf of a copyright owner, and you believe that material accessible on or through our website infringes your copyright, you may submit a formal notification as described below.\n\n[Important Notice for Website Operators: To maintain formal DMCA safe harbor protections in the United States, service providers must register a designated agent with the U.S. Copyright Office online directory. An editable placeholder for designated agent information is provided below.]' 
+      },
+      { id: 'dmca-h2-4', type: 'heading', level: 'h2', text: '4. Information Required in a Takedown Notice' },
+      { 
+        id: 'dmca-p-4', 
+        type: 'paragraph', 
+        text: 'To ensure your notice can be promptly investigated and processed, your complaint must include the following information in writing:\n\n1. Identification of the Copyrighted Work: A clear description or title of the copyrighted work that you claim has been infringed.\n2. Identification of the Allegedly Infringing Material: The exact URL(s) on TikSavePro or the specific platform link where the alleged infringement occurs, sufficient to allow us to locate the item.\n3. Your Contact Details: Your full legal name, title/company (if applicable), valid email address, physical mailing address, and telephone number.\n4. Statement of Good Faith: A statement confirming: "I have a good-faith belief that the use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law."\n5. Statement of Accuracy & Authority: A statement under penalty of perjury confirming: "The information in this notification is accurate, and I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed."\n6. Signature: A physical or electronic signature of the copyright owner or authorized representative.' 
+      },
+      { id: 'dmca-h2-5', type: 'heading', level: 'h2', text: '5. How to Submit Your Notice' },
+      { 
+        id: 'dmca-p-5', 
+        type: 'paragraph', 
+        text: 'You can submit your complete copyright takedown notice directly through our dedicated [Contact Us page](/contact-us). Please select the subject "Copyright / DMCA Notice" and include all information outlined in Section 4 above.\n\n• Online Contact Route: [https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)\n• Subject Category: Copyright / DMCA Notice\n• Designated Agent Placeholder: [Website Operator / Legal Agent Name, Address Placeholder — To be configured by site administrator]\n\nIncomplete or vague notices that lack specific URLs or required legal declarations may experience delays or may not be actionable.' 
+      },
+      { id: 'dmca-h2-6', type: 'heading', level: 'h2', text: '6. Review and Technical Limitations' },
+      { 
+        id: 'dmca-p-6', 
+        type: 'paragraph', 
+        text: 'Upon receipt of a valid and complete copyright notice, TikSavePro will review the claim and take appropriate, technically feasible action within our control, which may include restricting or disabling access to specific URL processing endpoints.\n\n• Technical Role Distinction: TikSavePro is a browser-based URL parsing utility and does NOT host, store, or control video servers operated by TikTok. If the infringing content is hosted on TikTok\'s platform, rights holders should also submit an infringement report directly to TikTok via TikTok\'s official intellectual property reporting channels so the source video can be removed at the origin.' 
+      },
+      { id: 'dmca-h2-7', type: 'heading', level: 'h2', text: '7. Counter-Notification & Disputes' },
+      { 
+        id: 'dmca-p-7', 
+        type: 'paragraph', 
+        text: 'If content access was restricted as a result of a mistaken or misidentified copyright notice, affected parties may submit a counter-notification detailing why the material was removed or disabled in error. Where applicable, counter-notifications should include identification of the affected URL, a statement of good faith belief under penalty of perjury, contact details, and an electronic signature.' 
+      },
+      { id: 'dmca-h2-8', type: 'heading', level: 'h2', text: '8. Repeat Infringers & Abuse Prevention' },
+      { 
+        id: 'dmca-p-8', 
+        type: 'paragraph', 
+        text: 'TikSavePro maintains a policy of restricting or blocking access to users or IP addresses that repeatedly engage in copyright infringement, automated scraping, security attacks, or abusive behavior that violates our [Terms of Service](/terms-of-service).' 
+      },
+      { id: 'dmca-h2-9', type: 'heading', level: 'h2', text: '9. Watermark Removal Notice' },
+      { 
+        id: 'dmca-p-9', 
+        type: 'paragraph', 
+        text: 'Where available, TikSavePro may provide download streams that do not display a visible platform watermark. We explicitly emphasize that the removal of a visible platform watermark does NOT remove, transfer, or waive underlying copyright protections. Watermark-free content remains subject to all applicable creator rights and copyright laws.' 
+      },
+      { id: 'dmca-h2-10', type: 'heading', level: 'h2', text: '10. Downloaded Content & Permitted Use' },
+      { 
+        id: 'dmca-p-10', 
+        type: 'paragraph', 
+        text: 'Downloaded files may contain music, voice tracks, choreography, video clips, and trademarks belonging to third parties. Our platform is provided for personal, educational, backup, and fair use research purposes. Users must independently evaluate whether their intended use requires creator authorization.' 
+      },
+      { id: 'dmca-h2-11', type: 'heading', level: 'h2', text: '11. Advertising, Affiliates & Third-Party Links' },
+      { 
+        id: 'dmca-p-11', 
+        type: 'paragraph', 
+        text: '• Google AdSense: We display banner advertisements from Google AdSense and third-party advertising partners to fund operational costs. Third-party ad vendors may use cookies and web beacons as described in our [Privacy Policy](/privacy-policy).\n\n• Affiliate Disclosures: Some external links may be affiliate links through which we may earn a referral commission at no additional cost to you.\n\n• No Endorsement: The presence of an advertisement or external link does not constitute an endorsement or warranty of the advertised product or service.' 
+      },
+      { id: 'dmca-h2-12', type: 'heading', level: 'h2', text: '12. Service Availability & Technical Disclaimer' },
+      { 
+        id: 'dmca-p-12', 
+        type: 'paragraph', 
+        text: 'TikSavePro is provided on an "as-is" and "as-available" basis. We do not guarantee uninterrupted service, error-free operation, or permanent compatibility with every TikTok URL. Due to platform updates, privacy restrictions, or regional limitations, certain links may not be accessible.' 
+      },
+      { id: 'dmca-h2-13', type: 'heading', level: 'h2', text: '13. No Legal Advice' },
+      { 
+        id: 'dmca-p-13', 
+        type: 'paragraph', 
+        text: 'The information provided on this page and throughout the website is for general informational and educational purposes only and does not constitute legal advice. If you have specific legal questions regarding copyright, fair use, or intellectual property rights, you should consult with a qualified legal professional.' 
+      },
+      { id: 'dmca-h2-14', type: 'heading', level: 'h2', text: '14. Changes to This Policy & Contact Us' },
+      { 
+        id: 'dmca-p-14', 
+        type: 'paragraph', 
+        text: 'We reserve the right to modify or update this DMCA & Disclaimer document at any time. Any changes will be reflected with an updated "Last Updated" date.\n\nFor any questions, legal inquiries, or copyright notices, please contact us via our official contact form:\n\n[https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)' 
+      },
+      {
+        id: 'dmca-cta',
+        type: 'cta_box',
+        title: 'Need Assistance or Have Copyright Questions?',
+        subtitle: 'Our support team is available to review inquiries and copyright notices submitted through our contact form.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      }
+    ])
+  },
+  dmca: {
+    title: 'DMCA & Disclaimer',
+    seoTitle: 'DMCA & Disclaimer | TikSavePro',
+    seoDescription: "Learn about TikSavePro's copyright, DMCA notice process, content-use responsibilities, third-party services, and website disclaimers.",
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'dmca-hero', 
+        type: 'hero', 
+        title: 'DMCA & Disclaimer', 
+        subtitle: 'Copyright considerations, DMCA notice procedures, content responsibilities, and website disclaimers for TikSavePro.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Copyright & Disclaimers'
+      },
+      { id: 'dmca-h2-intro', type: 'heading', level: 'h2', text: 'Effective Date & Overview' },
+      { 
+        id: 'dmca-p-intro', 
+        type: 'paragraph', 
+        text: 'Effective Date: February 2026 | Last Updated: February 2026\n\nWelcome to the DMCA & Disclaimer page of TikSavePro (accessible at [https://tik-tokdownloader.xyz](https://tik-tokdownloader.xyz)). This document describes our copyright policies, the procedure for submitting intellectual property complaints, user responsibilities regarding downloaded content, and comprehensive operational disclaimers.\n\nTikSavePro is an independent third-party online service providing browser-based tools for supported public media formats. TikSavePro is NOT affiliated with, sponsored by, endorsed by, or officially connected to TikTok, ByteDance Ltd., or any of their subsidiaries.' 
+      },
+      { id: 'dmca-h2-1', type: 'heading', level: 'h2', text: '1. Independent Third-Party Platform' },
+      { 
+        id: 'dmca-p-1', 
+        type: 'paragraph', 
+        text: 'TikSavePro operates strictly as an independent, browser-based media utility. We do not claim official partnership, endorsement, authorization, or sponsorship by TikTok or any other platform.\n\nAll platform names, trademarks, logos, and brand elements mentioned on this website belong exclusively to their respective owners. Their reference on TikSavePro is solely for informational and descriptive identification of supported public URL formats under fair use principles.' 
+      },
+      { id: 'dmca-h2-2', type: 'heading', level: 'h2', text: '2. Copyright & Intellectual Property Rights' },
+      { 
+        id: 'dmca-p-2', 
+        type: 'paragraph', 
+        text: 'TikSavePro respects the intellectual property rights of content creators, artists, songwriters, publishers, and platforms, and we expect all users of our service to do the same.\n\n• Creator Ownership: All videos, music recordings, sound bites, images, visual effects, and creator profiles available on TikTok remain the exclusive intellectual property and copyright of their respective creators or authorized rights holders.\n\n• No Transfer of Ownership: Using our downloader or extraction tools does NOT transfer copyright ownership, grant a reproduction license, or confer commercial redistribution rights to the user.\n\n• User Responsibility for Rights: Users are solely responsible for ensuring that their use of any downloaded media complies with applicable copyright laws, fair use exceptions, platform terms of service, and creator permissions. You should not publish, broadcast, monetize, or commercially exploit another person\'s content without proper authorization.' 
+      },
+      { id: 'dmca-h2-3', type: 'heading', level: 'h2', text: '3. DMCA & Copyright Complaint Policy' },
+      { 
+        id: 'dmca-p-3', 
+        type: 'paragraph', 
+        text: 'In accordance with applicable intellectual property principles and the framework of the Digital Millennium Copyright Act (17 U.S.C. §512), TikSavePro responds to clear, complete, and actionable notices of alleged copyright infringement.\n\nIf you are a copyright owner, or an authorized representative acting on behalf of a copyright owner, and you believe that material accessible on or through our website infringes your copyright, you may submit a formal notification as described below.\n\n[Important Notice for Website Operators: To maintain formal DMCA safe harbor protections in the United States, service providers must register a designated agent with the U.S. Copyright Office online directory. An editable placeholder for designated agent information is provided below.]' 
+      },
+      { id: 'dmca-h2-4', type: 'heading', level: 'h2', text: '4. Information Required in a Takedown Notice' },
+      { 
+        id: 'dmca-p-4', 
+        type: 'paragraph', 
+        text: 'To ensure your notice can be promptly investigated and processed, your complaint must include the following information in writing:\n\n1. Identification of the Copyrighted Work: A clear description or title of the copyrighted work that you claim has been infringed.\n2. Identification of the Allegedly Infringing Material: The exact URL(s) on TikSavePro or the specific platform link where the alleged infringement occurs, sufficient to allow us to locate the item.\n3. Your Contact Details: Your full legal name, title/company (if applicable), valid email address, physical mailing address, and telephone number.\n4. Statement of Good Faith: A statement confirming: "I have a good-faith belief that the use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law."\n5. Statement of Accuracy & Authority: A statement under penalty of perjury confirming: "The information in this notification is accurate, and I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed."\n6. Signature: A physical or electronic signature of the copyright owner or authorized representative.' 
+      },
+      { id: 'dmca-h2-5', type: 'heading', level: 'h2', text: '5. How to Submit Your Notice' },
+      { 
+        id: 'dmca-p-5', 
+        type: 'paragraph', 
+        text: 'You can submit your complete copyright takedown notice directly through our dedicated [Contact Us page](/contact-us). Please select the subject "Copyright / DMCA Notice" and include all information outlined in Section 4 above.\n\n• Online Contact Route: [https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)\n• Subject Category: Copyright / DMCA Notice\n• Designated Agent Placeholder: [Website Operator / Legal Agent Name, Address Placeholder — To be configured by site administrator]\n\nIncomplete or vague notices that lack specific URLs or required legal declarations may experience delays or may not be actionable.' 
+      },
+      { id: 'dmca-h2-6', type: 'heading', level: 'h2', text: '6. Review and Technical Limitations' },
+      { 
+        id: 'dmca-p-6', 
+        type: 'paragraph', 
+        text: 'Upon receipt of a valid and complete copyright notice, TikSavePro will review the claim and take appropriate, technically feasible action within our control, which may include restricting or disabling access to specific URL processing endpoints.\n\n• Technical Role Distinction: TikSavePro is a browser-based URL parsing utility and does NOT host, store, or control video servers operated by TikTok. If the infringing content is hosted on TikTok\'s platform, rights holders should also submit an infringement report directly to TikTok via TikTok\'s official intellectual property reporting channels so the source video can be removed at the origin.' 
+      },
+      { id: 'dmca-h2-7', type: 'heading', level: 'h2', text: '7. Counter-Notification & Disputes' },
+      { 
+        id: 'dmca-p-7', 
+        type: 'paragraph', 
+        text: 'If content access was restricted as a result of a mistaken or misidentified copyright notice, affected parties may submit a counter-notification detailing why the material was removed or disabled in error. Where applicable, counter-notifications should include identification of the affected URL, a statement of good faith belief under penalty of perjury, contact details, and an electronic signature.' 
+      },
+      { id: 'dmca-h2-8', type: 'heading', level: 'h2', text: '8. Repeat Infringers & Abuse Prevention' },
+      { 
+        id: 'dmca-p-8', 
+        type: 'paragraph', 
+        text: 'TikSavePro maintains a policy of restricting or blocking access to users or IP addresses that repeatedly engage in copyright infringement, automated scraping, security attacks, or abusive behavior that violates our [Terms of Service](/terms-of-service).' 
+      },
+      { id: 'dmca-h2-9', type: 'heading', level: 'h2', text: '9. Watermark Removal Notice' },
+      { 
+        id: 'dmca-p-9', 
+        type: 'paragraph', 
+        text: 'Where available, TikSavePro may provide download streams that do not display a visible platform watermark. We explicitly emphasize that the removal of a visible platform watermark does NOT remove, transfer, or waive underlying copyright protections. Watermark-free content remains subject to all applicable creator rights and copyright laws.' 
+      },
+      { id: 'dmca-h2-10', type: 'heading', level: 'h2', text: '10. Downloaded Content & Permitted Use' },
+      { 
+        id: 'dmca-p-10', 
+        type: 'paragraph', 
+        text: 'Downloaded files may contain music, voice tracks, choreography, video clips, and trademarks belonging to third parties. Our platform is provided for personal, educational, backup, and fair use research purposes. Users must independently evaluate whether their intended use requires creator authorization.' 
+      },
+      { id: 'dmca-h2-11', type: 'heading', level: 'h2', text: '11. Advertising, Affiliates & Third-Party Links' },
+      { 
+        id: 'dmca-p-11', 
+        type: 'paragraph', 
+        text: '• Google AdSense: We display banner advertisements from Google AdSense and third-party advertising partners to fund operational costs. Third-party ad vendors may use cookies and web beacons as described in our [Privacy Policy](/privacy-policy).\n\n• Affiliate Disclosures: Some external links may be affiliate links through which we may earn a referral commission at no additional cost to you.\n\n• No Endorsement: The presence of an advertisement or external link does not constitute an endorsement or warranty of the advertised product or service.' 
+      },
+      { id: 'dmca-h2-12', type: 'heading', level: 'h2', text: '12. Service Availability & Technical Disclaimer' },
+      { 
+        id: 'dmca-p-12', 
+        type: 'paragraph', 
+        text: 'TikSavePro is provided on an "as-is" and "as-available" basis. We do not guarantee uninterrupted service, error-free operation, or permanent compatibility with every TikTok URL. Due to platform updates, privacy restrictions, or regional limitations, certain links may not be accessible.' 
+      },
+      { id: 'dmca-h2-13', type: 'heading', level: 'h2', text: '13. No Legal Advice' },
+      { 
+        id: 'dmca-p-13', 
+        type: 'paragraph', 
+        text: 'The information provided on this page and throughout the website is for general informational and educational purposes only and does not constitute legal advice. If you have specific legal questions regarding copyright, fair use, or intellectual property rights, you should consult with a qualified legal professional.' 
+      },
+      { id: 'dmca-h2-14', type: 'heading', level: 'h2', text: '14. Changes to This Policy & Contact Us' },
+      { 
+        id: 'dmca-p-14', 
+        type: 'paragraph', 
+        text: 'We reserve the right to modify or update this DMCA & Disclaimer document at any time. Any changes will be reflected with an updated "Last Updated" date.\n\nFor any questions, legal inquiries, or copyright notices, please contact us via our official contact form:\n\n[https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)' 
+      },
+      {
+        id: 'dmca-cta',
+        type: 'cta_box',
+        title: 'Need Assistance or Have Copyright Questions?',
+        subtitle: 'Our support team is available to review inquiries and copyright notices submitted through our contact form.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      }
+    ])
   }
 };
 
@@ -834,7 +1064,7 @@ export default function CustomPage({ params }: { params: any }) {
 
       try {
         let res = await getCustomPageBySlug(normalizedSlug);
-        // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy or terms-of-service/terms, try the alias
+        // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy or terms-of-service/terms or dmca-disclaimer/dmca/disclaimer, try the alias
         if (!res || !res.isPublished) {
           if (normalizedSlug === 'contact-us') {
             res = await getCustomPageBySlug('contact');
@@ -852,6 +1082,12 @@ export default function CustomPage({ params }: { params: any }) {
             res = await getCustomPageBySlug('terms');
           } else if (normalizedSlug === 'terms') {
             res = await getCustomPageBySlug('terms-of-service');
+          } else if (normalizedSlug === 'dmca-disclaimer') {
+            res = (await getCustomPageBySlug('dmca')) || (await getCustomPageBySlug('disclaimer'));
+          } else if (normalizedSlug === 'dmca') {
+            res = (await getCustomPageBySlug('dmca-disclaimer')) || (await getCustomPageBySlug('disclaimer'));
+          } else if (normalizedSlug === 'disclaimer') {
+            res = (await getCustomPageBySlug('dmca-disclaimer')) || (await getCustomPageBySlug('dmca'));
           }
         }
 
@@ -865,6 +1101,9 @@ export default function CustomPage({ params }: { params: any }) {
           if (s === 'privacy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
           if (s === 'terms-of-service') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
           if (s === 'terms') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
+          if (s === 'dmca-disclaimer') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
+          if (s === 'dmca') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
+          if (s === 'disclaimer') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
           return null;
         };
 
