@@ -533,6 +533,248 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
         buttonLink: '/contact-us'
       }
     ])
+  },
+  'terms-of-service': {
+    title: 'Terms of Service',
+    seoTitle: 'Terms of Service | TikSavePro',
+    seoDescription: 'Read the TikSavePro Terms of Service to understand the rules, responsibilities, copyright considerations, advertising, and conditions for using our website and tools.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'tos-hero', 
+        type: 'hero', 
+        title: 'Terms of Service', 
+        subtitle: 'These Terms of Service govern your access to and use of TikSavePro and our browser-based tools.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Terms & Conditions'
+      },
+      { id: 'tos-h2-intro', type: 'heading', level: 'h2', text: 'Effective Date & Agreement to Terms' },
+      { 
+        id: 'tos-p-intro', 
+        type: 'paragraph', 
+        text: 'Effective Date: February 2026 | Last Updated: February 2026\n\nWelcome to TikSavePro (accessible at [https://tik-tokdownloader.xyz](https://tik-tokdownloader.xyz)). These Terms of Service ("Terms") constitute a legally binding agreement between you ("user", "you", or "your") and TikSavePro ("we", "us", or "our") concerning your access to and use of the TikSavePro website, utilities, and associated services.\n\nBy accessing or using our website, you acknowledge that you have read, understood, and agree to be bound by these Terms and our [Privacy Policy](/privacy-policy). If you do not agree to these Terms, you must immediately discontinue use of the website and all related tools.' 
+      },
+      { id: 'tos-h2-1', type: 'heading', level: 'h2', text: '1. Description of Services & Tool Functionality' },
+      { 
+        id: 'tos-p-1', 
+        type: 'paragraph', 
+        text: 'TikSavePro provides online, browser-based media conversion and retrieval tools designed to help users interact with publicly accessible TikTok content. Our tools currently include:\n\n• [TikTok Video Downloader](/video): Browser-based downloading of supported public TikTok videos in MP4 format\n• [TikTok Audio Extractor & MP3 Downloader](/audio): Sound track extraction and audio downloading in MP3 format\n• [TikTok Profile Bulk Downloader](/bulk): Multi-link media processing utility for publicly accessible profile content\n• [Android APK Section](/apk): Android utility downloads and update guides\n• [Blog & Editorial Content](/blog): Guides, tutorials, and industry articles\n\nAll tools are provided on an "as-is" and "as-available" basis. We do not guarantee that every TikTok URL can be parsed or that particular video resolutions, formats, or audio bitrates will always be available.' 
+      },
+      { id: 'tos-h2-2', type: 'heading', level: 'h2', text: '2. Independent Platform & No TikTok Affiliation' },
+      { 
+        id: 'tos-p-2', 
+        type: 'paragraph', 
+        text: 'TikSavePro is an independent, third-party online service. TikSavePro is NOT affiliated with, sponsored by, endorsed by, or in any way officially connected to TikTok, ByteDance Ltd., or any of their subsidiaries or affiliates.\n\nThe name "TikTok" and associated trademarks, logos, and brand elements are the exclusive intellectual property of their respective owners. Their mention on this website is strictly for descriptive identification of supported public content formats under fair use principles.' 
+      },
+      { id: 'tos-h2-3', type: 'heading', level: 'h2', text: '3. Eligibility & Responsible Use' },
+      { 
+        id: 'tos-p-3', 
+        type: 'paragraph', 
+        text: 'By using TikSavePro, you represent and warrant that:\n\n• You have the legal capacity to enter into these Terms under applicable law\n• You will use the platform only for lawful, personal, non-commercial, or authorized purposes\n• You will not use the service to violate any local, national, or international law, platform policy, or third-party right\n• You will not submit automated bot requests or overload our server infrastructure' 
+      },
+      { id: 'tos-h2-4', type: 'heading', level: 'h2', text: '4. Copyright & Intellectual Property Rights' },
+      { 
+        id: 'tos-p-4', 
+        type: 'paragraph', 
+        text: 'TikSavePro respects copyright and intellectual property rights, and we expect all users to do the same.\n\n• No Transfer of Ownership: Using our downloader or extraction tools does NOT grant you copyright ownership, intellectual property rights, or a commercial license to any downloaded video, music track, or creator content.\n\n• Creator Rights: All videos, sounds, songs, trademarks, and visual assets remain the exclusive intellectual property of their respective creators, publishers, and rights holders.\n\n• Authorized Use: You agree that you will only download content that you own, content in the public domain, or content for which you have obtained explicit written permission or a valid legal basis. You must not redistribute, sell, broadcast, monetize, or publicly republish downloaded third-party media without proper rights and attribution.' 
+      },
+      { id: 'tos-h2-5', type: 'heading', level: 'h2', text: '5. Watermark Removal Notice' },
+      { 
+        id: 'tos-p-5', 
+        type: 'paragraph', 
+        text: 'Where technically available, our platform provides download streams that do not display visible platform watermarks. Please note that the absence or removal of a visible platform watermark does NOT eliminate, alter, or diminish the underlying copyright, ownership, or licensing restrictions attached to the creator\'s content. Watermark-free media must still be handled in full compliance with copyright law.' 
+      },
+      { id: 'tos-h2-6', type: 'heading', level: 'h2', text: '6. Prohibited Activities' },
+      { 
+        id: 'tos-p-6', 
+        type: 'paragraph', 
+        text: 'When accessing or using TikSavePro, you strictly agree NOT to:\n\n• Download, process, or distribute private, password-protected, or non-public content\n• Use the platform to infringe patents, trademarks, trade secrets, copyrights, or privacy rights\n• Attempt to bypass, disable, or interfere with security features or access controls of the website\n• Deploy automated scrapers, crawlers, data mining tools, or high-volume scripts against our endpoints\n• Introduce viruses, malware, trojans, worms, or other malicious code\n• Use the platform for harassment, defamation, abuse, or unlawful activities\n• Impersonate TikSavePro, our team, or any other individual or entity' 
+      },
+      { id: 'tos-h2-7', type: 'heading', level: 'h2', text: '7. Media Handling & Server Storage Policy' },
+      { 
+        id: 'tos-p-7', 
+        type: 'paragraph', 
+        text: 'TikSavePro does NOT host, archive, or permanently store downloaded video or audio files on our servers. Our platform operates strictly as a real-time URL processor, retrieving media streams from public endpoints and serving them directly to your browser client. We do not maintain a permanent database of processed user media.' 
+      },
+      { id: 'tos-h2-8', type: 'heading', level: 'h2', text: '8. No Account Credentials Required' },
+      { 
+        id: 'tos-p-8', 
+        type: 'paragraph', 
+        text: 'TikSavePro does not require you to register an account or provide login credentials to access our downloader utilities. We will NEVER ask you for your TikTok password or private social media account credentials. Do not share your private passwords or account tokens with any third party.' 
+      },
+      { id: 'tos-h2-9', type: 'heading', level: 'h2', text: '9. Third-Party Links, Advertising & Affiliates' },
+      { 
+        id: 'tos-p-9', 
+        type: 'paragraph', 
+        text: 'Our website may contain advertisements, sponsored promotions, and links to external third-party websites:\n\n• Google AdSense: We display advertisements served by Google AdSense and third-party advertising networks to support website maintenance costs. Third parties may use cookies and web beacons in connection with ad serving as detailed in our [Privacy Policy](/privacy-policy).\n\n• Affiliate Links: Some external links may be affiliate links. If you click on an affiliate link and make a purchase, TikSavePro may receive a referral commission at no additional cost to you.\n\n• External Websites: TikSavePro has no control over external websites and accepts no responsibility for their content, accuracy, terms, or privacy practices. We encourage you to review the terms of all external sites you visit.' 
+      },
+      { id: 'tos-h2-10', type: 'heading', level: 'h2', text: '10. Disclaimer of Warranties' },
+      { 
+        id: 'tos-p-10', 
+        type: 'paragraph', 
+        text: 'TikSavePro and all associated tools, services, and content are provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, whether express, implied, or statutory.\n\nTo the maximum extent permitted by applicable law, TikSavePro expressly disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, non-infringement, and uninterrupted availability. We do not warrant that our tools will be error-free, uninterrupted, compatible with all devices or URLs, or free from server delays.' 
+      },
+      { id: 'tos-h2-11', type: 'heading', level: 'h2', text: '11. Limitation of Liability' },
+      { 
+        id: 'tos-p-11', 
+        type: 'paragraph', 
+        text: 'To the fullest extent permitted by applicable law, in no event shall TikSavePro, its operators, affiliates, partners, or agents be liable for any direct, indirect, incidental, consequential, special, or punitive damages arising out of or in connection with:\n\n• Your access to, use of, or inability to access or use the website or tools\n• Any content downloaded, extracted, or processed through the service\n• Any unauthorized access to, alteration of, or temporary interruption of our services\n• Any third-party conduct or content on or linked from the website' 
+      },
+      { id: 'tos-h2-12', type: 'heading', level: 'h2', text: '12. Suspension, Termination & Service Changes' },
+      { 
+        id: 'tos-p-12', 
+        type: 'paragraph', 
+        text: 'We reserve the right to modify, suspend, or discontinue any feature, tool, or aspect of TikSavePro at any time without prior notice. We may also restrict or terminate access to the service for any user who violates these Terms or engages in abusive or unlawful behavior.' 
+      },
+      { id: 'tos-h2-13', type: 'heading', level: 'h2', text: '13. Governing Law & Dispute Resolution' },
+      { 
+        id: 'tos-p-13', 
+        type: 'paragraph', 
+        text: 'These Terms shall be governed by and construed in accordance with the applicable laws of the jurisdiction in which the website operator is established, without regard to its conflict of law principles. Any dispute arising out of or relating to these Terms or your use of the website shall be resolved through good-faith communication or submitted to the competent courts of that jurisdiction.' 
+      },
+      { id: 'tos-h2-14', type: 'heading', level: 'h2', text: '14. Changes to These Terms' },
+      { 
+        id: 'tos-p-14', 
+        type: 'paragraph', 
+        text: 'We reserve the right to update or modify these Terms of Service at any time. When material changes are made, the "Last Updated" date at the top of this document will be updated. Your continued use of the website following the posting of revised Terms constitutes your acceptance of the changes.' 
+      },
+      { id: 'tos-h2-15', type: 'heading', level: 'h2', text: '15. Contact Us' },
+      { 
+        id: 'tos-p-15', 
+        type: 'paragraph', 
+        text: 'If you have any questions, concerns, or legal inquiries regarding these Terms of Service, please reach out to us via our official contact form at:\n\n[https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)' 
+      },
+      {
+        id: 'tos-cta',
+        type: 'cta_box',
+        title: 'Have Questions About Our Terms?',
+        subtitle: 'If you have questions about website usage, responsible use, or legal inquiries, get in touch with our team.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      }
+    ])
+  },
+  terms: {
+    title: 'Terms of Service',
+    seoTitle: 'Terms of Service | TikSavePro',
+    seoDescription: 'Read the TikSavePro Terms of Service to understand the rules, responsibilities, copyright considerations, advertising, and conditions for using our website and tools.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'tos-hero', 
+        type: 'hero', 
+        title: 'Terms of Service', 
+        subtitle: 'These Terms of Service govern your access to and use of TikSavePro and our browser-based tools.', 
+        bgColor: '#0f172a',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Terms & Conditions'
+      },
+      { id: 'tos-h2-intro', type: 'heading', level: 'h2', text: 'Effective Date & Agreement to Terms' },
+      { 
+        id: 'tos-p-intro', 
+        type: 'paragraph', 
+        text: 'Effective Date: February 2026 | Last Updated: February 2026\n\nWelcome to TikSavePro (accessible at [https://tik-tokdownloader.xyz](https://tik-tokdownloader.xyz)). These Terms of Service ("Terms") constitute a legally binding agreement between you ("user", "you", or "your") and TikSavePro ("we", "us", or "our") concerning your access to and use of the TikSavePro website, utilities, and associated services.\n\nBy accessing or using our website, you acknowledge that you have read, understood, and agree to be bound by these Terms and our [Privacy Policy](/privacy-policy). If you do not agree to these Terms, you must immediately discontinue use of the website and all related tools.' 
+      },
+      { id: 'tos-h2-1', type: 'heading', level: 'h2', text: '1. Description of Services & Tool Functionality' },
+      { 
+        id: 'tos-p-1', 
+        type: 'paragraph', 
+        text: 'TikSavePro provides online, browser-based media conversion and retrieval tools designed to help users interact with publicly accessible TikTok content. Our tools currently include:\n\n• [TikTok Video Downloader](/video): Browser-based downloading of supported public TikTok videos in MP4 format\n• [TikTok Audio Extractor & MP3 Downloader](/audio): Sound track extraction and audio downloading in MP3 format\n• [TikTok Profile Bulk Downloader](/bulk): Multi-link media processing utility for publicly accessible profile content\n• [Android APK Section](/apk): Android utility downloads and update guides\n• [Blog & Editorial Content](/blog): Guides, tutorials, and industry articles\n\nAll tools are provided on an "as-is" and "as-available" basis. We do not guarantee that every TikTok URL can be parsed or that particular video resolutions, formats, or audio bitrates will always be available.' 
+      },
+      { id: 'tos-h2-2', type: 'heading', level: 'h2', text: '2. Independent Platform & No TikTok Affiliation' },
+      { 
+        id: 'tos-p-2', 
+        type: 'paragraph', 
+        text: 'TikSavePro is an independent, third-party online service. TikSavePro is NOT affiliated with, sponsored by, endorsed by, or in any way officially connected to TikTok, ByteDance Ltd., or any of their subsidiaries or affiliates.\n\nThe name "TikTok" and associated trademarks, logos, and brand elements are the exclusive intellectual property of their respective owners. Their mention on this website is strictly for descriptive identification of supported public content formats under fair use principles.' 
+      },
+      { id: 'tos-h2-3', type: 'heading', level: 'h2', text: '3. Eligibility & Responsible Use' },
+      { 
+        id: 'tos-p-3', 
+        type: 'paragraph', 
+        text: 'By using TikSavePro, you represent and warrant that:\n\n• You have the legal capacity to enter into these Terms under applicable law\n• You will use the platform only for lawful, personal, non-commercial, or authorized purposes\n• You will not use the service to violate any local, national, or international law, platform policy, or third-party right\n• You will not submit automated bot requests or overload our server infrastructure' 
+      },
+      { id: 'tos-h2-4', type: 'heading', level: 'h2', text: '4. Copyright & Intellectual Property Rights' },
+      { 
+        id: 'tos-p-4', 
+        type: 'paragraph', 
+        text: 'TikSavePro respects copyright and intellectual property rights, and we expect all users to do the same.\n\n• No Transfer of Ownership: Using our downloader or extraction tools does NOT grant you copyright ownership, intellectual property rights, or a commercial license to any downloaded video, music track, or creator content.\n\n• Creator Rights: All videos, sounds, songs, trademarks, and visual assets remain the exclusive intellectual property of their respective creators, publishers, and rights holders.\n\n• Authorized Use: You agree that you will only download content that you own, content in the public domain, or content for which you have obtained explicit written permission or a valid legal basis. You must not redistribute, sell, broadcast, monetize, or publicly republish downloaded third-party media without proper rights and attribution.' 
+      },
+      { id: 'tos-h2-5', type: 'heading', level: 'h2', text: '5. Watermark Removal Notice' },
+      { 
+        id: 'tos-p-5', 
+        type: 'paragraph', 
+        text: 'Where technically available, our platform provides download streams that do not display visible platform watermarks. Please note that the absence or removal of a visible platform watermark does NOT eliminate, alter, or diminish the underlying copyright, ownership, or licensing restrictions attached to the creator\'s content. Watermark-free media must still be handled in full compliance with copyright law.' 
+      },
+      { id: 'tos-h2-6', type: 'heading', level: 'h2', text: '6. Prohibited Activities' },
+      { 
+        id: 'tos-p-6', 
+        type: 'paragraph', 
+        text: 'When accessing or using TikSavePro, you strictly agree NOT to:\n\n• Download, process, or distribute private, password-protected, or non-public content\n• Use the platform to infringe patents, trademarks, trade secrets, copyrights, or privacy rights\n• Attempt to bypass, disable, or interfere with security features or access controls of the website\n• Deploy automated scrapers, crawlers, data mining tools, or high-volume scripts against our endpoints\n• Introduce viruses, malware, trojans, worms, or other malicious code\n• Use the platform for harassment, defamation, abuse, or unlawful activities\n• Impersonate TikSavePro, our team, or any other individual or entity' 
+      },
+      { id: 'tos-h2-7', type: 'heading', level: 'h2', text: '7. Media Handling & Server Storage Policy' },
+      { 
+        id: 'tos-p-7', 
+        type: 'paragraph', 
+        text: 'TikSavePro does NOT host, archive, or permanently store downloaded video or audio files on our servers. Our platform operates strictly as a real-time URL processor, retrieving media streams from public endpoints and serving them directly to your browser client. We do not maintain a permanent database of processed user media.' 
+      },
+      { id: 'tos-h2-8', type: 'heading', level: 'h2', text: '8. No Account Credentials Required' },
+      { 
+        id: 'tos-p-8', 
+        type: 'paragraph', 
+        text: 'TikSavePro does not require you to register an account or provide login credentials to access our downloader utilities. We will NEVER ask you for your TikTok password or private social media account credentials. Do not share your private passwords or account tokens with any third party.' 
+      },
+      { id: 'tos-h2-9', type: 'heading', level: 'h2', text: '9. Third-Party Links, Advertising & Affiliates' },
+      { 
+        id: 'tos-p-9', 
+        type: 'paragraph', 
+        text: 'Our website may contain advertisements, sponsored promotions, and links to external third-party websites:\n\n• Google AdSense: We display advertisements served by Google AdSense and third-party advertising networks to support website maintenance costs. Third parties may use cookies and web beacons in connection with ad serving as detailed in our [Privacy Policy](/privacy-policy).\n\n• Affiliate Links: Some external links may be affiliate links. If you click on an affiliate link and make a purchase, TikSavePro may receive a referral commission at no additional cost to you.\n\n• External Websites: TikSavePro has no control over external websites and accepts no responsibility for their content, accuracy, terms, or privacy practices. We encourage you to review the terms of all external sites you visit.' 
+      },
+      { id: 'tos-h2-10', type: 'heading', level: 'h2', text: '10. Disclaimer of Warranties' },
+      { 
+        id: 'tos-p-10', 
+        type: 'paragraph', 
+        text: 'TikSavePro and all associated tools, services, and content are provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, whether express, implied, or statutory.\n\nTo the maximum extent permitted by applicable law, TikSavePro expressly disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, non-infringement, and uninterrupted availability. We do not warrant that our tools will be error-free, uninterrupted, compatible with all devices or URLs, or free from server delays.' 
+      },
+      { id: 'tos-h2-11', type: 'heading', level: 'h2', text: '11. Limitation of Liability' },
+      { 
+        id: 'tos-p-11', 
+        type: 'paragraph', 
+        text: 'To the fullest extent permitted by applicable law, in no event shall TikSavePro, its operators, affiliates, partners, or agents be liable for any direct, indirect, incidental, consequential, special, or punitive damages arising out of or in connection with:\n\n• Your access to, use of, or inability to access or use the website or tools\n• Any content downloaded, extracted, or processed through the service\n• Any unauthorized access to, alteration of, or temporary interruption of our services\n• Any third-party conduct or content on or linked from the website' 
+      },
+      { id: 'tos-h2-12', type: 'heading', level: 'h2', text: '12. Suspension, Termination & Service Changes' },
+      { 
+        id: 'tos-p-12', 
+        type: 'paragraph', 
+        text: 'We reserve the right to modify, suspend, or discontinue any feature, tool, or aspect of TikSavePro at any time without prior notice. We may also restrict or terminate access to the service for any user who violates these Terms or engages in abusive or unlawful behavior.' 
+      },
+      { id: 'tos-h2-13', type: 'heading', level: 'h2', text: '13. Governing Law & Dispute Resolution' },
+      { 
+        id: 'tos-p-13', 
+        type: 'paragraph', 
+        text: 'These Terms shall be governed by and construed in accordance with the applicable laws of the jurisdiction in which the website operator is established, without regard to its conflict of law principles. Any dispute arising out of or relating to these Terms or your use of the website shall be resolved through good-faith communication or submitted to the competent courts of that jurisdiction.' 
+      },
+      { id: 'tos-h2-14', type: 'heading', level: 'h2', text: '14. Changes to These Terms' },
+      { 
+        id: 'tos-p-14', 
+        type: 'paragraph', 
+        text: 'We reserve the right to update or modify these Terms of Service at any time. When material changes are made, the "Last Updated" date at the top of this document will be updated. Your continued use of the website following the posting of revised Terms constitutes your acceptance of the changes.' 
+      },
+      { id: 'tos-h2-15', type: 'heading', level: 'h2', text: '15. Contact Us' },
+      { 
+        id: 'tos-p-15', 
+        type: 'paragraph', 
+        text: 'If you have any questions, concerns, or legal inquiries regarding these Terms of Service, please reach out to us via our official contact form at:\n\n[https://tik-tokdownloader.xyz/contact-us](https://tik-tokdownloader.xyz/contact-us)' 
+      },
+      {
+        id: 'tos-cta',
+        type: 'cta_box',
+        title: 'Have Questions About Our Terms?',
+        subtitle: 'If you have questions about website usage, responsible use, or legal inquiries, get in touch with our team.',
+        buttonText: 'Contact Support',
+        buttonLink: '/contact-us'
+      }
+    ])
   }
 };
 
@@ -592,7 +834,7 @@ export default function CustomPage({ params }: { params: any }) {
 
       try {
         let res = await getCustomPageBySlug(normalizedSlug);
-        // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy, try the alias
+        // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy or terms-of-service/terms, try the alias
         if (!res || !res.isPublished) {
           if (normalizedSlug === 'contact-us') {
             res = await getCustomPageBySlug('contact');
@@ -606,6 +848,10 @@ export default function CustomPage({ params }: { params: any }) {
             res = await getCustomPageBySlug('privacy');
           } else if (normalizedSlug === 'privacy') {
             res = await getCustomPageBySlug('privacy-policy');
+          } else if (normalizedSlug === 'terms-of-service') {
+            res = await getCustomPageBySlug('terms');
+          } else if (normalizedSlug === 'terms') {
+            res = await getCustomPageBySlug('terms-of-service');
           }
         }
 
@@ -617,6 +863,8 @@ export default function CustomPage({ params }: { params: any }) {
           if (s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
           if (s === 'privacy-policy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
           if (s === 'privacy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
+          if (s === 'terms-of-service') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
+          if (s === 'terms') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
           return null;
         };
 

@@ -91,7 +91,7 @@ export const DEFAULT_FOOTER_CONFIG: FooterConfig = {
       title: 'Legal',
       links: [
         { id: 'fl-9', label: 'Privacy Policy', url: '/privacy-policy', target: '_self' },
-        { id: 'fl-10', label: 'Terms of Service', url: '/terms', target: '_self' },
+        { id: 'fl-10', label: 'Terms of Service', url: '/terms-of-service', target: '_self' },
         { id: 'fl-11', label: 'DMCA & Disclaimer', url: '/dmca', target: '_self' },
       ],
     },
@@ -117,7 +117,7 @@ const CMS_PAGE_PRESETS = [
   { label: 'About Us', url: '/about-us' },
   { label: 'Contact Us', url: '/contact-us' },
   { label: 'Privacy Policy', url: '/privacy-policy' },
-  { label: 'Terms of Service', url: '/terms' },
+  { label: 'Terms of Service', url: '/terms-of-service' },
   { label: 'DMCA', url: '/dmca' },
 ];
 
