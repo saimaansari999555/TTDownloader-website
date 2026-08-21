@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e0e7ff"/>
+    </linearGradient>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#4f46e5" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base with Border -->
+  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="8"/>
+
+  <!-- Glowing Accent Ring -->
+  <circle cx="256" cy="240" r="140" fill="none" stroke="url(#glowGrad)" stroke-width="8" stroke-dasharray="16 12" opacity="0.4" />
+
+  <!-- Download Arrow Core -->
+  <g filter="url(#dropShadow)">
+    <!-- Arrow Stem -->
+    <rect x="232" y="120" width="48" height="130" rx="16" fill="url(#arrowGrad)" />
+    
+    <!-- Arrow Head -->
+    <path d="M160 230 L256 330 L352 230 C360 220 348 210 336 210 L296 210 L296 230 L256 272 L216 230 L216 210 L176 210 C164 210 152 220 160 230 Z" fill="url(#arrowGrad)" />
+
+    <!-- Storage Tray / Base Bar -->
+    <path d="M140 330 C140 320 150 310 160 310 L190 310 C198 310 204 316 204 324 C204 332 210 338 218 338 L294 338 C302 338 308 332 308 324 C308 316 314 310 322 310 L352 310 C362 310 372 320 372 330 L372 356 C372 374 358 388 340 388 L172 388 C154 388 140 374 140 356 Z" fill="url(#glowGrad)" />
+  </g>
+
+  <!-- Sparkle Accent in top right -->
+  <path d="M370 120 Q370 145 395 145 Q370 145 370 170 Q370 145 345 145 Q370 145 370 120 Z" fill="#06b6d4" />
+</svg>
