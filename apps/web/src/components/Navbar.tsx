@@ -50,13 +50,13 @@ export default function Navbar() {
     <header className={`${config.sticky !== false ? 'fixed top-0 left-0 right-0 z-50' : 'relative z-50'}`}>
       {/* Announcement Bar */}
       {config.announcement?.enabled && !announcementDismissed && (
-        <div className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 text-white text-xs font-semibold py-2 px-4 flex items-center justify-between shadow-md">
+        <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 text-white text-xs font-semibold py-2 px-4 flex items-center justify-between border-b border-indigo-500/30 shadow-sm">
           <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-1 text-center">
             <span>{config.announcement.message}</span>
             {config.announcement.linkText && config.announcement.linkUrl && (
               <Link
                 href={config.announcement.linkUrl}
-                className="underline hover:text-white/80 transition-opacity font-bold inline-flex items-center gap-1 ml-1"
+                className="underline hover:text-white/90 transition-opacity font-bold inline-flex items-center gap-1 ml-1"
               >
                 {config.announcement.linkText} <ArrowRight className="w-3 h-3" />
               </Link>
@@ -75,10 +75,10 @@ export default function Navbar() {
       )}
 
       {/* Main Navbar */}
-      <div className="glass-panel rounded-none border-x-0 border-t-0 px-4 sm:px-6 py-4 backdrop-blur-md">
+      <div className="bg-[#090d16]/90 border-b border-slate-800/80 px-4 sm:px-6 py-3.5 backdrop-blur-xl transition-all duration-200">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link href={config.logo?.link || '/'} className="flex items-center gap-2.5">
+          <Link href={config.logo?.link || '/'} className="flex items-center gap-2.5 group">
             {config.logo?.imageUrl ? (
               <img
                 src={config.logo.imageUrl}
@@ -86,13 +86,13 @@ export default function Navbar() {
                 className="h-8 w-auto object-contain"
               />
             ) : (
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 rounded-lg bg-indigo-600 border border-indigo-400/40 flex items-center justify-center shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform">
                 <Download className="w-4 h-4 text-white" />
               </div>
             )}
-            <span className="font-bold text-lg text-white">
+            <span className="font-extrabold text-lg tracking-tight text-white">
               {logoBase}
-              <span className="text-primary-400">{logoHighlight}</span>
+              <span className="text-indigo-400 font-black">{logoHighlight}</span>
             </span>
           </Link>
 
@@ -106,13 +106,13 @@ export default function Navbar() {
                   key={item.id || item.url}
                   href={item.url}
                   target={item.target || '_self'}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     isActive
-                      ? 'text-primary-400 bg-primary-500/10 font-semibold'
-                      : 'text-text-secondary hover:text-white hover:bg-white/5'
+                      ? 'text-white bg-slate-800 border border-slate-700/80 font-semibold shadow-sm'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
-                  {Icon && <Icon className="w-4 h-4 shrink-0" />}
+                  {Icon && <Icon className="w-4 h-4 shrink-0 opacity-80" />}
                   {item.label}
                 </Link>
               );
@@ -120,11 +120,11 @@ export default function Navbar() {
 
             {/* Header CTA Button */}
             {config.cta?.enabled && config.cta.text && (
-              <div className="ml-3 pl-3 border-l border-white/10">
+              <div className="ml-3 pl-3 border-l border-slate-800">
                 <Link
                   href={config.cta.url || '/video'}
                   target={config.cta.target || '_self'}
-                  className="btn-primary rounded-xl px-4 py-2 text-xs font-bold shadow-lg inline-flex items-center gap-1.5"
+                  className="btn-primary rounded-lg px-3.5 py-1.5 text-xs font-bold inline-flex items-center gap-1.5 shadow-md"
                 >
                   <Download className="w-3.5 h-3.5" />
                   {config.cta.text}
@@ -135,7 +135,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden p-2 text-text-secondary hover:text-white"
+            className="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle mobile menu"
           >
@@ -145,7 +145,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="lg:hidden mt-4 pb-2 space-y-1 border-t border-white/10 pt-4 animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="lg:hidden mt-3 pb-2 space-y-1 border-t border-slate-800 pt-3 animate-in fade-in slide-in-from-top-2 duration-150">
             {activeMenuItems.map((item) => {
               const Icon = getIconForUrl(item.url);
               const isActive = pathname === item.url;
@@ -155,10 +155,10 @@ export default function Navbar() {
                   href={item.url}
                   target={item.target || '_self'}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm transition-colors ${
                     isActive
-                      ? 'text-primary-400 bg-primary-500/10 font-bold'
-                      : 'text-text-secondary hover:text-white hover:bg-white/5'
+                      ? 'text-white bg-slate-800 border border-slate-700/80 font-bold'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                   }`}
                 >
                   {Icon && <Icon className="w-4 h-4 shrink-0" />}
@@ -169,12 +169,12 @@ export default function Navbar() {
 
             {/* Mobile CTA */}
             {config.cta?.enabled && config.cta.text && (
-              <div className="pt-2 px-2">
+              <div className="pt-2 px-1">
                 <Link
                   href={config.cta.url || '/video'}
                   target={config.cta.target || '_self'}
                   onClick={() => setMobileOpen(false)}
-                  className="btn-primary rounded-xl py-3 px-4 text-xs font-bold shadow-lg flex items-center justify-center gap-2 w-full"
+                  className="btn-primary rounded-lg py-2.5 px-4 text-xs font-bold flex items-center justify-center gap-2 w-full"
                 >
                   <Download className="w-4 h-4" />
                   {config.cta.text}

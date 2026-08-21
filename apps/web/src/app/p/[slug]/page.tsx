@@ -1264,33 +1264,37 @@ export default function CustomPage({ params }: { params: any }) {
         <div className="glass-panel overflow-hidden rounded-2xl shadow-xl border border-white/5 bg-slate-950/20 backdrop-blur-xl">
           {blocks.map((block: any, idx: number) => {
             if (block.type === 'hero') {
-              const bgImage = block.bgImage || '/contact-banner.jpg';
               return (
                 <div 
                   key={block.id || idx} 
-                  className="p-8 sm:p-14 md:p-20 text-center space-y-4 border-b border-white/5 relative overflow-hidden bg-cover bg-center"
-                  style={{ 
-                    backgroundColor: '#0f172a',
-                    backgroundImage: `url(${bgImage})`,
+                  className="relative py-14 sm:py-20 px-4 sm:px-8 md:px-12 text-center rounded-2xl overflow-hidden mb-8 border border-slate-800/80 shadow-2xl"
+                  style={{
+                    backgroundColor: block.bgColor || '#090d16',
+                    backgroundImage: block.bgImage ? `linear-gradient(180deg, rgba(9, 13, 22, 0.85) 0%, rgba(9, 13, 22, 0.95) 100%), url(${block.bgImage})` : undefined,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90 backdrop-blur-[1px] pointer-events-none" />
-                  <div className="relative z-10 space-y-4 max-w-3xl mx-auto">
+                  <div className="max-w-4xl mx-auto space-y-4 relative z-10">
                     {block.badge && (
-                      <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500/20 text-primary-300 border border-primary-500/30 mb-1 shadow-sm">
-                        <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-950/80 text-indigo-300 border border-indigo-500/30 mb-1 shadow-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
                         {block.badge}
                       </div>
                     )}
-                    <h1 className="text-3xl md:text-5xl font-black text-white leading-tight break-words tracking-tight drop-shadow-md">{block.title}</h1>
-                    <p className="text-white/85 text-sm md:text-lg max-w-2xl mx-auto break-words leading-relaxed drop-shadow">{block.subtitle}</p>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight break-words tracking-tight drop-shadow-md">
+                      {block.title}
+                    </h1>
+                    <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto break-words leading-relaxed">
+                      {block.subtitle}
+                    </p>
 
                     {(block.ctaText || block.secondaryCtaText) && (
-                      <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+                      <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
                         {block.ctaText && (
                           <Link 
                             href={block.ctaLink || '/'} 
-                            className="btn-primary px-6 py-3 rounded-xl font-bold text-sm md:text-base inline-flex items-center gap-2 shadow-lg shadow-primary-500/25 transition-transform hover:scale-105"
+                            className="btn-primary px-6 py-3 rounded-xl font-bold text-sm md:text-base inline-flex items-center gap-2 shadow-lg shadow-indigo-600/25 transition-transform hover:scale-[1.02] active:scale-[0.98]"
                           >
                             {block.ctaText}
                           </Link>
@@ -1298,7 +1302,7 @@ export default function CustomPage({ params }: { params: any }) {
                         {block.secondaryCtaText && (
                           <Link 
                             href={block.secondaryCtaLink || '/video'} 
-                            className="px-6 py-3 rounded-xl font-bold text-sm md:text-base bg-white/10 hover:bg-white/15 text-white border border-white/15 inline-flex items-center gap-2 transition-all hover:scale-105"
+                            className="px-6 py-3 rounded-xl font-bold text-sm md:text-base bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 inline-flex items-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
                           >
                             {block.secondaryCtaText}
                           </Link>
@@ -1333,13 +1337,13 @@ export default function CustomPage({ params }: { params: any }) {
             if (block.type === 'heading') {
               const Tag: any = block.level || 'h2';
               const sizeClass = 
-                Tag === 'h1' ? 'text-2xl md:text-4xl font-black' : 
-                Tag === 'h2' ? 'text-xl md:text-3xl font-extrabold' : 
-                'text-lg md:text-2xl font-bold';
+                Tag === 'h1' ? 'text-2xl md:text-4xl font-extrabold' : 
+                Tag === 'h2' ? 'text-xl md:text-2xl font-bold pb-2 border-b border-slate-800/80' : 
+                'text-lg md:text-xl font-semibold';
               
               return (
                 <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 pt-8 pb-2">
-                  <Tag className={`${sizeClass} text-white break-words`}>{block.text}</Tag>
+                  <Tag className={`${sizeClass} text-white break-words tracking-tight`}>{block.text}</Tag>
                 </div>
               );
             }
@@ -1361,13 +1365,13 @@ export default function CustomPage({ params }: { params: any }) {
                   const isInternal = href.startsWith('/') || href.startsWith('#');
                   if (isInternal) {
                     parts.push(
-                      <Link key={match.index} href={href} className="text-primary-400 font-semibold hover:underline">
+                      <Link key={match.index} href={href} className="text-indigo-400 font-semibold hover:underline">
                         {label}
                       </Link>
                     );
                   } else {
                     parts.push(
-                      <a key={match.index} href={href} target="_blank" rel="noopener noreferrer" className="text-primary-400 font-semibold hover:underline">
+                      <a key={match.index} href={href} target="_blank" rel="noopener noreferrer" className="text-indigo-400 font-semibold hover:underline">
                         {label}
                       </a>
                     );
@@ -1382,7 +1386,7 @@ export default function CustomPage({ params }: { params: any }) {
 
               return (
                 <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-2">
-                  <p className="text-text-secondary text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">
+                  <p className="text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">
                     {formatParagraphWithLinks(block.text)}
                   </p>
                 </div>
@@ -1392,23 +1396,23 @@ export default function CustomPage({ params }: { params: any }) {
             if (block.type === 'cards_grid' && Array.isArray(block.items)) {
               return (
                 <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                     {block.items.map((item: any, iIdx: number) => (
-                      <div key={iIdx} className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-primary-500/30 transition-all flex flex-col justify-between space-y-4">
-                        <div className="space-y-2.5">
+                      <div key={iIdx} className="p-5 sm:p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all duration-200 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-md">
+                        <div className="space-y-2">
                           <div className="flex items-center justify-between gap-2">
-                            <h3 className="text-base sm:text-lg font-bold text-white">{item.title}</h3>
+                            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">{item.title}</h3>
                             {item.badge && (
-                              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-primary-500/15 text-primary-300 border border-primary-500/25 shrink-0">
+                              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-950/80 text-indigo-300 border border-indigo-500/30 shrink-0">
                                 {item.badge}
                               </span>
                             )}
                           </div>
-                          <p className="text-text-secondary text-sm leading-relaxed">{item.description}</p>
+                          <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
                         </div>
                         {item.ctaText && item.ctaLink && (
                           <div>
-                            <Link href={item.ctaLink} className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-primary-400 hover:text-primary-300 transition-colors">
+                            <Link href={item.ctaLink} className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
                               {item.ctaText} →
                             </Link>
                           </div>
@@ -1423,14 +1427,14 @@ export default function CustomPage({ params }: { params: any }) {
             if (block.type === 'steps' && Array.isArray(block.items)) {
               return (
                 <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                     {block.items.map((step: any, sIdx: number) => (
-                      <div key={sIdx} className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 relative space-y-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 border border-primary-500/30 flex items-center justify-center font-black text-primary-400 text-lg">
+                      <div key={sIdx} className="p-5 sm:p-6 rounded-xl bg-slate-900/80 border border-slate-800 relative space-y-3 shadow-sm">
+                        <div className="w-9 h-9 rounded-lg bg-indigo-950/80 border border-indigo-500/30 flex items-center justify-center font-black text-indigo-400 text-base">
                           {step.number || sIdx + 1}
                         </div>
-                        <h3 className="text-base font-bold text-white">{step.title}</h3>
-                        <p className="text-text-secondary text-sm leading-relaxed">{step.description}</p>
+                        <h3 className="text-base font-bold text-white tracking-tight">{step.title}</h3>
+                        <p className="text-slate-400 text-sm leading-relaxed">{step.description}</p>
                       </div>
                     ))}
                   </div>
@@ -1440,14 +1444,14 @@ export default function CustomPage({ params }: { params: any }) {
 
             if (block.type === 'faq' && Array.isArray(block.items)) {
               return (
-                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4 space-y-3">
+                <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-4 space-y-2.5">
                   {block.items.map((item: any, fIdx: number) => (
-                    <details key={fIdx} className="group p-4 rounded-xl bg-white/[0.02] border border-white/5 open:border-primary-500/25 open:bg-white/[0.04] transition-all">
-                      <summary className="font-bold text-white text-sm sm:text-base cursor-pointer list-none flex items-center justify-between gap-3">
+                    <details key={fIdx} className="group p-4 rounded-xl bg-slate-900/70 border border-slate-800 open:border-slate-700 open:bg-slate-900/90 transition-all">
+                      <summary className="font-semibold text-white text-sm sm:text-base cursor-pointer list-none flex items-center justify-between gap-3 select-none">
                         <span>{item.question}</span>
-                        <span className="text-primary-400 text-xs transition-transform duration-200 group-open:rotate-180">▼</span>
+                        <span className="text-slate-400 text-xs transition-transform duration-200 group-open:rotate-180">▼</span>
                       </summary>
-                      <p className="text-text-secondary text-sm leading-relaxed mt-3 pt-3 border-t border-white/5 whitespace-pre-wrap">
+                      <p className="text-slate-300 text-sm leading-relaxed mt-3 pt-3 border-t border-slate-800 whitespace-pre-wrap">
                         {item.answer}
                       </p>
                     </details>
@@ -1459,12 +1463,12 @@ export default function CustomPage({ params }: { params: any }) {
             if (block.type === 'cta_box') {
               return (
                 <div key={block.id || idx} className="px-4 sm:px-8 md:px-12 py-6">
-                  <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-primary-950/40 via-purple-950/30 to-slate-900/60 border border-primary-500/20 text-center space-y-4">
-                    <h3 className="text-xl md:text-2xl font-black text-white">{block.title}</h3>
-                    <p className="text-text-secondary text-sm sm:text-base max-w-xl mx-auto">{block.subtitle}</p>
+                  <div className="p-6 sm:p-8 rounded-2xl bg-slate-900/90 border border-slate-800 text-center space-y-3 shadow-lg">
+                    <h3 className="text-xl md:text-2xl font-extrabold text-white tracking-tight">{block.title}</h3>
+                    <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">{block.subtitle}</p>
                     {block.buttonText && block.buttonLink && (
                       <div className="pt-2">
-                        <Link href={block.buttonLink} className="btn-primary px-6 py-2.5 rounded-xl font-bold text-sm inline-flex items-center gap-2 shadow-lg shadow-primary-500/20">
+                        <Link href={block.buttonLink} className="btn-primary px-6 py-2.5 rounded-xl font-bold text-sm inline-flex items-center gap-2 shadow-md">
                           {block.buttonText} →
                         </Link>
                       </div>

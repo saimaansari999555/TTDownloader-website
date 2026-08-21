@@ -63,12 +63,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-white/5 mt-24 pb-8">
+    <footer className="border-t border-slate-800/80 bg-[#070a11] mt-24 pb-12">
       <div className="max-w-7xl mx-auto px-6 pt-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-1 space-y-4">
-            <Link href={config.logo?.link || '/'} className="flex items-center gap-2">
+            <Link href={config.logo?.link || '/'} className="flex items-center gap-2.5 group">
               {config.logo?.imageUrl ? (
                 <img
                   src={config.logo.imageUrl}
@@ -76,16 +76,16 @@ export default function Footer() {
                   className="h-8 w-auto object-contain"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg">
+                <div className="w-8 h-8 rounded-lg bg-indigo-600 border border-indigo-400/40 flex items-center justify-center shadow-md shadow-indigo-600/30">
                   <Download className="w-4 h-4 text-white" />
                 </div>
               )}
-              <span className="font-bold text-lg text-white">
+              <span className="font-extrabold text-lg tracking-tight text-white">
                 {logoBase}
-                <span className="text-primary-400">{logoHighlight}</span>
+                <span className="text-indigo-400 font-black">{logoHighlight}</span>
               </span>
             </Link>
-            <p className="text-text-secondary text-sm leading-relaxed">
+            <p className="text-slate-400 text-sm leading-relaxed">
               {config.description || DEFAULT_FOOTER_CONFIG.description}
             </p>
           </div>
@@ -93,14 +93,14 @@ export default function Footer() {
           {/* Dynamic Columns */}
           {columns.map((column) => (
             <div key={column.id || column.title}>
-              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{column.title}</h4>
+              <h4 className="text-white font-bold mb-4 text-xs uppercase tracking-wider">{column.title}</h4>
               <ul className="space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link.id || link.url}>
                     <Link
                       href={link.url}
                       target={link.target || '_self'}
-                      className="text-text-secondary hover:text-primary-400 text-sm transition-colors"
+                      className="text-slate-400 hover:text-indigo-400 text-sm font-medium transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -112,8 +112,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-text-secondary text-sm">{renderedCopyright}</p>
+        <div className="border-t border-slate-800/80 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-slate-400 text-sm">{renderedCopyright}</p>
           {activeSocials.length > 0 && (
             <div className="flex items-center gap-4">
               {activeSocials.map((social) => (
@@ -123,7 +123,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.platform}
-                  className="text-text-secondary hover:text-white transition-colors p-1"
+                  className="text-slate-400 hover:text-white transition-colors p-1"
                 >
                   {renderSocialIcon(social.platform)}
                 </a>
