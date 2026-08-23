@@ -1138,6 +1138,15 @@ export default function CustomPage({ params }: { params: any }) {
       }
 
       try {
+        if (typeof window !== 'undefined') {
+          const local = JSON.parse(localStorage.getItem('local_custom_pages') || '[]');
+          const matchedLocal = local.find((p: any) => p.slug === normalizedSlug || p.id === normalizedSlug);
+          if (matchedLocal && matchedLocal.isPublished !== false) {
+            setPage(matchedLocal);
+            setLoading(false);
+          }
+        }
+
         let res = await getCustomPageBySlug(normalizedSlug);
         // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy or terms-of-service/terms or dmca-disclaimer/dmca/disclaimer, try the alias
         if (!res || !res.isPublished) {
@@ -1213,6 +1222,18 @@ export default function CustomPage({ params }: { params: any }) {
     };
 
     loadPageData();
+
+    const handleUpdate = () => {
+      loadPageData();
+    };
+
+    window.addEventListener('tiksave_pages_updated', handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+
+    return () => {
+      window.removeEventListener('tiksave_pages_updated', handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
   }, [slug]);
 
   useEffect(() => {
@@ -1332,6 +1353,16 @@ export default function CustomPage({ params }: { params: any }) {
 
             if (block.type === 'contact_tool') {
               return <ContactFormTool key={block.id || idx} />;
+            }
+
+            if (block.type === 'rich_text' || block.type === 'content' || block.type === 'html') {
+              return (
+                <div
+                  key={block.id || idx}
+                  className="px-4 sm:px-8 md:px-12 py-6 text-slate-200 leading-relaxed rich-editor-content prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-indigo-400 prose-ul:list-disc prose-ol:list-decimal"
+                  dangerouslySetInnerHTML={{ __html: block.content || block.text || '' }}
+                />
+              );
             }
 
             if (block.type === 'heading') {
@@ -1499,6 +1530,13 @@ export default function CustomPage({ params }: { params: any }) {
 
             return null;
           })}
+
+          {page.content && !blocks.some((b: any) => b.type === 'rich_text' || b.type === 'content' || b.type === 'paragraph') && (
+            <div
+              className="px-4 sm:px-8 md:px-12 py-8 text-slate-200 leading-relaxed rich-editor-content prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-indigo-400 prose-ul:list-disc prose-ol:list-decimal"
+              dangerouslySetInnerHTML={{ __html: page.content }}
+            />
+          )}
         </div>
       </article>
 
