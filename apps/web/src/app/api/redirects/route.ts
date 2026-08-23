@@ -41,14 +41,20 @@ function normalizePath(p: string): string {
   return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
 }
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const activeOnly = searchParams.get('activeOnly') === 'true';
 
-  if (activeOnly) {
-    return NextResponse.json(globalRedirects.filter(r => r.isActive));
-  }
-  return NextResponse.json(globalRedirects);
+  const data = activeOnly ? globalRedirects.filter(r => r.isActive) : globalRedirects;
+  return NextResponse.json(data, {
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+    },
+  });
 }
 
 export async function POST(req: Request) {

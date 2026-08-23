@@ -50,7 +50,17 @@ export function saveSettingsStore(settings: Record<string, string>) {
   return globalSettings;
 }
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   const list = Object.entries(globalSettings).map(([key, value]) => ({ key, value }));
-  return NextResponse.json(list);
+  return NextResponse.json(list, {
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
+  });
 }
+

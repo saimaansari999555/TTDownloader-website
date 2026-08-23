@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getPostsStore, savePostsStore } from '../route';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const posts = getPostsStore();
@@ -8,7 +11,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   const post = posts.find((p: any) => p.slug === slug || p.slug === decodedSlug || p.id === slug);
 
   if (post) {
-    return NextResponse.json(post);
+    return NextResponse.json(post, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      },
+    });
   }
   return NextResponse.json({ error: 'Post not found' }, { status: 404 });
 }

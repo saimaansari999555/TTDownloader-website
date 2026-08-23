@@ -94,41 +94,138 @@ export const createApk = (body: any): Promise<any> => Promise.resolve({ success:
 export const deleteApk = (id: string): Promise<any> => Promise.resolve({ success: true });
 
 export const getSettings = (): Promise<any[]> =>
-  api.get('/api/settings').then(r => r.data).catch(() => []);
+  api
+    .get(`/api/settings?_t=${Date.now()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' },
+    })
+    .then((r) => r.data)
+    .catch(() => []);
 
-export const updateSetting = (key: string, value: string): Promise<any> =>
-  api.put(`/api/settings/${encodeURIComponent(key)}`, { value }).then(r => r.data).catch(() => ({ success: true }));
+export const updateSetting = async (key: string, value: string): Promise<any> => {
+  try {
+    const res = await api.put(`/api/settings/${encodeURIComponent(key)}`, { value });
+    if (typeof window !== 'undefined') {
+      try {
+        const cached = localStorage.getItem('tiksave_settings_cache');
+        const map = cached ? JSON.parse(cached) : {};
+        map[key] = value;
+        localStorage.setItem('tiksave_settings_cache', JSON.stringify(map));
+        window.dispatchEvent(new CustomEvent('tiksave_settings_updated', { detail: { key, value } }));
+      } catch {}
+    }
+    return res.data;
+  } catch {
+    if (typeof window !== 'undefined') {
+      try {
+        const cached = localStorage.getItem('tiksave_settings_cache');
+        const map = cached ? JSON.parse(cached) : {};
+        map[key] = value;
+        localStorage.setItem('tiksave_settings_cache', JSON.stringify(map));
+        window.dispatchEvent(new CustomEvent('tiksave_settings_updated', { detail: { key, value } }));
+      } catch {}
+    }
+    return { success: true, key, value };
+  }
+};
 
 export const getAdminPosts = (): Promise<any[]> =>
-  api.get('/api/blog/posts?take=100').then(r => r.data).catch(() => []);
+  api
+    .get(`/api/blog/posts?take=100&_t=${Date.now()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store' },
+    })
+    .then((r) => r.data)
+    .catch(() => []);
 
 export const createPost = (data: any): Promise<any> =>
-  api.post('/api/blog/posts', data).then(r => r.data).catch(() => data);
+  api
+    .post('/api/blog/posts', data)
+    .then((r) => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('tiksave_posts_updated'));
+      }
+      return r.data;
+    })
+    .catch(() => data);
 
 export const updatePost = (id: string, data: any): Promise<any> =>
-  api.put(`/api/blog/posts/${encodeURIComponent(id)}`, data).then(r => r.data).catch(() => data);
+  api
+    .put(`/api/blog/posts/${encodeURIComponent(id)}`, data)
+    .then((r) => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('tiksave_posts_updated'));
+      }
+      return r.data;
+    })
+    .catch(() => data);
 
 export const deletePost = (id: string): Promise<any> =>
-  api.delete(`/api/blog/posts/${encodeURIComponent(id)}`).then(r => r.data).catch(() => ({ success: true }));
+  api
+    .delete(`/api/blog/posts/${encodeURIComponent(id)}`)
+    .then((r) => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('tiksave_posts_updated'));
+      }
+      return r.data;
+    })
+    .catch(() => ({ success: true }));
 
 // Custom Pages
 export const getCustomPages = (): Promise<any[]> =>
-  api.get('/api/pages').then(r => r.data).catch(() => []);
+  api
+    .get(`/api/pages?_t=${Date.now()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store' },
+    })
+    .then((r) => r.data)
+    .catch(() => []);
 
 export const getCustomPage = (id: string): Promise<any> =>
-  api.get(`/api/pages/${encodeURIComponent(id)}`).then(r => r.data).catch(() => null);
+  api
+    .get(`/api/pages/${encodeURIComponent(id)}?_t=${Date.now()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store' },
+    })
+    .then((r) => r.data)
+    .catch(() => null);
 
 export const getCustomPageBySlug = (slug: string): Promise<any> =>
-  api.get(`/api/pages/${encodeURIComponent(slug)}`).then(r => r.data).catch(() => null);
+  api
+    .get(`/api/pages/${encodeURIComponent(slug)}?_t=${Date.now()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store' },
+    })
+    .then((r) => r.data)
+    .catch(() => null);
 
 export const createCustomPage = (body: any): Promise<any> =>
-  api.post('/api/pages', body).then(r => r.data).catch(() => body);
+  api
+    .post('/api/pages', body)
+    .then((r) => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('tiksave_pages_updated'));
+      }
+      return r.data;
+    })
+    .catch(() => body);
 
 export const updateCustomPage = (id: string, body: any): Promise<any> =>
-  api.put(`/api/pages/${encodeURIComponent(id)}`, body).then(r => r.data).catch(() => body);
+  api
+    .put(`/api/pages/${encodeURIComponent(id)}`, body)
+    .then((r) => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('tiksave_pages_updated'));
+      }
+      return r.data;
+    })
+    .catch(() => body);
 
 export const deleteCustomPage = (id: string): Promise<any> =>
-  api.delete(`/api/pages/${encodeURIComponent(id)}`).then(r => r.data).catch(() => ({ success: true }));
+  api
+    .delete(`/api/pages/${encodeURIComponent(id)}`)
+    .then((r) => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('tiksave_pages_updated'));
+      }
+      return r.data;
+    })
+    .catch(() => ({ success: true }));
 
 // Backup & Recovery
 export const exportDatabase = (): Promise<any> =>

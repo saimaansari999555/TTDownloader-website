@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getSettingsStore, saveSettingsStore } from '../route';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function PUT(req: Request, { params }: { params: Promise<{ key: string }> }) {
   try {
     const { key } = await params;
@@ -8,8 +11,16 @@ export async function PUT(req: Request, { params }: { params: Promise<{ key: str
     const store = getSettingsStore();
     store[key] = body.value !== undefined ? String(body.value) : '';
     saveSettingsStore(store);
-    return NextResponse.json({ success: true, key, value: store[key] });
+    return NextResponse.json(
+      { success: true, key, value: store[key] },
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+        },
+      }
+    );
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+

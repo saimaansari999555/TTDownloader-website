@@ -35,11 +35,19 @@ export default function AdminSettings() {
       await Promise.all(
         Object.entries(settings).map(([key, value]) => updateSetting(key, value))
       );
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('tiksave_settings_cache', JSON.stringify(settings));
+          window.dispatchEvent(new CustomEvent('tiksave_settings_updated', { detail: settings }));
+        } catch {}
+      }
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (err: any) {
       alert('Failed to save: ' + (err.response?.data?.message || err.message));
-    } finally { setSaving(false); }
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleExport = async () => {
@@ -654,6 +662,28 @@ export default function AdminSettings() {
                   </div>
                 </div>
               )}
+
+              {/* Bottom In-Tab Save Action Bar */}
+              <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+                <div className="text-xs text-text-secondary">
+                  {saved ? (
+                    <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                      ✓ Changes successfully saved and synchronized with live website!
+                    </span>
+                  ) : (
+                    <span>Make sure to save changes so they reflect immediately on your live website.</span>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={saveAll}
+                  disabled={saving}
+                  className="btn-primary rounded-xl px-8 py-3.5 flex items-center gap-2.5 font-bold disabled:opacity-70 shadow-lg active:scale-95 transition-all w-full sm:w-auto justify-center"
+                >
+                  {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  {saved ? 'Settings Saved Live!' : 'Save Configuration Changes'}
+                </button>
+              </div>
             </>
           )}
         </div>

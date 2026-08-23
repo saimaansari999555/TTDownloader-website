@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getPagesStore, savePagesStore } from '../route';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const pages = getPagesStore();
@@ -12,7 +15,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   }
 
   if (page) {
-    return NextResponse.json(page);
+    return NextResponse.json(page, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      },
+    });
   }
   return NextResponse.json({ error: 'Page not found' }, { status: 404 });
 }
