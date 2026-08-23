@@ -219,7 +219,6 @@ export default function VideoDownloader() {
               </div>
             </div>
           </motion.div>
-          <AdSlot placement="result" settings={settings} />
         </>
       )}
     </div>

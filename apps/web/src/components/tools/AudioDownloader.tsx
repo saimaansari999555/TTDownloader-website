@@ -182,7 +182,6 @@ export default function AudioDownloader() {
               </div>
             </div>
           </motion.div>
-          <AdSlot placement="result" settings={settings} />
         </>
       )}
     </div>

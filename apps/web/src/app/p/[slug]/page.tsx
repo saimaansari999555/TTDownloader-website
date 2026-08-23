@@ -1276,12 +1276,7 @@ export default function CustomPage({ params }: { params: any }) {
       {page.seoDescription && <meta name="description" content={page.seoDescription} />}
       {page.seoKeywords && <meta name="keywords" content={page.seoKeywords} />}
 
-      {/* Ad slot (Top) */}
-      <div className="max-w-5xl mx-auto px-4">
-        <AdSlot placement="header" settings={settings} />
-      </div>
-
-      <article className="max-w-5xl mx-auto px-4 mt-6">
+      <article className="max-w-5xl mx-auto px-4 mt-4">
         <div className="glass-panel overflow-hidden rounded-2xl shadow-xl border border-white/5 bg-slate-950/20 backdrop-blur-xl">
           {blocks.map((block: any, idx: number) => {
             if (block.type === 'hero') {
@@ -1539,11 +1534,6 @@ export default function CustomPage({ params }: { params: any }) {
           )}
         </div>
       </article>
-
-      {/* Ad slot (Bottom) */}
-      <div className="max-w-5xl mx-auto px-4 mt-8">
-        <AdSlot placement="footer" settings={settings} />
-      </div>
     </main>
   );
 }
