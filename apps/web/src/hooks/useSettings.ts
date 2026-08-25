@@ -32,22 +32,33 @@ export function useSettings() {
   const fetchFreshSettings = useCallback(async () => {
     try {
       const list = await getSettings();
+      const serverMap: Record<string, string> = {};
       if (Array.isArray(list) && list.length > 0) {
-        const map: Record<string, string> = {};
         list.forEach((s: any) => {
           if (s && s.key !== undefined) {
-            map[s.key] = s.value;
+            serverMap[s.key] = s.value;
           }
         });
-        setSettings(prev => ({ ...prev, ...map }));
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(map));
-          } catch {}
-        }
-        if (map.custom_css) {
-          applyCustomCss(map.custom_css);
-        }
+      }
+
+      let localMap: Record<string, string> = {};
+      if (typeof window !== 'undefined') {
+        try {
+          const cached = localStorage.getItem(SETTINGS_STORAGE_KEY);
+          if (cached) localMap = JSON.parse(cached);
+        } catch {}
+      }
+
+      // Merge server defaults with user saved local settings (user settings take priority!)
+      const merged = { ...serverMap, ...localMap };
+      setSettings(merged);
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(merged));
+        } catch {}
+      }
+      if (merged.custom_css) {
+        applyCustomCss(merged.custom_css);
       }
     } catch {
       // Keep cached settings on error

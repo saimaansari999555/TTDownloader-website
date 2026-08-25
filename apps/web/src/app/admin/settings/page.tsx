@@ -17,11 +17,24 @@ export default function AdminSettings() {
   const [restoring, setRestoring] = useState(false);
 
   useEffect(() => {
+    let localMap: Record<string, string> = {};
+    if (typeof window !== 'undefined') {
+      try {
+        const cached = localStorage.getItem('tiksave_settings_cache');
+        if (cached) {
+          localMap = JSON.parse(cached);
+          setSettings(localMap);
+        }
+      } catch {}
+    }
+
     getSettings()
       .then(list => {
-        const map: Record<string, string> = {};
-        list.forEach((s: any) => { map[s.key] = s.value; });
-        setSettings(map);
+        const serverMap: Record<string, string> = {};
+        if (Array.isArray(list)) {
+          list.forEach((s: any) => { serverMap[s.key] = s.value; });
+        }
+        setSettings(prev => ({ ...serverMap, ...localMap, ...prev }));
       })
       .catch(() => {})
       .finally(() => setLoading(false));
