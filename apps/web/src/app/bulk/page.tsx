@@ -1,5 +1,5 @@
-'use client';
-import CustomPage from '@/app/p/[slug]/page';
-export default function BulkPage() {
-  return <CustomPage params={{ slug: 'bulk' }} />;
+import { redirect } from 'next/navigation';
+
+export default function LegacyBulkPage() {
+  redirect('/bulk-downloader');
 }

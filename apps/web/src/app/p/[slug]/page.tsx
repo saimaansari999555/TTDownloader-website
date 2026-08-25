@@ -17,17 +17,17 @@ import ContactFormTool from '@/components/tools/ContactFormTool';
 
 const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
   home: {
-    title: 'Home Downloader',
+    title: 'TikTok Video Downloader',
     seoTitle: 'TikSavePro - Download TikTok Videos Without Watermark',
-    seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
+    seoDescription: 'Download TikTok videos without watermark in HD quality for free directly from your web browser with TikSavePro.',
     isPublished: true,
     layout: JSON.stringify([
       { 
         id: 'h-1', 
         type: 'hero', 
         title: 'Download TikTok Videos Without Watermark', 
-        subtitle: 'Fast, free, and ad-supported online tool. Paste any public TikTok link to download your video.', 
-        bgColor: '#0f172a',
+        subtitle: 'Fast, free, and secure online tool. Paste any public TikTok link to download your video in original HD MP4 format.', 
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'Fast & Watermark-Free'
       },
@@ -45,17 +45,17 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
         type: 'hero', 
         title: 'TikTok Video Downloader', 
         subtitle: 'Download available HD videos without watermark directly in MP4 format.', 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'MP4 Video Downloader'
       },
       { id: 'v-2', type: 'downloader_tool' }
     ])
   },
-  audio: {
+  'audio-extractor': {
     title: 'TikTok Audio Extractor',
-    seoTitle: 'TikTok Audio Extractor - TikSavePro',
-    seoDescription: 'Extract and download MP3 audio from any TikTok video.',
+    seoTitle: 'TikTok Audio Extractor – Download MP3 Sounds | TikSavePro',
+    seoDescription: 'Extract and download MP3 audio from any TikTok video in high quality for free.',
     isPublished: true,
     layout: JSON.stringify([
       { 
@@ -63,17 +63,35 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
         type: 'hero', 
         title: 'TikTok Audio Extractor', 
         subtitle: 'Extract sound tracks and download audio in MP3 format from supported TikTok videos.', 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'MP3 Audio Extractor'
       },
       { id: 'au-2', type: 'audio_tool' }
     ])
   },
-  bulk: {
+  audio: {
+    title: 'TikTok Audio Extractor',
+    seoTitle: 'TikTok Audio Extractor – Download MP3 Sounds | TikSavePro',
+    seoDescription: 'Extract and download MP3 audio from any TikTok video in high quality for free.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'au-1', 
+        type: 'hero', 
+        title: 'TikTok Audio Extractor', 
+        subtitle: 'Extract sound tracks and download audio in MP3 format from supported TikTok videos.', 
+        bgColor: '#090d16',
+        bgImage: '/contact-banner.jpg',
+        badge: 'MP3 Audio Extractor'
+      },
+      { id: 'au-2', type: 'audio_tool' }
+    ])
+  },
+  'bulk-downloader': {
     title: 'TikTok Profile Bulk Downloader',
-    seoTitle: 'TikTok Profile Bulk Downloader - TikSavePro',
-    seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
+    seoTitle: 'TikTok Profile Bulk Downloader – Save Multiple Videos | TikSavePro',
+    seoDescription: 'Enter any TikTok username to fetch and download all their videos at once without watermark.',
     isPublished: true,
     layout: JSON.stringify([
       { 
@@ -81,14 +99,32 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
         type: 'hero', 
         title: 'TikTok Profile Bulk Downloader', 
         subtitle: 'Enter a public TikTok username to fetch and process multiple videos more conveniently.', 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'Profile Bulk Downloader'
       },
       { id: 'b-2', type: 'bulk_tool' }
     ])
   },
-  apk: {
+  bulk: {
+    title: 'TikTok Profile Bulk Downloader',
+    seoTitle: 'TikTok Profile Bulk Downloader – Save Multiple Videos | TikSavePro',
+    seoDescription: 'Enter any TikTok username to fetch and download all their videos at once without watermark.',
+    isPublished: true,
+    layout: JSON.stringify([
+      { 
+        id: 'b-1', 
+        type: 'hero', 
+        title: 'TikTok Profile Bulk Downloader', 
+        subtitle: 'Enter a public TikTok username to fetch and process multiple videos more conveniently.', 
+        bgColor: '#090d16',
+        bgImage: '/contact-banner.jpg',
+        badge: 'Profile Bulk Downloader'
+      },
+      { id: 'b-2', type: 'bulk_tool' }
+    ])
+  },
+  'android-apk': {
     title: 'TikSavePro Android App – Coming Soon',
     seoTitle: 'TikSavePro Android App – Coming Soon | TikTok Downloader',
     seoDescription: 'Learn about the upcoming TikSavePro Android app and use our browser-based TikTok video, audio, MP3 and bulk downloader tools on Android today.',
@@ -99,11 +135,11 @@ const DEFAULT_SYSTEM_PAGES: Record<string, any> = {
         type: 'hero', 
         title: 'Coming Soon: TikSavePro Android App', 
         subtitle: "We're working on a dedicated Android experience to make TikSavePro tools more convenient on mobile devices.", 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'Android App • In Development',
         ctaText: 'Use TikSavePro Online',
-        ctaLink: '/video',
+        ctaLink: '/',
         secondaryCtaText: 'Explore Planned Features',
         secondaryCtaLink: '#features'
       },
@@ -1148,9 +1184,25 @@ export default function CustomPage({ params }: { params: any }) {
         }
 
         let res = await getCustomPageBySlug(normalizedSlug);
-        // If not found and slug is contact-us/contact or about-us/about or privacy-policy/privacy or terms-of-service/terms or dmca-disclaimer/dmca/disclaimer, try the alias
+        // If not found and slug has an alias, check the alias
         if (!res || !res.isPublished) {
-          if (normalizedSlug === 'contact-us') {
+          if (normalizedSlug === 'audio-extractor') {
+            res = await getCustomPageBySlug('audio');
+          } else if (normalizedSlug === 'audio') {
+            res = await getCustomPageBySlug('audio-extractor');
+          } else if (normalizedSlug === 'bulk-downloader') {
+            res = await getCustomPageBySlug('bulk');
+          } else if (normalizedSlug === 'bulk') {
+            res = await getCustomPageBySlug('bulk-downloader');
+          } else if (normalizedSlug === 'android-apk') {
+            res = await getCustomPageBySlug('apk');
+          } else if (normalizedSlug === 'apk') {
+            res = await getCustomPageBySlug('android-apk');
+          } else if (normalizedSlug === 'home') {
+            res = await getCustomPageBySlug('video');
+          } else if (normalizedSlug === 'video') {
+            res = await getCustomPageBySlug('home');
+          } else if (normalizedSlug === 'contact-us') {
             res = await getCustomPageBySlug('contact');
           } else if (normalizedSlug === 'contact') {
             res = await getCustomPageBySlug('contact-us');
@@ -1177,17 +1229,15 @@ export default function CustomPage({ params }: { params: any }) {
 
         const resolveFallback = (s: string) => {
           if (DEFAULT_SYSTEM_PAGES[s]) return DEFAULT_SYSTEM_PAGES[s];
-          if (s === 'contact-us') return DEFAULT_SYSTEM_PAGES['contact'];
-          if (s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'];
-          if (s === 'about-us') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
-          if (s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
-          if (s === 'privacy-policy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
-          if (s === 'privacy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
-          if (s === 'terms-of-service') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
-          if (s === 'terms') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
-          if (s === 'dmca-disclaimer') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
-          if (s === 'dmca') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
-          if (s === 'disclaimer') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
+          if (s === 'audio-extractor' || s === 'audio') return DEFAULT_SYSTEM_PAGES['audio-extractor'] || DEFAULT_SYSTEM_PAGES['audio'];
+          if (s === 'bulk-downloader' || s === 'bulk') return DEFAULT_SYSTEM_PAGES['bulk-downloader'] || DEFAULT_SYSTEM_PAGES['bulk'];
+          if (s === 'android-apk' || s === 'apk') return DEFAULT_SYSTEM_PAGES['android-apk'] || DEFAULT_SYSTEM_PAGES['apk'];
+          if (s === 'home' || s === 'video') return DEFAULT_SYSTEM_PAGES['home'] || DEFAULT_SYSTEM_PAGES['video'];
+          if (s === 'contact-us' || s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'] || DEFAULT_SYSTEM_PAGES['contact'];
+          if (s === 'about-us' || s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          if (s === 'privacy-policy' || s === 'privacy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
+          if (s === 'terms-of-service' || s === 'terms') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
+          if (s === 'dmca-disclaimer' || s === 'dmca' || s === 'disclaimer') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
           return null;
         };
 
@@ -1204,10 +1254,15 @@ export default function CustomPage({ params }: { params: any }) {
       } catch {
         const resolveFallback = (s: string) => {
           if (DEFAULT_SYSTEM_PAGES[s]) return DEFAULT_SYSTEM_PAGES[s];
-          if (s === 'contact-us') return DEFAULT_SYSTEM_PAGES['contact'];
-          if (s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'];
-          if (s === 'about-us') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
-          if (s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          if (s === 'audio-extractor' || s === 'audio') return DEFAULT_SYSTEM_PAGES['audio-extractor'] || DEFAULT_SYSTEM_PAGES['audio'];
+          if (s === 'bulk-downloader' || s === 'bulk') return DEFAULT_SYSTEM_PAGES['bulk-downloader'] || DEFAULT_SYSTEM_PAGES['bulk'];
+          if (s === 'android-apk' || s === 'apk') return DEFAULT_SYSTEM_PAGES['android-apk'] || DEFAULT_SYSTEM_PAGES['apk'];
+          if (s === 'home' || s === 'video') return DEFAULT_SYSTEM_PAGES['home'] || DEFAULT_SYSTEM_PAGES['video'];
+          if (s === 'contact-us' || s === 'contact') return DEFAULT_SYSTEM_PAGES['contact-us'] || DEFAULT_SYSTEM_PAGES['contact'];
+          if (s === 'about-us' || s === 'about') return DEFAULT_SYSTEM_PAGES['about-us'] || DEFAULT_SYSTEM_PAGES['about'];
+          if (s === 'privacy-policy' || s === 'privacy') return DEFAULT_SYSTEM_PAGES['privacy-policy'] || DEFAULT_SYSTEM_PAGES['privacy'];
+          if (s === 'terms-of-service' || s === 'terms') return DEFAULT_SYSTEM_PAGES['terms-of-service'] || DEFAULT_SYSTEM_PAGES['terms'];
+          if (s === 'dmca-disclaimer' || s === 'dmca' || s === 'disclaimer') return DEFAULT_SYSTEM_PAGES['dmca-disclaimer'] || DEFAULT_SYSTEM_PAGES['dmca'];
           return null;
         };
         const fallback = resolveFallback(normalizedSlug);

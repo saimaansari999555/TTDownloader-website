@@ -70,11 +70,10 @@ export const DEFAULT_FOOTER_CONFIG: FooterConfig = {
       id: 'col-tools',
       title: 'Download Tools',
       links: [
-        { id: 'fl-1', label: 'TikTok Downloader', url: '/', target: '_self' },
-        { id: 'fl-2', label: 'Video Downloader', url: '/video', target: '_self' },
-        { id: 'fl-3', label: 'Audio Extractor', url: '/audio', target: '_self' },
-        { id: 'fl-4', label: 'Bulk Downloader', url: '/bulk', target: '_self' },
-        { id: 'fl-5', label: 'Android APK', url: '/apk', target: '_self' },
+        { id: 'fl-1', label: 'TikTok Video Downloader', url: '/', target: '_self' },
+        { id: 'fl-2', label: 'Audio Extractor (MP3)', url: '/audio-extractor', target: '_self' },
+        { id: 'fl-3', label: 'Profile Bulk Downloader', url: '/bulk-downloader', target: '_self' },
+        { id: 'fl-4', label: 'Android APK App', url: '/android-apk', target: '_self' },
       ],
     },
     {

@@ -3,18 +3,18 @@ import { NextResponse } from 'next/server';
 let globalPages: any[] = [
   {
     id: 'home',
-    title: 'Home Downloader',
+    title: 'TikTok Video Downloader',
     slug: 'home',
     seoTitle: 'TikSavePro - Download TikTok Videos Without Watermark',
-    seoDescription: 'Download TikTok videos without watermark in HD quality for free.',
+    seoDescription: 'Download TikTok videos without watermark in HD quality for free directly from your web browser with TikSavePro.',
     isPublished: true,
     layout: JSON.stringify([
       { 
         id: 'h-1', 
         type: 'hero', 
         title: 'Download TikTok Videos Without Watermark', 
-        subtitle: 'Fast, free, and ad-supported online tool. Paste any public TikTok link to download your video.', 
-        bgColor: '#0f172a',
+        subtitle: 'Fast, free, and secure online tool. Paste any public TikTok link to download your video in original HD MP4 format.', 
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'Fast & Watermark-Free'
       },
@@ -22,31 +22,11 @@ let globalPages: any[] = [
     ])
   },
   {
-    id: 'video',
-    title: 'TikTok Video Downloader',
-    slug: 'video',
-    seoTitle: 'TikTok Video Downloader - TikSavePro',
-    seoDescription: 'Download HD videos without watermark in MP4 format.',
-    isPublished: true,
-    layout: JSON.stringify([
-      { 
-        id: 'v-1', 
-        type: 'hero', 
-        title: 'TikTok Video Downloader', 
-        subtitle: 'Download available HD videos without watermark directly in MP4 format.', 
-        bgColor: '#0f172a',
-        bgImage: '/contact-banner.jpg',
-        badge: 'MP4 Video Downloader'
-      },
-      { id: 'v-2', type: 'downloader_tool' }
-    ])
-  },
-  {
-    id: 'audio',
+    id: 'audio-extractor',
     title: 'TikTok Audio Extractor',
-    slug: 'audio',
-    seoTitle: 'TikTok Audio Extractor - TikSavePro',
-    seoDescription: 'Extract and download MP3 audio from any TikTok video.',
+    slug: 'audio-extractor',
+    seoTitle: 'TikTok Audio Extractor – Download MP3 Sounds | TikSavePro',
+    seoDescription: 'Extract and download MP3 audio from any TikTok video in high quality for free.',
     isPublished: true,
     layout: JSON.stringify([
       { 
@@ -54,7 +34,7 @@ let globalPages: any[] = [
         type: 'hero', 
         title: 'TikTok Audio Extractor', 
         subtitle: 'Extract sound tracks and download audio in MP3 format from supported TikTok videos.', 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'MP3 Audio Extractor'
       },
@@ -62,11 +42,11 @@ let globalPages: any[] = [
     ])
   },
   {
-    id: 'bulk',
+    id: 'bulk-downloader',
     title: 'TikTok Profile Bulk Downloader',
-    slug: 'bulk',
-    seoTitle: 'TikTok Profile Bulk Downloader - TikSavePro',
-    seoDescription: 'Enter any TikTok username to fetch and download all their videos at once.',
+    slug: 'bulk-downloader',
+    seoTitle: 'TikTok Profile Bulk Downloader – Save Multiple Videos | TikSavePro',
+    seoDescription: 'Enter any TikTok username to fetch and download all their videos at once without watermark.',
     isPublished: true,
     layout: JSON.stringify([
       { 
@@ -74,7 +54,7 @@ let globalPages: any[] = [
         type: 'hero', 
         title: 'TikTok Profile Bulk Downloader', 
         subtitle: 'Enter a public TikTok username to fetch and process multiple videos more conveniently.', 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'Profile Bulk Downloader'
       },
@@ -82,9 +62,9 @@ let globalPages: any[] = [
     ])
   },
   {
-    id: 'apk',
+    id: 'android-apk',
     title: 'TikSavePro Android App – Coming Soon',
-    slug: 'apk',
+    slug: 'android-apk',
     seoTitle: 'TikSavePro Android App – Coming Soon | TikTok Downloader',
     seoDescription: 'Learn about the upcoming TikSavePro Android app and use our browser-based TikTok video, audio, MP3 and bulk downloader tools on Android today.',
     isPublished: true,
@@ -94,11 +74,11 @@ let globalPages: any[] = [
         type: 'hero', 
         title: 'Coming Soon: TikSavePro Android App', 
         subtitle: "We're working on a dedicated Android experience to make TikSavePro tools more convenient on mobile devices.", 
-        bgColor: '#0f172a',
+        bgColor: '#090d16',
         bgImage: '/contact-banner.jpg',
         badge: 'Android App • In Development',
         ctaText: 'Use TikSavePro Online',
-        ctaLink: '/video',
+        ctaLink: '/',
         secondaryCtaText: 'Explore Planned Features',
         secondaryCtaLink: '#features'
       },

@@ -38,11 +38,12 @@ export default function Navbar() {
   const logoBase = logoText.replace(logoHighlight, '');
 
   const getIconForUrl = (url: string) => {
-    if (url === '/video' || url === '/') return Download;
-    if (url === '/audio') return Music;
-    if (url === '/bulk') return Users;
+    if (url === '/' || url === '/video') return Download;
+    if (url === '/audio-extractor' || url === '/audio') return Music;
+    if (url === '/bulk-downloader' || url === '/bulk') return Users;
+    if (url === '/android-apk' || url === '/apk') return Download;
     if (url === '/blog') return FileText;
-    if (url === '/contact-us') return Mail;
+    if (url === '/contact-us' || url === '/contact') return Mail;
     return null;
   };
 
