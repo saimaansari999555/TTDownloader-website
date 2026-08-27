@@ -5,9 +5,13 @@ import type { NextRequest } from 'next/server';
 const STATIC_REDIRECTS: Record<string, { target: string; status: number }> = {
   '/about': { target: '/about-us', status: 301 },
   '/contact': { target: '/contact-us', status: 301 },
+  '/video': { target: '/', status: 301 },
+  '/audio': { target: '/audio-extractor', status: 301 },
+  '/bulk': { target: '/bulk-downloader', status: 301 },
+  '/apk': { target: '/android-apk', status: 301 },
 };
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const normalizedPath = pathname.toLowerCase();
 
@@ -39,46 +43,17 @@ export async function middleware(request: NextRequest) {
         }
       }
     }
-  } catch (e) {
+  } catch {
     // ignore cookie parse error
   }
 
-  // 2. Fast static fallback check
+  // 2. Static redirect rules (no async, no self-fetch — safe for Vercel Edge Runtime)
   const staticRule = STATIC_REDIRECTS[normalizedPath];
   if (staticRule) {
     const targetUrl = staticRule.target.startsWith('http')
       ? staticRule.target
       : new URL(staticRule.target, request.url);
     return NextResponse.redirect(targetUrl, { status: staticRule.status });
-  }
-
-  // 3. Dynamic API check for admin-created redirects with 500ms timeout
-  try {
-    const origin = request.nextUrl.origin;
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 500);
-
-    const res = await fetch(`${origin}/api/redirects?activeOnly=true`, {
-      signal: controller.signal,
-      headers: { 'Accept': 'application/json' },
-    });
-    clearTimeout(timeoutId);
-
-    if (res.ok) {
-      const redirects: any[] = await res.json();
-      const match = redirects.find(
-        (r) => r.isActive && r.sourcePath?.toLowerCase() === normalizedPath
-      );
-
-      if (match && match.targetPath) {
-        const targetUrl = match.targetPath.startsWith('http')
-          ? match.targetPath
-          : new URL(match.targetPath, request.url);
-        return NextResponse.redirect(targetUrl, { status: Number(match.statusCode) || 301 });
-      }
-    }
-  } catch {
-    // If internal fetch fails or aborts, proceed normally
   }
 
   return NextResponse.next();
