@@ -12,29 +12,42 @@ export const api = axios.create({
 });
 
 export const fetchVideo = async (url: string) => {
+  // First try backend NestJS API (when running)
   try {
     const res = await api.post('/api/downloader/fetch', { url });
     if (res.data?.data) return res.data.data;
-  } catch (err) {
-    console.warn('Backend API fetch unavailable, falling back to direct provider:', err);
+  } catch {
+    // Backend not available, use Next.js proxy
   }
-  const directRes = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
-  const data = await directRes.json();
+
+  // Use server-side Next.js proxy to avoid CORS issues
+  const proxyRes = await fetch(`/api/download`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url }),
+  });
+  const data = await proxyRes.json();
   if (data && data.code === 0 && data.data) {
     return data.data;
   }
-  throw new Error(data?.msg || 'Could not fetch TikTok video. Please check the link and try again.');
+  throw new Error(data?.error || data?.msg || 'Could not fetch TikTok video. The link may be private or removed.');
 };
+
 
 export const fetchAudio = async (url: string) => {
   try {
     const res = await api.post('/api/downloader/fetch-audio', { url });
     if (res.data?.data) return res.data.data;
-  } catch (err) {
-    console.warn('Backend API fetch-audio unavailable, falling back to direct provider:', err);
+  } catch {
+    // Backend not available, use Next.js proxy
   }
-  const directRes = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
-  const data = await directRes.json();
+  // Use server-side proxy to avoid CORS
+  const proxyRes = await fetch(`/api/download`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url }),
+  });
+  const data = await proxyRes.json();
   if (data && data.code === 0 && data.data) {
     return {
       title: data.data.title,
@@ -43,23 +56,24 @@ export const fetchAudio = async (url: string) => {
       author: data.data.author,
     };
   }
-  throw new Error(data?.msg || 'Could not extract audio. Please check the link and try again.');
+  throw new Error(data?.error || data?.msg || 'Could not extract audio. Please check the link and try again.');
 };
 
 export const fetchUserVideos = async (username: string, cursor = 0) => {
   try {
     const res = await api.get(`/api/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`);
     if (res.data?.data) return res.data.data;
-  } catch (err) {
-    console.warn('Backend API bulk downloader unavailable, falling back to direct provider:', err);
+  } catch {
+    // Backend not available, use Next.js proxy
   }
+  // Use server-side proxy to avoid CORS
   const cleanUsername = username.replace(/^@/, '');
-  const directRes = await fetch(`https://tikwm.com/api/user/posts?unique_id=${encodeURIComponent(cleanUsername)}&count=12&cursor=${cursor}`);
-  const data = await directRes.json();
+  const proxyRes = await fetch(`/api/bulk?username=${encodeURIComponent(cleanUsername)}&cursor=${cursor}&count=20`);
+  const data = await proxyRes.json();
   if (data && data.code === 0 && data.data) {
     return data.data;
   }
-  throw new Error(data?.msg || 'Could not fetch profile videos. Please check username and try again.');
+  throw new Error(data?.error || data?.msg || 'Could not fetch profile videos. Please check username and try again.');
 };
 
 export const submitContact = (body: { name: string; email: string; subject: string; message: string }) =>
