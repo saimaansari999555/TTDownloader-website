@@ -3,6 +3,7 @@ import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import PluginInjector from "@/components/PluginInjector";
 import AdSenseScriptLoader from "@/components/AdSenseScriptLoader";
+import AnalyticsInjector from "@/components/AnalyticsInjector";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="antialiased selection:bg-indigo-500/30 selection:text-white">
         <PluginInjector />
         <AdSenseScriptLoader />
+        <AnalyticsInjector />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>

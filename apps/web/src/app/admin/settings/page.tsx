@@ -273,13 +273,134 @@ export default function AdminSettings() {
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold text-text-secondary mb-2">Google Analytics GA4 Tag</label>
-                      <input type="text" className="w-full glass-input rounded-xl py-3 px-4 text-sm" placeholder="G-XXXXXXXXXX" value={settings['google_analytics'] || ''} onChange={e => set('google_analytics', e.target.value)} />
-                    </div>
                     <div className="md:col-span-2">
                       <label className="block text-xs font-bold text-text-secondary mb-2">Robots.txt Content</label>
                       <textarea rows={4} className="w-full glass-input rounded-xl py-3 px-4 text-sm font-mono resize-none" value={settings['robots_txt'] || ''} onChange={e => set('robots_txt', e.target.value)} />
+                    </div>
+                  </div>
+
+                  {/* ─── ANALYTICS & WEBMASTER TOOLS ─── */}
+                  <div className="space-y-4 pt-2">
+                    <div className="border-b border-white/10 pb-3">
+                      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                        <span className="text-xl">📊</span> Analytics &amp; Webmaster Tools
+                      </h3>
+                      <p className="text-xs text-text-secondary mt-1">Connect Google Analytics, Search Console, and Ahrefs to track website performance and SEO rankings.</p>
+                    </div>
+
+                    {/* Google Analytics GA4 */}
+                    <div className="p-5 bg-white/5 rounded-xl border border-white/5 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-orange-500/15 flex items-center justify-center text-lg">📈</div>
+                          <div>
+                            <h4 className="text-sm font-bold text-white">Google Analytics GA4</h4>
+                            <p className="text-xs text-text-secondary">Auto-injects gtag.js tracking script on every page</p>
+                          </div>
+                        </div>
+                        <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${settings['google_analytics']?.trim() ? 'bg-green-500/15 text-green-400' : 'bg-white/5 text-text-secondary'}`}>
+                          {settings['google_analytics']?.trim() ? 'Active' : 'Not Set'}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Measurement ID <span className="text-primary-400">(G-XXXXXXXXXX)</span></label>
+                          <input
+                            type="text"
+                            className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono"
+                            placeholder="G-4RMHBXVVQ3"
+                            value={settings['google_analytics'] || ''}
+                            onChange={e => set('google_analytics', e.target.value)}
+                          />
+                        </div>
+                        <div className="flex flex-col justify-end">
+                          <p className="text-xs text-text-secondary leading-relaxed">
+                            Enter only your <strong className="text-white">Measurement ID</strong> (starts with G-). The full gtag.js script will be auto-injected on every page.
+                          </p>
+                        </div>
+                      </div>
+                      {settings['google_analytics']?.trim() && (
+                        <div className="bg-black/30 rounded-lg px-4 py-2.5 font-mono text-xs text-green-400 border border-green-500/20">
+                          {'<!-- Google Analytics -->'}<br/>
+                          {'<script async src="https://www.googletagmanager.com/gtag/js?id='}{settings['google_analytics']}{'"></script>'}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Google Search Console */}
+                    <div className="p-5 bg-white/5 rounded-xl border border-white/5 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center text-lg">🔍</div>
+                          <div>
+                            <h4 className="text-sm font-bold text-white">Google Search Console</h4>
+                            <p className="text-xs text-text-secondary">Verify site ownership via HTML meta tag in &lt;head&gt;</p>
+                          </div>
+                        </div>
+                        <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${settings['google_search_console']?.trim() ? 'bg-green-500/15 text-green-400' : 'bg-white/5 text-text-secondary'}`}>
+                          {settings['google_search_console']?.trim() ? 'Active' : 'Not Set'}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Verification Meta Tag Content</label>
+                          <input
+                            type="text"
+                            className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono"
+                            placeholder="abcdefghijklmnop1234567890"
+                            value={settings['google_search_console'] || ''}
+                            onChange={e => set('google_search_console', e.target.value)}
+                          />
+                        </div>
+                        <div className="flex flex-col justify-end">
+                          <p className="text-xs text-text-secondary leading-relaxed">
+                            In Search Console, choose <strong className="text-white">"HTML Tag"</strong> verification method. Copy only the <strong className="text-white">content="..."</strong> value (not the full tag).
+                          </p>
+                        </div>
+                      </div>
+                      {settings['google_search_console']?.trim() && (
+                        <div className="bg-black/30 rounded-lg px-4 py-2.5 font-mono text-xs text-blue-400 border border-blue-500/20">
+                          {'<meta name="google-site-verification" content="'}{settings['google_search_console']}{'"/>'}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Ahrefs Site Verification */}
+                    <div className="p-5 bg-white/5 rounded-xl border border-white/5 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-orange-400/15 flex items-center justify-center text-lg">🔗</div>
+                          <div>
+                            <h4 className="text-sm font-bold text-white">Ahrefs Site Verification</h4>
+                            <p className="text-xs text-text-secondary">Verify ownership for Ahrefs Webmaster Tools (AWT)</p>
+                          </div>
+                        </div>
+                        <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${settings['ahrefs_verification']?.trim() ? 'bg-green-500/15 text-green-400' : 'bg-white/5 text-text-secondary'}`}>
+                          {settings['ahrefs_verification']?.trim() ? 'Active' : 'Not Set'}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-text-secondary mb-1.5">Ahrefs Verification Token</label>
+                          <input
+                            type="text"
+                            className="w-full glass-input rounded-xl py-2.5 px-4 text-sm font-mono"
+                            placeholder="ahrefs-site-verification_xxxxxxxx"
+                            value={settings['ahrefs_verification'] || ''}
+                            onChange={e => set('ahrefs_verification', e.target.value)}
+                          />
+                        </div>
+                        <div className="flex flex-col justify-end">
+                          <p className="text-xs text-text-secondary leading-relaxed">
+                            In <strong className="text-white">Ahrefs Webmaster Tools</strong>, go to Verify &rarr; HTML Tag method. Copy the full <strong className="text-white">content="ahrefs-site-verification_..."</strong> value.
+                          </p>
+                        </div>
+                      </div>
+                      {settings['ahrefs_verification']?.trim() && (
+                        <div className="bg-black/30 rounded-lg px-4 py-2.5 font-mono text-xs text-orange-400 border border-orange-500/20">
+                          {'<meta name="ahrefs-site-verification" content="'}{settings['ahrefs_verification']}{'"/>'}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
