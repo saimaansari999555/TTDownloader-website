@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const videoUrl = searchParams.get('url');
 
   if (!videoUrl) {
-    return NextResponse.json({ error: 'URL parameter is required' }, { status: 400 });
+    return NextResponse.json({ code: -1, error: 'URL parameter is required' });
   }
 
   try {
@@ -22,11 +22,10 @@ export async function GET(request: NextRequest) {
     });
 
     if (!res.ok) {
-      return NextResponse.json({ error: 'Provider unavailable', code: res.status }, { status: 502 });
+      return NextResponse.json({ code: -1, error: 'Provider unavailable' });
     }
 
     const data = await res.json();
-
     return NextResponse.json(data, {
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -34,7 +33,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Failed to fetch video data' }, { status: 500 });
+    return NextResponse.json({ code: -1, error: err.message || 'Failed to fetch video data' });
   }
 }
 
@@ -44,7 +43,7 @@ export async function POST(request: NextRequest) {
     const videoUrl = body.url;
 
     if (!videoUrl) {
-      return NextResponse.json({ error: 'URL is required in request body' }, { status: 400 });
+      return NextResponse.json({ code: -1, error: 'URL is required in request body' });
     }
 
     const apiUrl = `https://tikwm.com/api/?url=${encodeURIComponent(videoUrl)}&hd=1`;
@@ -58,7 +57,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!res.ok) {
-      return NextResponse.json({ error: 'Provider unavailable', code: res.status }, { status: 502 });
+      return NextResponse.json({ code: -1, error: 'Provider unavailable' });
     }
 
     const data = await res.json();
@@ -69,6 +68,6 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Failed to fetch video data' }, { status: 500 });
+    return NextResponse.json({ code: -1, error: err.message || 'Failed to fetch video data' });
   }
 }

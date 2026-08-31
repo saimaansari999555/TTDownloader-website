@@ -18,7 +18,7 @@ function extractUsername(input: string): string {
   cleaned = cleaned.replace(/^@+/, '');
   cleaned = cleaned.split('?')[0].split('/')[0];
 
-  // Avoid treating domain paths as usernames
+  // Avoid treating domain paths or URLs as usernames
   if (cleaned.includes('http') || cleaned.includes('.com') || cleaned.includes('/')) {
     return '';
   }
@@ -33,7 +33,10 @@ export async function GET(request: NextRequest) {
   const count = searchParams.get('count') || '20';
 
   if (!rawUsername.trim()) {
-    return NextResponse.json({ error: 'Username parameter is required' }, { status: 400 });
+    return NextResponse.json({
+      code: -1,
+      error: 'Username parameter is required',
+    });
   }
 
   const trimmedInput = rawUsername.trim();
@@ -41,9 +44,10 @@ export async function GET(request: NextRequest) {
   // 1. Check if user pasted a TikTok Music / Sound link
   if (trimmedInput.includes('/music/') || trimmedInput.includes('/sound/')) {
     return NextResponse.json({
+      code: -1,
       error: 'This is a TikTok Music/Audio link (not a user profile). Please use our Audio Extractor tool to download MP3 sound tracks.',
       isMusicLink: true,
-    }, { status: 400 });
+    });
   }
 
   let cleanUsername = extractUsername(trimmedInput);
@@ -69,8 +73,9 @@ export async function GET(request: NextRequest) {
 
   if (!cleanUsername) {
     return NextResponse.json({
+      code: -1,
       error: 'Could not detect a valid TikTok username from this link. Please enter a profile handle (e.g. @khaby.lame) or profile link.',
-    }, { status: 400 });
+    });
   }
 
   try {
@@ -124,14 +129,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.json(
-      { error: `Could not fetch videos for profile @${cleanUsername}. Please verify the profile is public.` },
-      { status: 404 }
-    );
+    return NextResponse.json({
+      code: -1,
+      error: `Could not fetch videos for profile @${cleanUsername}. Please verify the profile is public.`,
+    });
   } catch (err: any) {
-    return NextResponse.json(
-      { error: err.message || 'Failed to process request' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      code: -1,
+      error: err.message || 'Failed to process request',
+    });
   }
 }
