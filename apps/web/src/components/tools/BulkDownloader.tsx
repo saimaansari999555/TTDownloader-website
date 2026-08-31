@@ -137,9 +137,22 @@ export default function BulkDownloader() {
 
       {/* Error Message */}
       {error && (
-        <div className="flex items-center gap-3 text-red-300 bg-red-950/40 border border-red-800/60 px-4 py-3 rounded-xl mb-6 max-w-3xl mx-auto shadow-md text-sm">
-          <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
-          <p className="font-medium">{error}</p>
+        <div className="bg-red-950/40 border border-red-800/60 p-4 rounded-xl mb-6 max-w-3xl mx-auto shadow-md text-sm text-red-300 space-y-3">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+            <p className="font-medium">{error}</p>
+          </div>
+          {(error.includes('Music/Audio') || error.includes('music')) && (
+            <div className="pt-2 border-t border-red-800/40 flex items-center justify-between">
+              <span className="text-xs text-red-200">Looking to download MP3 sound tracks?</span>
+              <a
+                href="/audio-extractor"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition-all shadow"
+              >
+                Go to Audio Extractor &rarr;
+              </a>
+            </div>
+          )}
         </div>
       )}
 

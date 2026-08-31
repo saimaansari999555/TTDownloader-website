@@ -17,6 +17,12 @@ function extractUsername(input: string): string {
   // Strip leading @, query parameters, trailing slashes
   cleaned = cleaned.replace(/^@+/, '');
   cleaned = cleaned.split('?')[0].split('/')[0];
+
+  // Avoid treating domain paths as usernames
+  if (cleaned.includes('http') || cleaned.includes('.com') || cleaned.includes('/')) {
+    return '';
+  }
+
   return cleaned.trim();
 }
 
@@ -30,17 +36,42 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Username parameter is required' }, { status: 400 });
   }
 
-  const cleanUsername = extractUsername(rawUsername);
+  const trimmedInput = rawUsername.trim();
 
-  if (!cleanUsername) {
-    return NextResponse.json({ error: 'Invalid TikTok username provided' }, { status: 400 });
+  // 1. Check if user pasted a TikTok Music / Sound link
+  if (trimmedInput.includes('/music/') || trimmedInput.includes('/sound/')) {
+    return NextResponse.json({
+      error: 'This is a TikTok Music/Audio link (not a user profile). Please use our Audio Extractor tool to download MP3 sound tracks.',
+      isMusicLink: true,
+    }, { status: 400 });
   }
+
+  let cleanUsername = extractUsername(trimmedInput);
 
   const headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept': 'application/json',
     'Referer': 'https://tikwm.com/',
   };
+
+  // 2. If user pasted a video URL without @username (e.g. vt.tiktok.com or /video/123), resolve author username first
+  if (!cleanUsername && (trimmedInput.includes('tiktok.com') || trimmedInput.includes('vt.tiktok.com'))) {
+    try {
+      const videoRes = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(trimmedInput)}`, { headers });
+      if (videoRes.ok) {
+        const videoData = await videoRes.json();
+        if (videoData && videoData.code === 0 && videoData.data?.author?.unique_id) {
+          cleanUsername = videoData.data.author.unique_id;
+        }
+      }
+    } catch {}
+  }
+
+  if (!cleanUsername) {
+    return NextResponse.json({
+      error: 'Could not detect a valid TikTok username from this link. Please enter a profile handle (e.g. @khaby.lame) or profile link.',
+    }, { status: 400 });
+  }
 
   try {
     // Attempt 1: Official user posts API
@@ -94,7 +125,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'Could not fetch user profile or videos. Please verify username.' },
+      { error: `Could not fetch videos for profile @${cleanUsername}. Please verify the profile is public.` },
       { status: 404 }
     );
   } catch (err: any) {
