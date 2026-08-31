@@ -17,6 +17,15 @@ export default function BulkDownloader() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12;
 
+  const extractCleanUser = (input: string) => {
+    let raw = input.trim();
+    if (raw.includes('tiktok.com')) {
+      const match = raw.match(/@([a-zA-Z0-9_.-]+)/);
+      if (match && match[1]) return match[1];
+    }
+    return raw.replace(/^@+/, '').split('?')[0].split('/')[0].trim();
+  };
+
   const handleFetch = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); 
@@ -24,9 +33,9 @@ export default function BulkDownloader() {
     setCursor(0);
     setCurrentPage(1);
     
-    const cleanUser = username.trim().replace('@', '');
+    const cleanUser = extractCleanUser(username);
     if (!cleanUser) { 
-      setError('Please enter a valid TikTok username (e.g. khaby.lame)'); 
+      setError('Please enter a valid TikTok username (e.g. khaby.lame) or profile link'); 
       return; 
     }
     setLoading(true);
@@ -35,7 +44,7 @@ export default function BulkDownloader() {
       setResult(data);
       setCursor(data.cursor || 0);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to fetch user profile. Please check the username and try again.');
+      setError(err.message || err.response?.data?.message || 'Failed to fetch user profile. Please check the username and try again.');
     } finally { 
       setLoading(false); 
     }

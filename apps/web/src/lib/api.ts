@@ -78,7 +78,7 @@ export const submitContact = (body: { name: string; email: string; subject: stri
   api.post('/api/contact', body).catch(() => Promise.resolve({ success: true }));
 
 export const getLatestApk = () =>
-  api.get('/api/apk/latest').catch(() => Promise.resolve(null));
+  API_BASE ? api.get('/api/apk/latest').then(r => r.data).catch(() => null) : Promise.resolve(null);
 
 export const getBlogPosts = (page = 0) =>
   api.get(`/api/blog/posts?skip=${page * 10}&take=10`).then(r => r.data).catch(() => []);
