@@ -12,15 +12,14 @@ export const api = axios.create({
 });
 
 export const fetchVideo = async (url: string) => {
-  // First try backend NestJS API (when running)
-  try {
-    const res = await api.post('/api/downloader/fetch', { url });
-    if (res.data?.data) return res.data.data;
-  } catch {
-    // Backend not available, use Next.js proxy
+  if (API_BASE) {
+    try {
+      const res = await api.post('/api/downloader/fetch', { url });
+      if (res.data?.data) return res.data.data;
+    } catch {}
   }
 
-  // Use server-side Next.js proxy to avoid CORS issues
+  // Use Next.js serverless proxy
   const proxyRes = await fetch(`/api/download`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -33,15 +32,14 @@ export const fetchVideo = async (url: string) => {
   throw new Error(data?.error || data?.msg || 'Could not fetch TikTok video. The link may be private or removed.');
 };
 
-
 export const fetchAudio = async (url: string) => {
-  try {
-    const res = await api.post('/api/downloader/fetch-audio', { url });
-    if (res.data?.data) return res.data.data;
-  } catch {
-    // Backend not available, use Next.js proxy
+  if (API_BASE) {
+    try {
+      const res = await api.post('/api/downloader/fetch-audio', { url });
+      if (res.data?.data) return res.data.data;
+    } catch {}
   }
-  // Use server-side proxy to avoid CORS
+
   const proxyRes = await fetch(`/api/download`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -53,20 +51,20 @@ export const fetchAudio = async (url: string) => {
       title: data.data.title,
       music: data.data.music,
       cover: data.data.cover,
-      author: data.data.author,
+      author: typeof data.data.author === 'object' ? (data.data.author.unique_id || data.data.author.nickname || 'Creator') : data.data.author,
     };
   }
   throw new Error(data?.error || data?.msg || 'Could not extract audio. Please check the link and try again.');
 };
 
 export const fetchUserVideos = async (username: string, cursor = 0) => {
-  try {
-    const res = await api.get(`/api/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`);
-    if (res.data?.data) return res.data.data;
-  } catch {
-    // Backend not available, use Next.js proxy
+  if (API_BASE) {
+    try {
+      const res = await api.get(`/api/downloader/bulk?username=${encodeURIComponent(username)}&cursor=${cursor}`);
+      if (res.data?.data) return res.data.data;
+    } catch {}
   }
-  // Use server-side proxy to avoid CORS
+
   const cleanUsername = username.replace(/^@/, '');
   const proxyRes = await fetch(`/api/bulk?username=${encodeURIComponent(cleanUsername)}&cursor=${cursor}&count=20`);
   const data = await proxyRes.json();

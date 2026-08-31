@@ -167,7 +167,7 @@ export default function VideoDownloader() {
                   </h3>
                   {result.author && (
                     <p className="text-sm text-slate-400 mb-4">
-                      Creator: <span className="text-slate-200 font-medium">@{result.author}</span>
+                      Creator: <span className="text-slate-200 font-medium">@{typeof result.author === 'object' ? (result.author.unique_id || result.author.nickname || result.author.id || 'Creator') : result.author}</span>
                     </p>
                   )}
                 </div>
