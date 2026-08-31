@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Users, Download, AlertCircle, Play, ChevronLeft, ChevronRight, Zap, ShieldCheck } from 'lucide-react';
-import { fetchUserVideos } from '@/lib/api';
+import { fetchUserVideos, fetchVideo } from '@/lib/api';
 
 export default function BulkDownloader() {
   const [username, setUsername] = useState('');
@@ -26,6 +26,12 @@ export default function BulkDownloader() {
     return raw.replace(/^@+/, '').split('?')[0].split('/')[0].trim();
   };
 
+  const extractUrls = (input: string): string[] => {
+    const urlRegex = /(https?:\/\/[^\s,]+)/g;
+    const matches = input.match(urlRegex) || [];
+    return Array.from(new Set(matches));
+  };
+
   const handleFetch = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); 
@@ -33,18 +39,65 @@ export default function BulkDownloader() {
     setCursor(0);
     setCurrentPage(1);
     
-    const cleanUser = extractCleanUser(username);
-    if (!cleanUser) { 
-      setError('Please enter a valid TikTok username (e.g. khaby.lame) or profile link'); 
+    const rawInput = username.trim();
+    if (!rawInput) { 
+      setError('Please enter a TikTok username (e.g. @khaby.lame) or paste TikTok video links'); 
       return; 
     }
+
+    const detectedUrls = extractUrls(rawInput);
+
     setLoading(true);
     try {
-      const data = await fetchUserVideos(cleanUser);
-      setResult(data);
-      setCursor(data.cursor || 0);
+      // Case A: User pasted one or more video URLs
+      if (detectedUrls.length > 0) {
+        const fetchedVideos: any[] = [];
+        for (const url of detectedUrls) {
+          try {
+            const v = await fetchVideo(url);
+            if (v) fetchedVideos.push(v);
+          } catch {}
+        }
+
+        if (fetchedVideos.length > 0) {
+          const first = fetchedVideos[0];
+          const authorObj = typeof first.author === 'object' ? first.author : null;
+          setResult({
+            videos: fetchedVideos,
+            cursor: 0,
+            hasMore: false,
+            userInfo: {
+              user: {
+                unique_id: authorObj?.unique_id || authorObj?.id || first.author || 'creator',
+                nickname: authorObj?.nickname || first.author || 'TikTok Creator',
+                avatar: authorObj?.avatar || first.cover
+              },
+              stats: {
+                videoCount: fetchedVideos.length,
+                followerCount: 0
+              }
+            }
+          });
+          return;
+        }
+      }
+
+      // Case B: User entered username or profile link
+      const cleanUser = extractCleanUser(rawInput);
+      if (!cleanUser) {
+        setError('Could not detect a valid username or video URL. Please check your input and try again.');
+        return;
+      }
+
+      try {
+        const data = await fetchUserVideos(cleanUser);
+        setResult(data);
+        setCursor(data.cursor || 0);
+      } catch (err: any) {
+        setError(`TikTok's server security blocks automated profile crawling for @${cleanUser}. Please paste one or more direct TikTok video links (one per line) in the box above to download them together in bulk!`);
+      }
     } catch (err: any) {
-      setError(err.message || err.response?.data?.message || 'Failed to fetch user profile. Please check the username and try again.');
+      setError(err.message || 'Failed to fetch videos. Please check your input and try again.');
     } finally { 
       setLoading(false); 
     }
@@ -95,7 +148,7 @@ export default function BulkDownloader() {
             <span className="absolute left-4 text-slate-400 font-bold select-none">@</span>
             <input 
               type="text" 
-              placeholder="TikTok username (e.g. khaby.lame)" 
+              placeholder="Enter TikTok username (e.g. @khaby.lame) or paste video URLs..." 
               className="w-full bg-slate-950/60 border border-slate-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-white rounded-xl py-3.5 pl-10 pr-4 text-base md:text-lg transition-all duration-200 placeholder:text-slate-500 outline-none" 
               value={username} 
               onChange={e => setUsername(e.target.value)} 
